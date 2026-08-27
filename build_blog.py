@@ -110,6 +110,13 @@ def build():
         title = m.group(1).strip()
         desc = (m.group(2) or "").strip().strip("*")
         body = raw[m.end():]
+        # 本文先頭に残った description 行を除去
+        blines = body.split("\n")
+        while blines and (blines[0].strip() == "" or re.match(r"^\**description\**[:：]", blines[0].strip(), re.I)):
+            if re.match(r"^\**description\**[:：]", blines[0].strip(), re.I) and not desc:
+                desc = re.sub(r"^\**description\**[:：]\s*", "", blines[0].strip(), flags=re.I).strip("*")
+            blines.pop(0)
+        body = "\n".join(blines)
         metas.append((title, desc, slug, body))
     today = "2026-08-28"
     for i, (title, desc, slug, body) in enumerate(metas):
