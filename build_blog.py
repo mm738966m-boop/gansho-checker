@@ -45,7 +45,19 @@ CSS = """
     border:1px solid var(--paper-line); border-radius:6px; padding:12px 16px; margin:10px 0; font-size:14px; }
   .related a:hover { border-color:var(--redpen); }
   footer { margin-top:52px; padding-top:16px; border-top:1px solid var(--paper-line); font-size:12px; color:var(--ink-soft); line-height:2; }
+  .tana-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+  .tana-card { display:block; background:var(--card); border:1px solid var(--paper-line); border-radius:6px; padding:15px 17px; text-decoration:none; color:var(--ink); }
+  .tana-card:hover { border-color:var(--redpen); }
+  .tana-card .t { font-family:var(--serif); font-weight:700; font-size:14.5px; margin-bottom:6px; }
+  .tana-card p { font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; line-height:1.8; }
+  .tana-card .go { font-family:var(--serif); font-size:13px; color:var(--redpen); font-weight:600; }
 """
+
+TANA = ('<h2>この先の一歩に</h2><div class="tana-grid">'
+  '<a class="tana-card" href="' + BASE + '"><div class="t">無料チェッカー</div><p>願書・志望理由書のAIっぽさを赤ペン診断。</p><span class="go">試してみる →</span></a>'
+  '<a class="tana-card" href="https://utage-system.com/p/xBWncXOH1VaH?ref=akapen"><div class="t">教育費と新NISAの無料勉強会</div><p>受験の先にある教育費の計画を、オンラインで。</p><span class="go">詳しく見る →</span></a>'
+  '<a class="tana-card" href="https://mm738966m-boop.github.io/yumekane-salon/?ref=akapen"><div class="t">ユメカネサロン（無料）</div><p>お金の話を気軽にできる、無料のオンラインの町。</p><span class="go">のぞいてみる →</span></a>'
+  '</div><p style="font-size:11px;color:var(--ink-soft);margin-top:8px">※ 勉強会・サロンは、提携先fulfullの運営です。</p>')
 
 CTA = ('<div class="cta"><div class="t">自分の文章のAIっぽさを、無料でチェックできます</div>'
   '<p>貼り付けるだけで、AIにありがちな表現に赤い波線が入ります。<br>登録不要・何度でも無料です。</p>'
@@ -134,7 +146,7 @@ def build():
           "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + today + " ｜ 赤ペン願書ラボ</div>"
-          + art + FOOTER + "</div>")
+          + art + TANA + FOOTER + "</div>")
         os.makedirs("blog", exist_ok=True)
         open("blog/" + slug, "w", encoding="utf-8").write(page)
         print("built", slug, len(page))
@@ -147,7 +159,7 @@ def build():
       "<style>" + CSS + " .related a small{display:block;color:var(--ink-soft);font-size:12px;margin-top:4px;font-weight:400;}"
       ".related a{font-weight:700;}</style>\n<div class=\"wrap\">" + SITEBAR
       + "<h1>読みもの一覧</h1><div class=\"meta\">願書・志望理由書の書き方と、AIとの上手な付き合い方。</div>"
-      + '<div class="related">' + cards.replace("<a ", '<a class="card" ') + "</div>" + CTA + FOOTER + "</div>")
+      + '<div class="related">' + cards.replace("<a ", '<a class="card" ') + "</div>" + CTA + TANA + FOOTER + "</div>")
     open("blog/index.html", "w", encoding="utf-8").write(idx)
     # sitemap / robots
     urls = [BASE, BASE + "ao.html", BASE + "blog/"] + [BASE + "blog/" + s for t, d, s, b in metas]
