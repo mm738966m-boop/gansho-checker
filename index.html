@@ -1012,7 +1012,7 @@
       if (shot && targets[shot]) {
         setTimeout(function () {
           var el = document.getElementById(targets[shot]);
-          if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 16);
+          if (el) document.body.style.transform = 'translateY(-' + Math.max(0, el.getBoundingClientRect().top + window.scrollY - 14) + 'px)';
         }, 300);
       }
     }
