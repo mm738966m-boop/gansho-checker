@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mm738966m-boop.github.io/gansho-checker/sitemap.xml
