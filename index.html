@@ -794,7 +794,7 @@
     $("formErr").style.display = "none";
   });
 
-  var SAMPLES = {
+  var SAMPLES = window.GANSHO_SAMPLES || {
     shogaku: "私どもが貴園ならびに貴校を志望いたしました理由は、豊かな人間性を育む教育理念に深く共感したためです。学校説明会に参加させていただき、先生方の温かいご指導のもと、子どもたちが主体的に活動する姿に深く感銘を受けました。娘は好奇心旺盛で、協調性のある性格です。家庭では思いやりの心を大切に育ててまいりました。貴校の恵まれた環境で多様な経験を積むことで、さらなる成長を遂げてくれるものと確信しております。入学の暁には、家庭と学校が一体となって娘の成長を支えてまいる所存です。",
     chugaku: "私が貴校を志望した理由は、多様な価値観に触れながら自己成長できる環境に魅力を感じたからです。学校説明会に参加させていただき、生徒の皆様が主体的に学ぶ姿に深く感銘を受けました。また、貴校の掲げる教育理念にも深く共感いたしました。私は小学校生活を通じて、協調性とコミュニケーション能力を身につけてまいりました。さらに、委員会活動の経験を通じて、リーダーシップの大切さも学びました。これらの経験を通じて、幅広い視野を持つことの重要性を実感しております。貴校に入学した際には、勉学だけでなく部活動にも精一杯努力し、将来は社会に貢献したいと考えております。以上のことから、私は貴校への入学を切に願っております。",
     ao: "私の強みは、リーダーシップとコミュニケーション能力です。高校では生徒会活動を通じて、多様な意見をまとめる力を身につけました。また、部活動ではキャプテンとして、チームの目標達成に貢献しました。これらの経験を通じて、主体的に行動することの大切さを学びました。貴学の掲げるグローバルな教育環境に魅力を感じており、入学後は勉学だけでなく課外活動にも全力で取り組む所存です。将来は幅広い視野を持つ人材として、よりよい社会の実現に貢献したいと考えております。"
@@ -996,6 +996,27 @@
   if (jr) jr.addEventListener("click", function () {
     $("rewriteWrap").scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  /* 撮影・デモ用URLパラメータ: ?demo=chugaku&full=1&shot=score|hints|rewrite */
+  try {
+    var q = new URLSearchParams(location.search);
+    var demoKey = q.get("demo");
+    if (demoKey && SAMPLES[demoKey]) {
+      if (q.get("full") === "1") memUnlocked = true;
+      suppressScroll = true;
+      input.value = SAMPLES[demoKey];
+      input.dispatchEvent(new Event("input"));
+      runCheck();
+      var shot = q.get("shot");
+      var targets = { score: "scoreCircle", hints: "advice", rewrite: "rewriteWrap", annotated: "annotatedBlock" };
+      if (shot && targets[shot]) {
+        setTimeout(function () {
+          var el = document.getElementById(targets[shot]);
+          if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 16);
+        }, 300);
+      }
+    }
+  } catch (e) {}
 
   /* コピーButton（静的HTML側に配置） */
   var cpBtn = $("copyPromptBtn");

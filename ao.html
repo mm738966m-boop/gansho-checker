@@ -767,7 +767,6 @@
   else global.GanshoEngine = { analyzeGansho: analyzeGansho, PHRASES: PHRASES };
 })(typeof window !== "undefined" ? window : this);
 
-
 /* ---- AO・推薦版 設定 ---- */
 window.GANSHO_SAMPLES = {"s1": "私の強みは、目標に向かって粘り強く努力を続けられることです。高校在学中は生徒会活動に取り組み、仲間と協力しながら学校行事を運営する中で、リーダーシップと協調性を身につけました。また、部活動においても日々の練習を通じて忍耐力を培い、困難な状況でも諦めずに取り組む姿勢を養いました。貴校の自由な学風と多様な学びの機会に強い魅力を感じており、貴校で学ぶことで自分自身をさらに成長させたいと考えております。貴校には様々な分野で活躍する学生が集い、互いに刺激し合える環境が整っていると伺っております。私はこれまで培ってきた経験を活かし、貴校の学生生活において積極的に学び、多様な価値観を持つ仲間と交流しながら視野を広げていきたいと考えております。将来は貴校で得た知識と経験を社会に還元し、貢献できる人材になりたいと強く願っております。", "s2": "私は中学二年生の夏、地域の高齢者施設でボランティア活動に参加しました。最初は何を話せばよいか分からず戸惑うばかりでしたが、ある利用者の方から「若い人が来てくれるだけで元気が出るよ」と声をかけていただき、その言葉が今も私の原点になっています。それ以来、月に一度施設を訪れ、将棋の相手をしたり昔の思い出話を伺ったりする中で、相手の立場に立って考えることの大切さを学んでまいりました。高校では福祉委員会に所属し、校内でのバリアフリー啓発活動にも取り組み、仲間と共に企画を練り上げる経験を積んでまいりました。こうした活動を通じて、目の前の人のために何ができるかを考え抜く姿勢が、自分の中に確かに根付いていると感じております。貴校の福祉分野における実践的な学びの環境は、私がこれまで積み重ねてきた経験をさらに深め、社会に還元できる力へとつなげてくれるものと考えております。貴校で学び、地域社会に貢献できる人材へと成長していきたいと強く願っております。", "s3": "私の強みは、リーダーシップとコミュニケーション能力です。高校では生徒会活動を通じて、多様な意見をまとめる力を身につけました。また、部活動ではキャプテンとして、チームの目標達成に貢献しました。これらの経験を通じて、主体的に行動することの大切さを学びました。貴学の掲げるグローバルな教育環境に魅力を感じており、入学後は勉学だけでなく課外活動にも全力で取り組む所存です。将来は幅広い視野を持つ人材として、よりよい社会の実現に貢献したいと考えております。"};
 GanshoEngine.PHRASES.push(
@@ -1018,6 +1017,27 @@ GanshoEngine.PHRASES.push(
   if (jr) jr.addEventListener("click", function () {
     $("rewriteWrap").scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  /* 撮影・デモ用URLパラメータ: ?demo=chugaku&full=1&shot=score|hints|rewrite */
+  try {
+    var q = new URLSearchParams(location.search);
+    var demoKey = q.get("demo");
+    if (demoKey && SAMPLES[demoKey]) {
+      if (q.get("full") === "1") memUnlocked = true;
+      suppressScroll = true;
+      input.value = SAMPLES[demoKey];
+      input.dispatchEvent(new Event("input"));
+      runCheck();
+      var shot = q.get("shot");
+      var targets = { score: "scoreCircle", hints: "advice", rewrite: "rewriteWrap", annotated: "annotatedBlock" };
+      if (shot && targets[shot]) {
+        setTimeout(function () {
+          var el = document.getElementById(targets[shot]);
+          if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 16);
+        }, 300);
+      }
+    }
+  } catch (e) {}
 
   /* コピーButton（静的HTML側に配置） */
   var cpBtn = $("copyPromptBtn");
