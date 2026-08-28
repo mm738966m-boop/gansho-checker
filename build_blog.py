@@ -9,7 +9,16 @@ ARTICLES = [
     ("記事1本文.md", "gansho-ai-kakikata.html"),
     ("記事2本文.md", "shibouriyusho-chatgpt-bareru.html"),
     ("記事3本文.md", "shougakkoujuken-gansho-reibun.html"),
+    ("記事4本文.md", "gansho-aippoi-naoshikata.html"),
 ]
+
+# 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
+PUBDATES = {
+    "gansho-ai-kakikata.html": "2026-08-28",
+    "shibouriyusho-chatgpt-bareru.html": "2026-08-28",
+    "shougakkoujuken-gansho-reibun.html": "2026-08-28",
+    "gansho-aippoi-naoshikata.html": "2026-08-28",
+}
 
 CSS = """
   :root { --paper:#FAF7F1; --paper-line:#EAE3D5; --card:#FFFFFF; --ink:#2B2926; --ink-soft:#6E6960;
@@ -132,8 +141,9 @@ def build():
             blines.pop(0)
         body = "\n".join(blines)
         metas.append((title, desc, slug, body))
-    today = "2026-08-28"
+    today = datetime.date.today().isoformat()
     for i, (title, desc, slug, body) in enumerate(metas):
+        pubdate = PUBDATES.get(slug, today)
         others = [(t, BASE + "blog/" + s) for j, (t, d, s, b) in enumerate(metas) if j != i]
         art = md_to_html(body, others)
         page = ("<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
@@ -147,7 +157,7 @@ def build():
           "<meta name=\"twitter:card\" content=\"summary_large_image\">\n"
           "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
-          + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + today + " ｜ 赤ペン願書ラボ</div>"
+          + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + pubdate + " ｜ 赤ペン願書ラボ</div>"
           + art + TANA + FOOTER + "</div>")
         os.makedirs("blog", exist_ok=True)
         open("blog/" + slug, "w", encoding="utf-8").write(page)
