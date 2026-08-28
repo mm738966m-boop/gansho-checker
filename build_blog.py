@@ -2,7 +2,7 @@
 # 記事md → ブランドHTML 変換ビルダー
 import re, os, html, datetime
 
-BASE = "https://mm738966m-boop.github.io/gansho-checker/"
+BASE = "https://akapen-lab.com/"
 SRC = "/Users/morikawa/Desktop/AIチェッカー/24h-engine/seo/"
 
 ARTICLES = [
