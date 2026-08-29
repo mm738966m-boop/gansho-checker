@@ -13,6 +13,7 @@ ARTICLES = [
     ("記事3本文.md", "shougakkoujuken-gansho-reibun.html"),
     ("記事4本文.md", "gansho-aippoi-naoshikata.html"),
     ("記事5本文.md", "chugakujuken-shibouriyusho-kakikata.html"),
+    ("記事6本文.md", "shibouriyusho-ai-tsukaikata.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -22,6 +23,7 @@ PUBDATES = {
     "shougakkoujuken-gansho-reibun.html": "2026-08-28",
     "gansho-aippoi-naoshikata.html": "2026-08-28",
     "chugakujuken-shibouriyusho-kakikata.html": "2026-08-29",
+    "shibouriyusho-ai-tsukaikata.html": "2026-08-29",
 }
 
 CSS = """

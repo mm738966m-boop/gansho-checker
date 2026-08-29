@@ -337,12 +337,96 @@ def fig_memo():
     return _svg(204, "見学メモの内容が志望理由書の一文になる流れの図", g)
 
 
+def fig_fork():
+    """土台にするか、そのまま出すか"""
+    g = _txt(320, 20, "同じ下書きでも、ここで先が分かれる", 14, INK, SERIF, "middle", "700")
+    g += _card(200, 34, 240, 40, "#EFEAF5", "#DCD3E8")
+    g += _txt(320, 59, "AIが出してきた下書き", 13.5, "#5B4B77", SERIF, "middle", "700")
+    # 分岐のブラケット
+    g += '<path d="M320 74v14M165 88h310M165 88v12M475 88v12" fill="none" stroke="%s" stroke-width="2"/>' % SOFT
+    g += '<path d="M165 106l-5-8h10z" fill="%s"/><path d="M475 106l-5-8h10z" fill="%s"/>' % (RED, GRN)
+    # 左：そのまま出す
+    g += _card(20, 112, 290, 108, REDBG, "#EBCFCD")
+    g += _txt(165, 138, "そのまま出す", 14, RED, SERIF, "middle", "700")
+    for i, t in enumerate(["どの家庭にも当てはまる文章になる", "面接で自分の言葉として話しにくい"]):
+        g += _txt(165, 168 + i * 24, t, 12, INK, SANS, "middle")
+    # 右：土台として使う
+    g += _card(330, 112, 290, 108, GRNBG, "#C9DED1")
+    g += _txt(475, 138, "土台として使う", 14, GRN, SERIF, "middle", "700")
+    for i, t in enumerate(["場面と子どもの言葉を足していく", "その家庭にしか書けない文章になる"]):
+        g += _txt(475, 168 + i * 24, t, 12, INK, SANS, "middle")
+    return _svg(234, "AIの下書きをそのまま出す場合と土台として使う場合の分かれ道", g)
+
+
+def fig_process():
+    """願書ができるまでの工程と担当"""
+    g = _txt(320, 20, "工程ごとに、担当を決めておく", 14, INK, SERIF, "middle", "700")
+    steps = [("材料を", "集める", "家庭"), ("構成を", "決める", "AI可"),
+             ("下書きを", "作る", "AI可"), ("場面と言葉を", "足す", "家庭"),
+             ("声に出して", "仕上げる", "家庭＋AI")]
+    x0, w, gap = 15, 118, 5
+    for i, (l1, l2, who) in enumerate(steps):
+        x = x0 + i * (w + gap)
+        c = x + w / 2.0
+        g += _card(x, 40, w, 100)
+        g += _txt(c, 68, l1, 12.5, INK, SANS, "middle", "500")
+        g += _txt(c, 86, l2, 12.5, INK, SANS, "middle", "500")
+        if who == "家庭":
+            bg, st, fg, cw, fs = GRNBG, "#C9DED1", GRN, 64, 11.5
+        elif who == "AI可":
+            bg, st, fg, cw, fs = "#EFEAF5", "#DCD3E8", "#5B4B77", 64, 11.5
+        else:
+            bg, st, fg, cw, fs = "#F3EFE5", LINE, INK, 82, 11
+        g += '<rect x="%g" y="%g" width="%g" height="22" rx="11" fill="%s" stroke="%s"/>' % (c - cw / 2.0, 104, cw, bg, st)
+        g += _txt(c, 119, who, fs, fg, SERIF, "middle", "700")
+    g += '<path d="M15 158h590" stroke="%s" stroke-width="2"/><path d="M615 158l-10-6v12z" fill="%s"/>' % (LINE, LINE)
+    g += _txt(320, 184, "AIに任せられるのは真ん中の工程。材料集めと書き直しは家庭にしか担えない", 12, SOFT, SANS, "middle")
+    return _svg(200, "願書ができるまでの5工程と、家庭が担う工程・AIに任せられる工程", g)
+
+
+def hero_tsukaikata():
+    """記事6：どこで線を引くか"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    g += _card(112, 28, 416, 134)
+    g += _grid(126, 42, 27, 6, 14)
+    # 中央の線引き
+    g += '<path d="M320 28v134" stroke="%s" stroke-width="2.2" stroke-dasharray="7 5"/>' % RED
+    g += '<rect x="152" y="52" width="72" height="24" rx="12" fill="#EFEAF5" stroke="#DCD3E8"/>'
+    g += _txt(188, 69, "AIまで", 12, "#5B4B77", SERIF, "middle", "700")
+    g += '<rect x="416" y="52" width="72" height="24" rx="12" fill="%s" stroke="#C9DED1"/>' % GRNBG
+    g += _txt(452, 69, "ここから家庭", 10.5, GRN, SERIF, "middle", "700")
+    g += _wave(150, 128, 120)
+    g += _wave(360, 128, 120, GRN)
+    g += _pen(556, 42, 1.0, 12)
+    return _svg(190, "願書づくりのどこまでをAIに任せ、どこから家庭が書くかの線引きのイメージ", g)
+
+
+def fig_ask():
+    """AIへの頼み方で結果が変わる"""
+    g = _txt(320, 20, "同じAIでも、頼み方で返ってくるものが変わる", 14, INK, SERIF, "middle", "700")
+    rows = [(38, REDBG, "#EBCFCD", RED, "「志望理由書を良い感じに書いて」",
+             "どの家庭にも当てはまる", "一般的な言葉が返ってくる"),
+            (128, GRNBG, "#C9DED1", GRN, "見学メモを渡して「これを整えて」",
+             "はじめから家庭の事実が", "入った文章になる")]
+    for y, bg, st, fg, ask, r1, r2 in rows:
+        g += _card(20, y, 296, 76, bg, st)
+        g += _txt(38, y + 26, "頼み方", 11, fg, SERIF, "start", "700")
+        g += _txt(38, y + 52, ask, 12.5, INK)
+        g += _arrow_r(326, y + 38, 30, fg)
+        g += _card(368, y, 252, 76, CARD, LINE)
+        g += _txt(386, y + 26, "返ってくる文章", 11, SOFT, SERIF, "start", "700")
+        g += _txt(386, y + 48, r1, 12, INK)
+        g += _txt(386, y + 66, r2, 12, INK)
+    return _svg(220, "AIへの頼み方の違いで返ってくる文章が変わることの対比図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
     "shougakkoujuken-gansho-reibun.html": hero_reibun,
     "gansho-aippoi-naoshikata.html": hero_fix,
     "chugakujuken-shibouriyusho-kakikata.html": hero_chugaku,
+    "shibouriyusho-ai-tsukaikata.html": hero_tsukaikata,
 }
 
 FIGURES = {
@@ -355,4 +439,7 @@ FIGURES = {
     "struct": (fig_struct, "並び順に迷ったら、この型に当てはめるところから始められます。"),
     "ratio": (fig_ratio, "字数の配分に迷ったら、真ん中をいちばん厚くするところから考えてみてください。"),
     "memo": (fig_memo, "その場で書きとめた短いメモが、いちばん書き直しの少ない材料になります。"),
+    "fork": (fig_fork, "使うか使わないかではなく、土台にするかそのまま出すかで先が分かれます。"),
+    "process": (fig_process, "工程ごとに担当を決めておくと、AI任せになりすぎる場面が減ります。"),
+    "ask": (fig_ask, "材料を先に渡すかどうかで、返ってくる文章の中身が変わります。"),
 }
