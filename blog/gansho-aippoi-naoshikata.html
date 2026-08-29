@@ -23,14 +23,23 @@
   .sitebar a { color:var(--ink-soft); text-decoration:none; }
   .sitebar a:hover { color:var(--redpen); }
   h1 { font-family:var(--serif); font-weight:700; font-size:clamp(23px,4.4vw,30px); line-height:1.6; margin:0 0 10px; }
-  .meta { font-size:12px; color:var(--ink-soft); margin-bottom:26px; }
-  h2 { font-family:var(--serif); font-size:20px; font-weight:700; margin:42px 0 14px; padding-left:12px; border-left:4px solid var(--redpen); line-height:1.6; }
+  .meta { font-size:12px; color:var(--ink-soft); margin-bottom:22px; }
+  h2 { font-family:var(--serif); font-size:20px; font-weight:700; margin:46px 0 14px; padding-left:12px; border-left:4px solid var(--redpen); line-height:1.6; scroll-margin-top:16px; }
+  h2 .n { display:inline-block; font-family:var(--sans); font-size:11px; font-weight:700; color:#fff;
+    background:var(--redpen); border-radius:50%; width:21px; height:21px; line-height:21px; text-align:center;
+    margin-right:9px; vertical-align:3px; }
   p { margin:14px 0; font-size:15px; }
   table { border-collapse:collapse; width:100%; font-size:13.5px; background:var(--card); margin:16px 0; }
   th,td { border:1px solid var(--paper-line); padding:9px 12px; text-align:left; }
   th { font-family:var(--serif); background:#F5F0E6; }
   .tablewrap { overflow-x:auto; }
-  ul,ol { padding-left:1.5em; } li { margin:6px 0; font-size:15px; }
+  ol { padding-left:1.5em; } li { margin:6px 0; font-size:15px; }
+  ul.cl { list-style:none; padding-left:0; background:var(--card); border:1px solid var(--paper-line);
+    border-radius:8px; padding:16px 20px; margin:22px 0; }
+  ul.cl li { position:relative; padding-left:1.8em; line-height:1.9; }
+  ul.cl li + li { margin-top:10px; padding-top:10px; border-top:1px dashed var(--paper-line); }
+  ul.cl li:before { content:"✓"; position:absolute; left:0; top:0; color:var(--redpen); font-weight:700; }
+  ul.cl li + li:before { top:10px; }
   .cta { background:var(--card); border:1.5px solid var(--redpen); border-radius:8px; padding:20px 22px; margin:28px 0; }
   .cta .t { font-family:var(--serif); font-weight:700; font-size:16px; margin-bottom:6px; }
   .cta p { font-size:13.5px; color:var(--ink-soft); margin:0 0 14px; }
@@ -43,29 +52,86 @@
     border:1px solid var(--paper-line); border-radius:6px; padding:12px 16px; margin:10px 0; font-size:14px; }
   .related a:hover { border-color:var(--redpen); }
   footer { margin-top:52px; padding-top:16px; border-top:1px solid var(--paper-line); font-size:12px; color:var(--ink-soft); line-height:2; }
-  .tana-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+  .tana-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
   .tana-card { display:block; background:var(--card); border:1px solid var(--paper-line); border-radius:6px; padding:15px 17px; text-decoration:none; color:var(--ink); }
   .tana-card:hover { border-color:var(--redpen); }
   .tana-card .t { font-family:var(--serif); font-weight:700; font-size:14.5px; margin-bottom:6px; }
   .tana-card p { font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; line-height:1.8; }
   .tana-card .go { font-family:var(--serif); font-size:13px; color:var(--redpen); font-weight:600; }
+  /* ── 図解・イメージ画像 ── */
+  .hero { margin:0 0 24px; }
+  .hero svg { width:100%; height:auto; display:block; border-radius:10px; }
+  figure.fig { margin:32px 0; }
+  figure.fig svg { width:100%; height:auto; display:block; background:var(--card);
+    border:1px solid var(--paper-line); border-radius:9px; }
+  figure.fig figcaption { font-size:12.5px; color:var(--ink-soft); line-height:1.85; margin-top:9px;
+    padding-left:13px; border-left:2px solid var(--paper-line); }
+  /* ── リード・目次 ── */
+  .lead { background:var(--card); border-left:4px solid var(--redpen); border-radius:0 8px 8px 0;
+    padding:15px 18px; margin:0 0 24px; }
+  .lead .t { font-family:var(--serif); font-weight:700; font-size:13px; color:var(--redpen); margin-bottom:5px; }
+  .lead p { font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.95; }
+  .toc { background:var(--card); border:1px solid var(--paper-line); border-radius:8px; padding:15px 20px 17px; margin:0 0 34px; }
+  .toc .th { font-family:var(--serif); font-weight:700; font-size:13.5px; margin-bottom:9px;
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .toc .rt { font-family:var(--sans); font-weight:400; font-size:11.5px; color:var(--ink-soft); white-space:nowrap; }
+  .toc ol { margin:0; padding-left:1.4em; }
+  .toc li { font-size:13px; margin:4px 0; line-height:1.8; }
+  .toc a { color:var(--ink); text-decoration:none; border-bottom:1px solid transparent; }
+  .toc a:hover { color:var(--redpen); border-bottom-color:var(--redpen); }
+  /* ── Before / After ── */
+  .ba { margin:22px 0; display:grid; gap:11px; }
+  .ba .box { border-radius:8px; padding:13px 16px; font-size:14px; line-height:1.95; }
+  .ba .box.b { background:var(--redpen-soft); border:1px solid #EBCFCD; }
+  .ba .box.a { background:var(--green-soft); border:1px solid #C9DED1; }
+  .ba .lbl { display:inline-block; font-family:var(--serif); font-weight:700; font-size:11px;
+    padding:2px 10px; border-radius:20px; margin-bottom:6px; letter-spacing:.04em; }
+  .ba .box.b .lbl { background:var(--redpen); color:#fff; }
+  .ba .box.a .lbl { background:var(--green); color:#fff; }
+  /* ── 記事一覧カード ── */
+  .postcard { display:block; background:var(--card); border:1px solid var(--paper-line); border-radius:9px;
+    overflow:hidden; text-decoration:none; color:var(--ink); margin:14px 0; }
+  .postcard:hover { border-color:var(--redpen); }
+  .postcard svg { width:100%; height:auto; display:block; border-bottom:1px solid var(--paper-line); }
+  .postcard .pb { padding:14px 18px 16px; }
+  .postcard .pt { font-family:var(--serif); font-weight:700; font-size:15.5px; line-height:1.6; }
+  .postcard .pd { font-size:12.5px; color:var(--ink-soft); line-height:1.85; margin-top:6px; }
+  @media (max-width:520px) {
+    figure.fig { margin:24px -4px; }
+    .toc .th { flex-direction:column; gap:2px; }
+  }
 </style>
-<div class="wrap"><div class="sitebar"><a class="logo" href="https://akapen-lab.com/blog/">✍ 赤ペン願書ラボ</a><a href="https://akapen-lab.com/">無料チェッカー</a><a href="https://akapen-lab.com/ao.html">総合型選抜版</a><a href="https://akapen-lab.com/blog/">読みもの一覧</a></div><h1>願書がAIっぽいと感じたら？直し方の具体例で解説</h1><div class="meta">2026-08-28 ｜ 赤ペン願書ラボ</div><h2>「AIっぽい」と感じるときに起きていること</h2>
+<div class="wrap"><div class="sitebar"><a class="logo" href="https://akapen-lab.com/blog/">✍ 赤ペン願書ラボ</a><a href="https://akapen-lab.com/">無料チェッカー</a><a href="https://akapen-lab.com/ao.html">総合型選抜版</a><a href="https://akapen-lab.com/blog/">読みもの一覧</a></div><h1>願書がAIっぽいと感じたら？直し方の具体例で解説</h1><div class="meta">2026-08-28 ｜ 赤ペン願書ラボ</div><div class="hero"><svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIっぽい文章を家庭の言葉に直す前と後のイメージ"><rect width="640" height="190" rx="10" fill="#F6F1E7"/><rect x="40" y="32" width="200" height="126" rx="7" fill="#FFFFFF" stroke="#EBCFCD"/><text x="56" y="56" font-family="Shippori Mincho, serif" font-size="12" fill="#C73E3A" text-anchor="start" font-weight="700">Before</text><rect x="56" y="73" width="168" height="6" rx="3" fill="#E3CFCD"/><rect x="56" y="93" width="168" height="6" rx="3" fill="#E3CFCD"/><rect x="56" y="113" width="168" height="6" rx="3" fill="#E3CFCD"/><rect x="56" y="133" width="96" height="6" rx="3" fill="#E3CFCD"/><path d="M56 88q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0q3 4 6 0q3 -4 6 0" fill="none" stroke="#C73E3A" stroke-width="1.6"/><g stroke="#C73E3A" stroke-width="2" fill="none"><path d="M258 95h40"/></g><path d="M304 95l-7-5v10z" fill="#C73E3A"/><rect x="322" y="32" width="200" height="126" rx="7" fill="#FFFFFF" stroke="#C9DED1"/><text x="338" y="56" font-family="Shippori Mincho, serif" font-size="12" fill="#4A7C59" text-anchor="start" font-weight="700">After</text><rect x="338" y="73" width="168" height="6" rx="3" fill="#CFE0D5"/><rect x="338" y="93" width="168" height="6" rx="3" fill="#CFE0D5"/><rect x="338" y="113" width="168" height="6" rx="3" fill="#CFE0D5"/><rect x="338" y="133" width="120" height="6" rx="3" fill="#CFE0D5"/><circle cx="360" cy="93" r="13" fill="none" stroke="#4A7C59" stroke-width="2"/><g transform="translate(556,42) scale(1) rotate(10)"><rect x="0" y="0" width="10" height="62" rx="4" fill="#C73E3A"/><rect x="0" y="0" width="10" height="16" rx="4" fill="#A82F2C"/><path d="M0 62h10l-5 12z" fill="#E8D9C4"/><path d="M3.4 70h3.2l-1.6 4z" fill="#2B2926"/></g></svg></div><div class="lead"><div class="t">この記事でわかること</div><p>書き終えた願書や志望理由書が「AIっぽい」と感じる方向けに、直し方の具体例をBefore→Afterで紹介し、無料ツールでのセルフチェック手順を解説します。</p></div><nav class="toc"><div class="th"><span>この記事の流れ</span><span class="rt">読むのにかかる時間：約8分</span></div><ol><li><a href="#s1">「AIっぽい」と感じるときに起きていること</a></li><li><a href="#s2">AIっぽさの正体：抽象語・接続詞・語尾のクセ</a></li><li><a href="#s3">Before→Afterで見る直し方の実例</a></li><li><a href="#s4">自分では気づきにくい理由</a></li><li><a href="#s5">無料ツールでチェックする手順</a></li><li><a href="#s6">直したあとの最終確認リスト</a></li></ol></nav><h2 id="s1"><span class="n">1</span>「AIっぽい」と感じるときに起きていること</h2>
 <p>願書を書き終えて読み返したとき、なんとなく引っかかりを覚えることがあります。<br>文章として整ってはいるのに、どこか自分の子どものことを書いた気がしない、という感覚です。<br>運営として多くの文章を見てきた中で、この感覚を持つ保護者は少なくありません。<br>特に、AIに下書きを手伝ってもらったあと、自分の言葉に直したつもりでも、この違和感が残るケースがよく見られます。<br>違和感の正体は、たいてい「読みやすいけれど、誰の子どものことを書いてもそのまま通用しそうな文章になっている」という点にあります。<br>文法は正しく、言葉遣いも丁寧なのに、書いた本人の顔が見えてこない状態です。<br>この状態は、文章そのものが悪いわけではありません。<br>むしろ、土台としてはよくできている場合が多く、あとひと手間を加えれば印象は大きく変わります。<br>問題は、その「ひと手間」がどこに必要なのか、書いた本人には見えにくいという点です。<br>自分で何度も読み返していると、内容に慣れてしまい、抽象的な部分もすんなり読めてしまいます。<br>また、塾や幼児教室から「よくまとまっている」と言われたのに、自分ではしっくりこない、という声を聞くこともあります。<br>第三者から見れば破綻のない文章でも、書いた本人が一番、わが子の実感との距離を感じ取っているのかもしれません。<br>この違和感を放置したまま提出してしまうと、面接で内容を聞かれたときに、自分の言葉で説明しにくくなることもあります。<br>だからこそ、「AIっぽい」と感じた時点で立ち止まり、どこにその原因があるのかを具体的に探ることが次のステップになります。<br>この記事では、AIっぽさの正体を整理したうえで、実際にどう直せばよいかを例文とともに見ていきます。</p>
-<h2>AIっぽさの正体：抽象語・接続詞・語尾のクセ</h2>
+<h2 id="s2"><span class="n">2</span>AIっぽさの正体：抽象語・接続詞・語尾のクセ</h2>
 <p>「AIっぽい」という印象は、感覚的なものに思えて、実は言葉の使い方に共通のクセがあることが多いです。<br>ひとつは、抽象語だけで場面をまとめてしまうクセです。<br>「豊かな学び」「主体性」「多様な価値観」といった言葉は、どんな子どもにも当てはまるため、具体的に何があったのかが伝わりません。<br>ふたつめは、接続詞の使い方が単調になるクセです。<br>「そして」「また」「そのため」といった接続詞が同じパターンで繰り返されると、文と文のつながりが機械的に感じられます。<br>みっつめは、語尾のクセです。<br>「〜と考えております」「〜と思っております」のような丁寧な語尾が何度も続くと、一文一文の熱量が均一になり、書き手の感情の起伏が伝わりにくくなります。<br>これらのクセは、AIが生成する文章に出やすい特徴であると同時に、人が急いで文章を整えたときにも自然と出てしまう特徴でもあります。<br>締め切りが近づき、時間に追われながら書き上げた文章に、同じクセが出ることも珍しくありません。<br>つまり、このクセがあるからといって「AIが書いた文章だ」と断定できるわけではありません。<br>大切なのは、犯人探しをすることではなく、自分の文章にこのクセが残っていないかを確認し、必要な部分を直していくことです。<br>四つ目に、一文の長さが均一にそろいすぎている点も、クセのひとつとして挙げられます。<br>人が話し言葉に近い感覚で書くと、長い文と短い文が自然に混ざりますが、整えすぎた文章はどの文も似た長さになりがちです。<br>次の章では、実際にこれらのクセをどう直すのか、具体例で見ていきます。</p>
-<h2>Before→Afterで見る直し方の実例</h2>
+<figure class="fig"><svg viewBox="0 0 640 196" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AIっぽさが出やすい3つのクセ：抽象語・接続詞・語尾"><rect x="16" y="34" width="190" height="148" rx="7" fill="#FFFFFF" stroke="#EBCFCD"/><rect x="16" y="34" width="190" height="4" rx="2" fill="#C73E3A"/><text x="111" y="68" font-family="Shippori Mincho, serif" font-size="16" fill="#C73E3A" text-anchor="middle" font-weight="700">抽象語</text><rect x="32" y="82" width="158" height="30" rx="5" fill="#F9EAE9" stroke="none"/><text x="111" y="102" font-family="Zen Kaku Gothic New, sans-serif" font-size="12.5" fill="#2B2926" text-anchor="middle" font-weight="400">「豊かな学び」</text><text x="111" y="134" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">どの子にも当てはまり、</text><text x="111" y="152" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">何があったか見えない</text><rect x="222" y="34" width="190" height="148" rx="7" fill="#FFFFFF" stroke="#EBCFCD"/><rect x="222" y="34" width="190" height="4" rx="2" fill="#C73E3A"/><text x="317" y="68" font-family="Shippori Mincho, serif" font-size="16" fill="#C73E3A" text-anchor="middle" font-weight="700">接続詞</text><rect x="238" y="82" width="158" height="30" rx="5" fill="#F9EAE9" stroke="none"/><text x="317" y="102" font-family="Zen Kaku Gothic New, sans-serif" font-size="12.5" fill="#2B2926" text-anchor="middle" font-weight="400">「そして」「また」</text><text x="317" y="134" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">同じつなぎ方が続き、</text><text x="317" y="152" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">機械的に感じられる</text><rect x="428" y="34" width="190" height="148" rx="7" fill="#FFFFFF" stroke="#EBCFCD"/><rect x="428" y="34" width="190" height="4" rx="2" fill="#C73E3A"/><text x="523" y="68" font-family="Shippori Mincho, serif" font-size="16" fill="#C73E3A" text-anchor="middle" font-weight="700">語尾</text><rect x="444" y="82" width="158" height="30" rx="5" fill="#F9EAE9" stroke="none"/><text x="523" y="102" font-family="Zen Kaku Gothic New, sans-serif" font-size="12.5" fill="#2B2926" text-anchor="middle" font-weight="400">「〜と考えております」</text><text x="523" y="134" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">熱量が均一になり、</text><text x="523" y="152" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">書き手の顔が消える</text><text x="320" y="20" font-family="Shippori Mincho, serif" font-size="14" fill="#2B2926" text-anchor="middle" font-weight="700">AIっぽさが出やすい3つのクセ</text></svg><figcaption>AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。</figcaption></figure>
+<h2 id="s3"><span class="n">3</span>Before→Afterで見る直し方の実例</h2>
 <p>ここでは、よくあるパターンを3つ取り上げ、直し方の実例を紹介します。<br>例文はいずれも、特定の学校を想定しない一般的な創作です。</p>
-<p>ひとつめは、抽象語だけで場面が終わってしまうパターンです。<br>Before：説明会に参加し、貴校の教育方針に強く共感いたしました。<br>Before：豊かな学びの環境が魅力的だと感じております。<br>このままだと、何を見て共感したのかが読み手に伝わりません。<br>After：説明会で、上級生が休み時間に下級生へ折り紙を教えている場面を見かけました。<br>After：帰り道、子どもは「わたしも教えてあげる係になりたい」と話し、その日から家で下の子に折り紙を教えるようになりました。<br>場面と子どもの言葉を足すだけで、同じ出来事でも印象がまったく違って見えます。</p>
-<p>ふたつめは、「〜と考えております」という語尾が繰り返されるパターンです。<br>Before：貴校で学ぶことで成長できると考えております。<br>Before：家庭でもそのための準備を進めていきたいと考えております。<br>語尾がそろいすぎると、一文ごとの重みが均一になり、単調な印象を与えます。<br>After：貴校で学びたいという言葉を、子どもは願書を書いている間も何度も口にしていました。<br>After：家庭では、通学の練習を兼ねて休日に最寄り駅まで一緒に歩くところから始めています。<br>語尾を言い切りの形に変え、具体的な行動を添えると、文章に動きが出てきます。</p>
-<p>みっつめは、「」でくくった教訓めいた一言で締めるパターンです。<br>Before：この経験を通して「諦めない心」の大切さを学びました。<br>出来事の途中経過が省かれ、きれいな結論だけが置かれると、実感が薄く感じられます。<br>After：練習してもうまくいかない日が続き、途中で「もうやめる」と泣いた日もありました。<br>After：それでも次の週末には自分から道具を出してきて、少しずつできることが増えていきました。<br>結論をひとことでまとめず、うまくいかなかった過程も含めて書くと、読み手に伝わる文章になります。</p>
-<h2>自分では気づきにくい理由</h2>
+<p>ひとつめは、抽象語だけで場面が終わってしまうパターンです。</p>
+<div class="ba"><div class="box b"><span class="lbl">Before</span><br>説明会に参加し、貴校の教育方針に強く共感いたしました。<br>豊かな学びの環境が魅力的だと感じております。</div></div>
+<p>このままだと、何を見て共感したのかが読み手に伝わりません。</p>
+<div class="ba"><div class="box a"><span class="lbl">After</span><br>説明会で、上級生が休み時間に下級生へ折り紙を教えている場面を見かけました。<br>帰り道、子どもは「わたしも教えてあげる係になりたい」と話し、その日から家で下の子に折り紙を教えるようになりました。</div></div>
+<p>場面と子どもの言葉を足すだけで、同じ出来事でも印象がまったく違って見えます。</p>
+<p>ふたつめは、「〜と考えております」という語尾が繰り返されるパターンです。</p>
+<div class="ba"><div class="box b"><span class="lbl">Before</span><br>貴校で学ぶことで成長できると考えております。<br>家庭でもそのための準備を進めていきたいと考えております。</div></div>
+<p>語尾がそろいすぎると、一文ごとの重みが均一になり、単調な印象を与えます。</p>
+<div class="ba"><div class="box a"><span class="lbl">After</span><br>貴校で学びたいという言葉を、子どもは願書を書いている間も何度も口にしていました。<br>家庭では、通学の練習を兼ねて休日に最寄り駅まで一緒に歩くところから始めています。</div></div>
+<p>語尾を言い切りの形に変え、具体的な行動を添えると、文章に動きが出てきます。</p>
+<p>みっつめは、「」でくくった教訓めいた一言で締めるパターンです。</p>
+<div class="ba"><div class="box b"><span class="lbl">Before</span><br>この経験を通して「諦めない心」の大切さを学びました。</div></div>
+<p>出来事の途中経過が省かれ、きれいな結論だけが置かれると、実感が薄く感じられます。</p>
+<div class="ba"><div class="box a"><span class="lbl">After</span><br>練習してもうまくいかない日が続き、途中で「もうやめる」と泣いた日もありました。<br>それでも次の週末には自分から道具を出してきて、少しずつできることが増えていきました。</div></div>
+<p>結論をひとことでまとめず、うまくいかなかった過程も含めて書くと、読み手に伝わる文章になります。</p>
+<h2 id="s4"><span class="n">4</span>自分では気づきにくい理由</h2>
 <p>こうしたクセは、他人の文章であればすぐに気づけるのに、自分の文章だと見過ごしやすいという特徴があります。<br>理由のひとつは、書いた本人はすでに背景を知っているため、抽象的な言葉を読んでも頭の中で自動的に具体的な場面を補ってしまうことです。<br>「豊かな学び」と書いても、書いた本人には特定の場面が浮かびますが、初めて読む相手にはその場面が見えません。<br>もうひとつの理由は、何度も読み返すうちに文章に慣れてしまい、違和感そのものを感じにくくなることです。<br>最初は引っかかっていた言い回しも、10回、20回と読むうちに「こういうものだ」と脳が処理してしまいます。<br>また、願書は短期間で何度も書き直すことが多いため、疲れた状態で読み返すと、細かな単調さに気づく余力が残っていないこともあります。<br>家族に読んでもらっても、内容そのものへの共感が先に立ち、言葉のクセにまでは目が向きにくい場合があります。<br>特に、日頃から子どもの様子を近くで見ている家族ほど、書かれていることが「事実として正しい」ことに安心してしまい、表現の単調さは見過ごされがちです。<br>兄弟姉妹の願書を過去に書いた経験がある家庭でも、前回と似た言い回しを無意識に使ってしまい、それが単調さにつながっている場合もあります。<br>こうした事情から、書き終えた文章のクセに自分だけで気づくのは、決して簡単なことではありません。<br>時間を置いて読み返す、家族で読み合わせをするといった工夫は有効ですが、それでも見落としは残りやすいものです。<br>だからこそ、機械的にクセを拾い出してくれる手段を、ひとつの参考として使う価値があります。</p>
+<figure class="fig"><svg viewBox="0 0 640 244" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="同じ一文でも書いた本人と読み手で見えているものが違うことの図"><text x="320" y="20" font-family="Shippori Mincho, serif" font-size="14" fill="#2B2926" text-anchor="middle" font-weight="700">同じ一文でも、見えているものが違う</text><rect x="20" y="36" width="600" height="40" rx="7" fill="#F3EFE5" stroke="#EAE3D5"/><text x="320" y="62" font-family="Shippori Mincho, serif" font-size="15" fill="#2B2926" text-anchor="middle" font-weight="700">「豊かな学びの環境に魅力を感じました」</text><g stroke="#C73E3A" stroke-width="2" fill="none"><path d="M170 84v16"/></g><path d="M170 106l-5-7h10z" fill="#C73E3A"/><g stroke="#C73E3A" stroke-width="2" fill="none"><path d="M470 84v16"/></g><path d="M470 106l-5-7h10z" fill="#C73E3A"/><rect x="20" y="116" width="290" height="112" rx="7" fill="#E9F1EC" stroke="#C9DED1"/><text x="165" y="142" font-family="Shippori Mincho, serif" font-size="12.5" fill="#4A7C59" text-anchor="middle" font-weight="700">書いた本人に見えているもの</text><text x="165" y="170" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#2B2926" text-anchor="middle" font-weight="400">見学した日の廊下の掲示物、</text><text x="165" y="190" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#2B2926" text-anchor="middle" font-weight="400">子どもが立ち止まった場面</text><text x="165" y="214" font-family="Zen Kaku Gothic New, sans-serif" font-size="11" fill="#6E6960" text-anchor="middle" font-weight="400">＝頭が勝手に補ってしまう</text><rect x="330" y="116" width="290" height="112" rx="7" fill="#F9EAE9" stroke="#EBCFCD"/><text x="475" y="142" font-family="Shippori Mincho, serif" font-size="12.5" fill="#C73E3A" text-anchor="middle" font-weight="700">初めて読む人に見えるもの</text><text x="475" y="178" font-family="Zen Kaku Gothic New, sans-serif" font-size="13" fill="#6E6960" text-anchor="middle" font-weight="400">（何も浮かばない）</text><text x="475" y="214" font-family="Zen Kaku Gothic New, sans-serif" font-size="11" fill="#6E6960" text-anchor="middle" font-weight="400">＝だから自分では気づけない</text></svg><figcaption>書いた本人の頭は足りない情報を勝手に補うため、自分では抜けに気づけません。</figcaption></figure>
 <div class="cta"><div class="t">自分の文章のAIっぽさを、無料でチェックできます</div><p>貼り付けるだけで、AIにありがちな表現に赤い波線が入ります。<br>登録不要・何度でも無料です。</p><a class="btn" href="https://akapen-lab.com/">願書AI感チェッカーを開く（無料）</a><a class="btn sub" href="https://akapen-lab.com/ao.html">総合型選抜・推薦の方はこちら</a></div>
-<h2>無料ツールでチェックする手順</h2>
+<h2 id="s5"><span class="n">5</span>無料ツールでチェックする手順</h2>
 <p>赤ペン願書ラボでは、書き終えた願書や志望理由書を無料で診断できるツールを提供しています。<br>使い方はシンプルで、書き終えた文章をそのまま貼り付けるだけです。<br>診断すると、抽象語の密度や語尾の偏り、接続詞の繰り返しといった、ここまで紹介してきたようなクセが箇所ごとに示されます。<br>ここで大切なのは、この診断結果を「AI検出の判定」として受け取らないことです。<br>このツールが目指しているのは、AI利用を隠したり、検出を回避したりすることではありません。<br>指摘された箇所に、わが子ならではの場面や言葉を足し、本人の言葉に近づけるための手がかりを提供することが目的です。<br>診断結果に出てきた箇所を、ひとつずつ「実際にはどんな場面だったか」と思い出しながら書き直していきます。<br>すべての指摘に対応する必要はなく、特に単調さが目立つ2〜3箇所を優先して直すだけでも、文章全体の印象は変わります。<br>直したあとの文章を、家族の誰かに音読してもらうと、また別の角度で気づきが得られることもあります。<br>直し終えたら、もう一度同じ文章を診断し、変化を確かめてみるのもひとつの方法です。<br>一度で満足のいく結果にならなくても、指摘箇所を減らしていく作業を繰り返すうちに、文章は少しずつ自分たちの言葉に近づいていきます。<br>数値や指摘の有無に一喜一憂するのではなく、直す作業のきっかけとして活用するのが、このツールの本来の使い方です。</p>
+<figure class="fig"><svg viewBox="0 0 640 218" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="書く・見直す・直すを繰り返すループの図"><text x="320" y="20" font-family="Shippori Mincho, serif" font-size="14" fill="#2B2926" text-anchor="middle" font-weight="700">提出までにまわしたい、小さなループ</text><circle cx="108" cy="100" r="46" fill="#FFFFFF" stroke="#EAE3D5" stroke-width="1.5"/><text x="108" y="105" font-family="Shippori Mincho, serif" font-size="15" fill="#2B2926" text-anchor="middle" font-weight="700">書く</text><circle cx="320" cy="100" r="46" fill="#FFFFFF" stroke="#EAE3D5" stroke-width="1.5"/><text x="320" y="105" font-family="Shippori Mincho, serif" font-size="15" fill="#2B2926" text-anchor="middle" font-weight="700">見直す</text><circle cx="532" cy="100" r="46" fill="#FFFFFF" stroke="#EAE3D5" stroke-width="1.5"/><text x="532" y="105" font-family="Shippori Mincho, serif" font-size="15" fill="#2B2926" text-anchor="middle" font-weight="700">直す</text><g stroke="#C73E3A" stroke-width="2" fill="none"><path d="M160 100h102"/></g><path d="M268 100l-7-5v10z" fill="#C73E3A"/><g stroke="#C73E3A" stroke-width="2" fill="none"><path d="M372 100h102"/></g><path d="M480 100l-7-5v10z" fill="#C73E3A"/><path d="M532 148q0 30-212 30T108 148" fill="none" stroke="#C73E3A" stroke-width="2" stroke-dasharray="5 4"/><path d="M108 148l-5 9h10z" fill="#C73E3A"/><text x="320" y="202" font-family="Zen Kaku Gothic New, sans-serif" font-size="12" fill="#6E6960" text-anchor="middle" font-weight="400">2〜3か所直したら、もう一度読み返す</text></svg><figcaption>一度で仕上げようとせず、小さく直して読み返すほうが早く整います。</figcaption></figure>
 <div class="cta"><div class="t">自分の文章のAIっぽさを、無料でチェックできます</div><p>貼り付けるだけで、AIにありがちな表現に赤い波線が入ります。<br>登録不要・何度でも無料です。</p><a class="btn" href="https://akapen-lab.com/">願書AI感チェッカーを開く（無料）</a><a class="btn sub" href="https://akapen-lab.com/ao.html">総合型選抜・推薦の方はこちら</a></div>
-<h2>直したあとの最終確認リスト</h2>
+<h2 id="s6"><span class="n">6</span>直したあとの最終確認リスト</h2>
 <p>直し終えた文章を提出する前に、次の項目を確認しておくと安心です。</p>
-<ul><li>抽象語だけで終わっている文がないか、具体的な場面に置き換えられているか</li><li>同じ語尾や接続詞が不自然に繰り返されていないか</li><li>「」でくくった教訓めいた一言だけで締めくくられている箇所がないか</li><li>声に出して読んでみて、家庭で普段使っている言葉に近いか</li><li>学校名や日付、人数などの固有名詞・数字に誤りがないか</li><li>家族以外の人にも一度読んでもらい、伝わるかどうかを確かめたか</li></ul>
+<ul class="cl"><li>抽象語だけで終わっている文がないか、具体的な場面に置き換えられているか</li><li>同じ語尾や接続詞が不自然に繰り返されていないか</li><li>「」でくくった教訓めいた一言だけで締めくくられている箇所がないか</li><li>声に出して読んでみて、家庭で普段使っている言葉に近いか</li><li>学校名や日付、人数などの固有名詞・数字に誤りがないか</li><li>家族以外の人にも一度読んでもらい、伝わるかどうかを確かめたか</li></ul>
 <p>これらは特別な作業ではなく、書き終えた文章をもう一段落ち着いて見直すための視点です。<br>「AIっぽい」と感じた違和感は、直すきっかけとしてはむしろ有効なサインだったと言えます。<br>そこに気づいた時点から、文章はわが子だけの言葉へと近づいていきます。</p><div class="related"><h3>あわせて読みたい</h3><a href="https://akapen-lab.com/blog/gansho-ai-kakikata.html">願書をAIで書くとどうなる？ChatGPT下書きの上手な使い方</a><a href="https://akapen-lab.com/blog/shibouriyusho-chatgpt-bareru.html">志望理由書はChatGPTを使うとばれる？学校側が見ているポイント</a><a href="https://akapen-lab.com/blog/shougakkoujuken-gansho-reibun.html">小学校受験の願書、伝わる例文の作り方（NG例と直し方つき）</a></div><h2>この先の一歩に</h2><div class="tana-grid"><a class="tana-card" href="https://akapen-lab.com/"><div class="t">無料チェッカー</div><p>願書・志望理由書のAIっぽさを赤ペン診断。</p><span class="go">試してみる →</span></a><a class="tana-card" href="https://brain-market.com/u/fulfull/a/b3UTMzYjMgoTZsNWa0JXY"><div class="t">フル版パスコード（¥1,980）</div><p>すべての指摘と言い換え例、全文書き直し指示文の完全版。</p><span class="go">Brainで見る →</span></a><a class="tana-card" href="https://utage-system.com/p/xBWncXOH1VaH?ref=akapen"><div class="t">教育費と新NISAの無料勉強会</div><p>受験の先にある教育費の計画を、オンラインで。</p><span class="go">詳しく見る →</span></a><a class="tana-card" href="https://mm738966m-boop.github.io/yumekane-salon/?ref=akapen"><div class="t">ユメカネサロン（無料）</div><p>お金の話を気軽にできる、無料のオンラインの町。</p><span class="go">のぞいてみる →</span></a></div><p style="font-size:11px;color:var(--ink-soft);margin-top:8px">※ 勉強会・サロンは、提携先fulfullの運営です。</p><footer>本記事は一般的な情報提供であり、合格・合否を保証するものではありません。<br>出願先の学校・大学が生成AIの使用について規定を設けている場合は、必ずそちらに従ってください。<br>運営：赤ペン願書ラボ</footer></div>
