@@ -274,11 +274,75 @@ def fig_struct():
     return _svg(174, "きっかけ・重なり・これからという文章構成の型", g)
 
 
+def hero_chugaku():
+    """記事5：説明会のメモが志望理由書になる"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # メモ帳
+    g += _card(44, 30, 186, 132)
+    g += '<rect x="44" y="30" width="186" height="20" rx="7" fill="#EFEAF5"/>'
+    g += _txt(64, 45, "説明会メモ", 11.5, "#5B4B77", SANS, "start", "700")
+    for i, y in enumerate((72, 92, 112, 132)):
+        g += '<rect x="62" y="%g" width="%g" height="5" rx="2.5" fill="#E2DBCB"/>' % (y - 4, 150 if i % 2 == 0 else 108)
+    g += '<rect x="222" y="58" width="8" height="26" rx="3" fill="%s"/>' % RED
+    g += '<rect x="222" y="94" width="8" height="26" rx="3" fill="%s"/>' % GRN
+    g += _arrow_r(252, 95, 40)
+    # 原稿用紙
+    g += _card(320, 26, 206, 140)
+    g += _grid(334, 40, 12, 6, 14)
+    g += '<circle cx="378" cy="61" r="20" fill="none" stroke="%s" stroke-width="2.2"/>' % RED
+    g += _wave(348, 116, 130)
+    g += _pen(564, 40, 1.0, 12)
+    return _svg(190, "説明会のメモが志望理由書の一文になるイメージ", g)
+
+
+def fig_ratio():
+    """字数配分の目安"""
+    g = _txt(320, 20, "600字なら、このくらいの配分がめやす", 14, INK, SERIF, "middle", "700")
+    x0, y0, w, h = 40, 44, 560, 46
+    segs = [("きっかけ", 2, REDBG, "#EBCFCD", RED, "約170字"),
+            ("重なり", 3, "#F3EFE5", LINE, INK, "約260字"),
+            ("これから", 2, GRNBG, "#C9DED1", GRN, "約170字")]
+    x = x0
+    for name, n, bg, st, fg, chars in segs:
+        sw = w * n / 7.0
+        g += '<rect x="%g" y="%g" width="%g" height="%g" fill="%s" stroke="%s"/>' % (x, y0, sw, h, bg, st)
+        g += _txt(x + sw / 2, y0 + 22, name, 13.5, fg, SERIF, "middle", "700")
+        g += _txt(x + sw / 2, y0 + 39, chars, 11, SOFT, SANS, "middle")
+        x += sw
+    g += _txt(320, 118, "2 ： 3 ： 2", 15, INK, SERIF, "middle", "700")
+    g += _txt(320, 142, "決まりではなく、迷ったときに当たりをつけるための目安です", 12, SOFT, SANS, "middle")
+    return _svg(158, "きっかけ2・重なり3・これから2という字数配分の帯グラフ", g)
+
+
+def fig_memo():
+    """見学メモから一文を作る"""
+    g = _txt(320, 20, "その日のメモが、そのまま一文になる", 14, INK, SERIF, "middle", "700")
+    # メモ帳
+    g += _card(20, 40, 236, 150)
+    g += '<rect x="20" y="40" width="236" height="22" rx="7" fill="#EFEAF5"/>'
+    g += _txt(38, 56, "見学のときのメモ", 11.5, "#5B4B77", SANS, "start", "700")
+    memo = ["10/12 説明会", "体育館の写真の前で足が止まった", "「ここで走ってみたい」"]
+    for i, t in enumerate(memo):
+        g += _txt(38, 88 + i * 30, t, 12, INK)
+        g += '<path d="M38 %g h180" stroke="%s" stroke-width="1"/>' % (96 + i * 30, LINE)
+    g += _arrow_r(268, 112, 38)
+    # 出来上がった一文
+    g += _card(326, 40, 294, 150, GRNBG, "#C9DED1")
+    g += _txt(344, 66, "願書の一文になる", 12, GRN, SERIF, "start", "700")
+    g += _txt(344, 96, "説明会の日、子どもは体育館の", 12.5, INK)
+    g += _txt(344, 116, "写真の前で足を止め、", 12.5, INK)
+    g += _txt(344, 136, "「ここで走ってみたい」と", 12.5, INK)
+    g += _txt(344, 156, "言いました。", 12.5, INK)
+    g += _txt(344, 180, "拾うのは、立ち止まった場所と、その場の一言", 10.5, SOFT)
+    return _svg(204, "見学メモの内容が志望理由書の一文になる流れの図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
     "shougakkoujuken-gansho-reibun.html": hero_reibun,
     "gansho-aippoi-naoshikata.html": hero_fix,
+    "chugakujuken-shibouriyusho-kakikata.html": hero_chugaku,
 }
 
 FIGURES = {
@@ -289,4 +353,6 @@ FIGURES = {
     "blind": (fig_blind, "書いた本人の頭は足りない情報を勝手に補うため、自分では抜けに気づけません。"),
     "loop": (fig_loop, "一度で仕上げようとせず、小さく直して読み返すほうが早く整います。"),
     "struct": (fig_struct, "並び順に迷ったら、この型に当てはめるところから始められます。"),
+    "ratio": (fig_ratio, "字数の配分に迷ったら、真ん中をいちばん厚くするところから考えてみてください。"),
+    "memo": (fig_memo, "その場で書きとめた短いメモが、いちばん書き直しの少ない材料になります。"),
 }
