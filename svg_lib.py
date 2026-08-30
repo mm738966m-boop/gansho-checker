@@ -593,6 +593,66 @@ def fig_speak():
     return _svg(258, "覚えさせた場合と実際にあった出来事を書いた場合で、面接での話しやすさが変わる図", g)
 
 
+def hero_katsudou():
+    """記事11：活動の棚卸し→活動報告書"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 付箋いろいろ
+    tags = [("部活", 60, 44, "#EFEAF5", "#DCD3E8", "#5B4B77", -4),
+            ("探究", 150, 66, GRNBG, "#C9DED1", GRN, 3),
+            ("委員会", 70, 106, "#F6E9E2", "#EAD3C4", "#A0653B", 2),
+            ("続けてきたこと", 132, 138, "#FDF3D8", "#EBD9A8", "#8A6D1E", -3)]
+    for t, x, y, bg, st, fg, rot in tags:
+        w = 34 + len(t) * 15
+        g += ('<g transform="rotate(%g %g %g)"><rect x="%g" y="%g" width="%g" height="30" rx="6" fill="%s" stroke="%s"/>'
+              % (rot, x + w / 2.0, y + 15, x, y, w, bg, st))
+        g += '<text x="%g" y="%g" font-family="%s" font-size="12.5" fill="%s" text-anchor="middle" font-weight="700">%s</text></g>' % (x + w / 2.0, y + 20, SERIF, fg, t)
+    g += _arrow_r(300, 95, 42)
+    g += _card(372, 26, 206, 140)
+    g += _txt(475, 52, "活動報告書", 13.5, INK, SERIF, "middle", "700")
+    g += _grid(390, 64, 12, 5, 14)
+    g += _wave(398, 122, 140)
+    g += _pen(596, 40, 0.9, 12)
+    return _svg(190, "自分の活動を書き出して活動報告書にまとめるイメージ", g)
+
+
+def hero_houshin():
+    """記事12：毎日の暮らし→教育方針の言葉"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 日々の場面カード
+    days = [("朝の支度", 46, 40), ("夕食の会話", 66, 84), ("休日の過ごし方", 52, 128)]
+    for t, x, y in days:
+        w = 40 + len(t) * 13
+        g += _card(x, y, w, 32, CARD, LINE, 8)
+        g += _txt(x + w / 2.0, y + 21, t, 12, SOFT, SANS, "middle")
+    g += _arrow_r(266, 95, 42)
+    # 方針の一言
+    g += _card(340, 46, 250, 96, GRNBG, "#C9DED1")
+    g += _txt(465, 78, "家庭の教育方針", 12, GRN, SERIF, "middle", "700")
+    g += _txt(465, 106, "毎日やっていることに", 13, INK, SANS, "middle")
+    g += _txt(465, 126, "名前をつけるだけ", 13, INK, SANS, "middle")
+    g += _pen(600, 46, 0.9, 10)
+    return _svg(190, "毎日の暮らしの場面が家庭の教育方針の言葉になるイメージ", g)
+
+
+def fig_tanaoroshi():
+    """活動の棚卸し3ステップ"""
+    g = _txt(320, 20, "「書くことがない」から始める棚卸し", 14, INK, SERIF, "middle", "700")
+    steps = [("1", "時系列で書き出す", "賞や役職に限らず全部"),
+             ("2", "数字を探す", "年数・回数・人数・頻度"),
+             ("3", "判断の場面を探す", "自分で決めた・変えた所")]
+    for i, (n, t, d) in enumerate(steps):
+        x = 24 + i * 206
+        g += _card(x, 40, 186, 106)
+        g += '<circle cx="%g" cy="40" r="16" fill="%s"/>' % (x + 93, RED)
+        g += _txt(x + 93, 45, n, 14, "#fff", SERIF, "middle", "700")
+        g += _txt(x + 93, 88, t, 14, INK, SERIF, "middle", "700")
+        g += _txt(x + 93, 118, d, 11.5, SOFT, SANS, "middle")
+        if i < 2:
+            g += _arrow_r(x + 190, 93, 22)
+    g += _txt(320, 172, "大きな実績ではなく、自分の判断があった場面がいちばんの材料になる", 12, SOFT, SANS, "middle")
+    return _svg(188, "活動を時系列・数字・判断の3ステップで棚卸しする図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -604,6 +664,8 @@ HEROES = {
     "shougakkoujuken-mensetsu-gansho-icchi.html": hero_icchi,
     "shibouriyusho-chushouteki-naoshikata.html": hero_gutai,
     "ao-nyushi-shibouriyusho-ai.html": hero_ao,
+    "sougougata-katsudouhoukokusho.html": hero_katsudou,
+    "gansho-katei-kyouiku-houshin.html": hero_houshin,
 }
 
 FIGURES = {
@@ -624,4 +686,5 @@ FIGURES = {
     "ladder": (fig_ladder, "抽象語は一気に直そうとせず、2段に分けて下ろすと場面にたどり着きます。"),
     "deepdive": (fig_deepdive, "書いた一文は必ず掘られる前提で選ぶと、盛る理由がなくなります。"),
     "speak": (fig_speak, "面接で言葉が出てくるかどうかは、願書を書く段階でだいたい決まります。"),
+    "tanaoroshi": (fig_tanaoroshi, "特別な実績を探すより、自分の判断があった場面を探すほうが早く見つかります。"),
 }

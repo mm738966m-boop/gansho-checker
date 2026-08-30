@@ -18,6 +18,8 @@ ARTICLES = [
     ("記事8本文.md", "shougakkoujuken-mensetsu-gansho-icchi.html"),
     ("記事9本文.md", "shibouriyusho-chushouteki-naoshikata.html"),
     ("記事10本文.md", "ao-nyushi-shibouriyusho-ai.html"),
+    ("記事11本文.md", "sougougata-katsudouhoukokusho.html"),
+    ("記事12本文.md", "gansho-katei-kyouiku-houshin.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -32,6 +34,41 @@ PUBDATES = {
     "shougakkoujuken-mensetsu-gansho-icchi.html": "2026-08-29",
     "shibouriyusho-chushouteki-naoshikata.html": "2026-08-29",
     "ao-nyushi-shibouriyusho-ai.html": "2026-08-29",
+    "sougougata-katsudouhoukokusho.html": "2026-08-30",
+    "gansho-katei-kyouiku-houshin.html": "2026-08-30",
+}
+
+
+# トピッククラスタ：ハブページと「あわせて読みたい」の厳選に使う。
+# 記事は複数クラスタに属してよい。未公開スラッグを書いてもよい（公開分だけ拾われる）。
+CLUSTERS = {
+    "guide-shougakkoujuken.html": {
+        "title": "小学校受験の願書ガイド",
+        "desc": "小学校受験の願書・面接準備の記事をまとめました。例文の作り方から提出前の確認まで。",
+        "slugs": ["shougakkoujuken-gansho-reibun.html", "shougakkoujuken-mensetsu-gansho-icchi.html",
+                  "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
+                  "gansho-ai-kakikata.html"],
+    },
+    "guide-chugakujuken.html": {
+        "title": "中学受験の志望理由書ガイド",
+        "desc": "中学受験の志望理由書の記事をまとめました。構成の型・字数配分・直し方まで。",
+        "slugs": ["chugakujuken-shibouriyusho-kakikata.html", "shibouriyusho-chushouteki-naoshikata.html",
+                  "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
+                  "shibouriyusho-ai-tsukaikata.html"],
+    },
+    "guide-sougougata.html": {
+        "title": "総合型選抜・推薦ガイド",
+        "desc": "総合型選抜（AO）・推薦入試の書類の記事をまとめました。志望理由書・活動報告書・面接まで。",
+        "slugs": ["ao-nyushi-shibouriyusho-ai.html", "sougougata-katsudouhoukokusho.html",
+                  "shibouriyusho-chatgpt-bareru.html"],
+    },
+    "guide-ai-kihon.html": {
+        "title": "願書×AIの基本ガイド",
+        "desc": "AIと願書・志望理由書の付き合い方の記事をまとめました。使い方の線引きから直し方まで。",
+        "slugs": ["gansho-ai-kakikata.html", "shibouriyusho-ai-tsukaikata.html",
+                  "gansho-aippoi-naoshikata.html", "shibouriyusho-chatgpt-bareru.html",
+                  "shibouriyusho-chushouteki-naoshikata.html"],
+    },
 }
 
 CSS = """
@@ -113,6 +150,12 @@ CSS = """
     padding:2px 10px; border-radius:20px; margin-bottom:6px; letter-spacing:.04em; }
   .ba .box.b .lbl { background:var(--redpen); color:#fff; }
   .ba .box.a .lbl { background:var(--green); color:#fff; }
+  .hublinks { display:flex; flex-wrap:wrap; gap:9px; margin:34px 0 6px; }
+  .hublinks.top { margin:4px 0 20px; }
+  .hublinks a { font-family:var(--serif); font-size:13px; font-weight:600; color:var(--redpen);
+    text-decoration:none; background:var(--card); border:1px solid var(--paper-line);
+    border-radius:20px; padding:7px 16px; }
+  .hublinks a:hover { border-color:var(--redpen); }
   /* ── 記事一覧カード ── */
   .postcard { display:block; background:var(--card); border:1px solid var(--paper-line); border-radius:9px;
     overflow:hidden; text-decoration:none; color:var(--ink); margin:14px 0; }
@@ -295,22 +338,57 @@ def build():
         body = "\n".join(blines)
         metas.append((title, desc, slug, body))
     today = datetime.date.today().isoformat()
+    published = {s: t for t, d, s, b in metas}
+    def related_for(slug):
+        """同クラスタの公開記事を優先して最大3件。足りなければ他記事で補う。"""
+        picks, seen = [], {slug}
+        for hub, c in CLUSTERS.items():
+            if slug in c["slugs"]:
+                for s2 in c["slugs"]:
+                    if s2 in published and s2 not in seen:
+                        picks.append(s2); seen.add(s2)
+        for t, d, s2, b in metas:
+            if len(picks) >= 3: break
+            if s2 not in seen:
+                picks.append(s2); seen.add(s2)
+        return [(published[s2], BASE + "blog/" + s2) for s2 in picks[:3]]
+    def hubs_for(slug):
+        return [(hub, c["title"]) for hub, c in CLUSTERS.items() if slug in c["slugs"]]
     for i, (title, desc, slug, body) in enumerate(metas):
         pubdate = PUBDATES.get(slug, today)
-        others = [(t, BASE + "blog/" + s) for j, (t, d, s, b) in enumerate(metas) if j != i]
-        art, heads = md_to_html(body, others)
+        art, heads = md_to_html(body, related_for(slug))
+        hub_h = ""
+        hs = hubs_for(slug)
+        if hs:
+            hub_h = ('<div class="hublinks">' + "".join(
+                '<a href="%s">%s →</a>' % (h, html.escape(t)) for h, t in hs) + "</div>")
+        art = art.replace('<div class="related">', hub_h + '<div class="related">', 1)
         hero = svg_lib.HEROES.get(slug)
         hero_h = '<div class="hero">' + hero() + "</div>" if hero else ""
+        og_name = "og/" + slug.replace(".html", ".png")
+        og_img = BASE + (og_name if os.path.exists(og_name) else "og-oju.png")
+        import json as _json
+        jsonld = ('<script type="application/ld+json">' + _json.dumps({
+            "@context": "https://schema.org", "@type": "Article",
+            "headline": title, "description": desc,
+            "datePublished": pubdate, "dateModified": pubdate,
+            "image": og_img,
+            "mainEntityOfPage": BASE + "blog/" + slug,
+            "author": {"@type": "Organization", "name": "赤ペン願書ラボ", "url": BASE},
+            "publisher": {"@type": "Organization", "name": "赤ペン願書ラボ", "url": BASE},
+        }, ensure_ascii=False) + "</script>")
         lead = ('<div class="lead"><div class="t">この記事でわかること</div><p>' + html.escape(desc) + "</p></div>") if desc else ""
         page = ("<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
           "<title>" + html.escape(title) + "｜赤ペン願書ラボ</title>\n"
           "<meta name=\"description\" content=\"" + html.escape(desc) + "\">\n"
           "<meta property=\"og:title\" content=\"" + html.escape(title) + "\">\n"
           "<meta property=\"og:description\" content=\"" + html.escape(desc) + "\">\n"
-          "<meta property=\"og:image\" content=\"" + BASE + "og-oju.png\">\n"
+          "<meta property=\"og:image\" content=\"" + og_img + "\">\n"
           "<meta property=\"og:url\" content=\"" + BASE + "blog/" + slug + "\">\n"
           "<meta property=\"og:type\" content=\"article\">\n"
           "<meta name=\"twitter:card\" content=\"summary_large_image\">\n"
+          "<link rel=\"canonical\" href=\"" + BASE + "blog/" + slug + "\">\n"
+          + jsonld + "\n"
           "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + pubdate + " ｜ 赤ペン願書ラボ</div>"
@@ -336,13 +414,42 @@ def build():
       "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
       "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
       + "<h1>読みもの一覧</h1><div class=\"meta\">願書・志望理由書の書き方と、AIとの上手な付き合い方。</div>"
+      + '<div class="hublinks top">' + "".join('<a href="%s">%s →</a>' % (h, html.escape(c["title"])) for h, c in CLUSTERS.items()) + "</div>"
       + cards + CTA + TANA + FOOTER + "</div>")
     open("blog/index.html", "w", encoding="utf-8").write(idx)
+    # ハブページ
+    hub_slugs = []
+    for hub, c in CLUSTERS.items():
+        hcards = ""
+        for s2 in c["slugs"]:
+            if s2 not in published: continue
+            t2 = published[s2]
+            d2 = next(d for t, d, s3, b in metas if s3 == s2)
+            hero2 = svg_lib.HEROES.get(s2)
+            hcards += ('<a class="postcard" href="%s">%s<div class="pb"><div class="pt">%s</div><div class="pd">%s</div></div></a>'
+                       % (s2, hero2() if hero2 else "", html.escape(t2), html.escape(d2)))
+        hpage = ("<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+          "<title>" + html.escape(c["title"]) + "｜赤ペン願書ラボ</title>\n"
+          "<meta name=\"description\" content=\"" + html.escape(c["desc"]) + "\">\n"
+          "<meta property=\"og:title\" content=\"" + html.escape(c["title"]) + "\">\n"
+          "<meta property=\"og:description\" content=\"" + html.escape(c["desc"]) + "\">\n"
+          "<meta property=\"og:image\" content=\"" + BASE + "og-oju.png\">\n"
+          "<meta property=\"og:url\" content=\"" + BASE + "blog/" + hub + "\">\n"
+          "<link rel=\"canonical\" href=\"" + BASE + "blog/" + hub + "\">\n"
+          "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
+          "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
+          + "<h1>" + html.escape(c["title"]) + "</h1><div class=\"meta\">" + html.escape(c["desc"]) + "</div>"
+          + hcards + CTA + TANA + FOOTER + "</div>")
+        open("blog/" + hub, "w", encoding="utf-8").write(hpage)
+        hub_slugs.append(hub)
+        print("built hub", hub)
     # sitemap / robots
-    urls = [BASE, BASE + "ao.html", BASE + "blog/"] + [BASE + "blog/" + s for t, d, s, b in metas]
+    urls = [(BASE, today), (BASE + "ao.html", today), (BASE + "blog/", today)] + \
+        [(BASE + "blog/" + h, today) for h in hub_slugs] + \
+        [(BASE + "blog/" + s, PUBDATES.get(s, today)) for t, d, s, b in metas]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for u in urls:
-        sm += "  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, today)
+    for u, lm in urls:
+        sm += "  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, lm)
     sm += "</urlset>\n"
     open("sitemap.xml", "w", encoding="utf-8").write(sm)
     open("robots.txt", "w", encoding="utf-8").write("User-agent: *\nAllow: /\nSitemap: " + BASE + "sitemap.xml\n")
