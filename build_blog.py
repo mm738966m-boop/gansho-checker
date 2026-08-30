@@ -171,7 +171,7 @@ CSS = """
 """
 
 BRAIN = "https://brain-market.com/u/fulfull/a/b3UTMzYjMgoTZsNWa0JXY"
-BRAIN_SENSEI = "https://brain-market.com/u/fulfull/a/b1MjMzYjMgoTZsNWa0JXY"
+BRAIN_SENSEI = "https://brain-market.com/u/fulfull/a/b3kDNzYjMgoTZsNWa0JXY"
 TANA = ('<h2>この先の一歩に</h2><div class="tana-grid">'
   '<a class="tana-card" href="' + BASE + '"><div class="t">無料チェッカー</div><p>願書・志望理由書のAIっぽさを赤ペン診断。</p><span class="go">試してみる →</span></a>'
   '<a class="tana-card" href="' + BRAIN + '"><div class="t">フル版パスコード（¥1,980）</div><p>すべての指摘と言い換え例、全文書き直し指示文の完全版。</p><span class="go">Brainで見る →</span></a>'
