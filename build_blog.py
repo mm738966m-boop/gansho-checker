@@ -171,9 +171,11 @@ CSS = """
 """
 
 BRAIN = "https://brain-market.com/u/fulfull/a/b3UTMzYjMgoTZsNWa0JXY"
+BRAIN_SENSEI = "https://brain-market.com/u/fulfull/a/b1MjMzYjMgoTZsNWa0JXY"
 TANA = ('<h2>この先の一歩に</h2><div class="tana-grid">'
   '<a class="tana-card" href="' + BASE + '"><div class="t">無料チェッカー</div><p>願書・志望理由書のAIっぽさを赤ペン診断。</p><span class="go">試してみる →</span></a>'
   '<a class="tana-card" href="' + BRAIN + '"><div class="t">フル版パスコード（¥1,980）</div><p>すべての指摘と言い換え例、全文書き直し指示文の完全版。</p><span class="go">Brainで見る →</span></a>'
+  '<a class="tana-card" href="' + BRAIN_SENSEI + '"><div class="t">添削指導をされる先生へ（¥4,980）</div><p>生徒がAIで書いてくる時代の添削キット。質問集・文例・テンプレ30。</p><span class="go">Brainで見る →</span></a>'
   '<a class="tana-card" href="https://utage-system.com/p/xBWncXOH1VaH?ref=akapen"><div class="t">教育費と新NISAの無料勉強会</div><p>受験の先にある教育費の計画を、オンラインで。</p><span class="go">詳しく見る →</span></a>'
   '<a class="tana-card" href="https://mm738966m-boop.github.io/yumekane-salon/?ref=akapen"><div class="t">ユメカネサロン（無料）</div><p>お金の話を気軽にできる、無料のオンラインの町。</p><span class="go">のぞいてみる →</span></a>'
   '</div><p style="font-size:11px;color:var(--ink-soft);margin-top:8px">※ 勉強会・サロンは、提携先fulfullの運営です。</p>')
