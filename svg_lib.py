@@ -80,6 +80,14 @@ def _svg(h, label, inner):
 
 # ─────────────────────────────── ヒーロー（記事冒頭のイメージ画像）
 
+def _bubble(x, y, w, h, bg=CARD, st=LINE, tail=28):
+    """吹き出し（下向きのしっぽ）"""
+    return (_card(x, y, w, h, bg, st)
+            + '<path d="M%g %gl6 13 13-13z" fill="%s" stroke="%s"/>'
+            % (x + tail, y + h, bg, st)
+            + '<path d="M%g %gh18" stroke="%s"/>' % (x + tail + 1, y + h, bg))
+
+
 def hero_ai():
     """記事1：AIに下書きを手伝ってもらう"""
     g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
@@ -420,6 +428,171 @@ def fig_ask():
     return _svg(220, "AIへの頼み方の違いで返ってくる文章が変わることの対比図", g)
 
 
+# ─────────────────────────────── 記事7〜10
+
+def hero_chigai():
+    """記事7：願書と志望理由書のちがい"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    g += _card(56, 28, 208, 134)
+    g += _txt(160, 52, "願書", 14, INK, SERIF, "middle", "700")
+    for i in range(4):
+        y = 70 + i * 22
+        g += '<rect x="76" y="%g" width="44" height="14" rx="3" fill="#EDE6D8"/>' % y
+        g += '<path d="M128 %gh114" stroke="%s"/>' % (y + 12, LINE)
+    g += '<path d="M320 30v130" stroke="%s" stroke-width="2" stroke-dasharray="6 5"/>' % LINE
+    g += '<rect x="286" y="82" width="68" height="26" rx="13" fill="%s" stroke="#EBCFCD"/>' % REDBG
+    g += _txt(320, 100, "ちがい", 12, RED, SERIF, "middle", "700")
+    g += _card(376, 28, 208, 134)
+    g += _txt(480, 52, "志望理由書", 14, INK, SERIF, "middle", "700")
+    g += _grid(396, 66, 13, 5, 14)
+    g += _wave(400, 122, 150)
+    return _svg(190, "願書と志望理由書を並べて違いを見比べるイメージ", g)
+
+
+def hero_icchi():
+    """記事8：願書と面接の一致"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    g += _card(46, 30, 194, 130)
+    g += _grid(60, 44, 12, 5, 14)
+    g += _wave(74, 128, 130)
+    g += _txt(143, 178, "願書に書いたこと", 11.5, SOFT, SANS, "middle")
+    g += '<circle cx="320" cy="88" r="30" fill="%s" stroke="#C9DED1" stroke-width="2"/>' % GRNBG
+    g += '<path d="M306 88l10 11 19-22" stroke="%s" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' % GRN
+    g += _bubble(400, 34, 190, 44)
+    g += _txt(418, 61, "どうしてこの学校を？", 12.5, INK)
+    g += _bubble(420, 100, 170, 44, GRNBG, "#C9DED1")
+    g += _txt(438, 127, "あのとき、ぼくが…", 12.5, INK)
+    g += _txt(495, 178, "面接で話すこと", 11.5, SOFT, SANS, "middle")
+    return _svg(190, "願書に書いた内容と面接で話す内容が一致しているイメージ", g)
+
+
+def hero_gutai():
+    """記事9：抽象から具体へ"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    g += ('<path d="M96 96q-24 0-24-20t26-18q4-22 30-22t32 20q26 0 26 20t-28 20z" '
+          'fill="#F0EAE0" stroke="%s" stroke-width="1.5"/>' % LINE)
+    g += _txt(134, 74, "豊かな", 12.5, SOFT, SANS, "middle")
+    g += _txt(134, 130, "ぼんやりした言葉", 11.5, SOFT, SANS, "middle")
+    g += _arrow_r(240, 88, 44)
+    g += _card(320, 32, 232, 126, CARD, "#C9DED1")
+    g += '<rect x="336" y="46" width="200" height="76" rx="4" fill="%s"/>' % GRNBG
+    g += '<circle cx="380" cy="82" r="15" fill="#CFE0D5"/>'
+    g += '<path d="M410 100h96M410 74h74" stroke="#B9D2C2" stroke-width="6" stroke-linecap="round"/>'
+    g += _txt(436, 144, "その日、実際にあった場面", 11.5, GRN, SANS, "middle")
+    g += _pen(586, 40, 1.0, 12)
+    return _svg(190, "ぼんやりした抽象語が、実際にあった場面に変わるイメージ", g)
+
+
+def hero_ao():
+    """記事10：AO入試の書類と面接"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 書類の重なり
+    g += _card(58, 44, 176, 118, "#F5F0E6", LINE)
+    g += _card(74, 32, 176, 118)
+    g += _txt(162, 58, "志望理由書", 13, INK, SERIF, "middle", "700")
+    g += _grid(92, 70, 10, 4, 14)
+    g += _wave(96, 130, 116)
+    for i, (t, bg, st, fg) in enumerate([("探究", "#EFEAF5", "#DCD3E8", "#5B4B77"),
+                                         ("活動報告", GRNBG, "#C9DED1", GRN)]):
+        g += '<rect x="278" y="%g" width="92" height="28" rx="14" fill="%s" stroke="%s"/>' % (46 + i * 44, bg, st)
+        g += _txt(324, 65 + i * 44, t, 12, fg, SERIF, "middle", "700")
+    g += _txt(324, 152, "自分がやってきたこと", 11, SOFT, SANS, "middle")
+    g += _arrow_r(388, 88, 34)
+    g += _bubble(444, 50, 164, 60, CARD, LINE, 24)
+    g += _txt(462, 76, "そこで何を", 12.5, INK)
+    g += _txt(462, 96, "考えましたか", 12.5, INK)
+    g += _txt(526, 152, "面接で深掘りされる", 11, SOFT, SANS, "middle")
+    return _svg(190, "AO入試の志望理由書と活動が面接で深掘りされるイメージ", g)
+
+
+def fig_docs():
+    """願書と志望理由書の役割のちがい"""
+    g = _txt(320, 20, "2つは、読み手が知りたいことが違う", 14, INK, SERIF, "middle", "700")
+    cols = [("願書", "#F3EFE5", LINE, INK,
+             ["だれが受けるのか", "家族の構成や連絡先", "様式が決まっていることが多い", "事実を正確に書く"]),
+            ("志望理由書", GRNBG, "#C9DED1", GRN,
+             ["なぜこの学校なのか", "家庭の考えと子どもの姿", "自由に書く余地が大きい", "場面を具体的に書く"])]
+    for i, (t, bg, st, fg, items) in enumerate(cols):
+        x = 20 + i * 310
+        g += _card(x, 36, 290, 180, bg, st)
+        g += _txt(x + 145, 64, t, 15, fg, SERIF, "middle", "700")
+        for j, it in enumerate(items):
+            g += '<circle cx="%g" cy="%g" r="3" fill="%s"/>' % (x + 26, 92 + j * 30, fg)
+            g += _txt(x + 40, 96 + j * 30, it, 12.5, INK)
+    g += _txt(320, 236, "呼び方も様式も学校ごとに違うので、最後は必ず募集要項に合わせる", 12, SOFT, SANS, "middle")
+    return _svg(252, "願書と志望理由書で読み手が知りたいことの違い", g)
+
+
+def fig_match():
+    """願書と面接の一致・ずれ"""
+    g = _txt(320, 20, "書いたことは、その場で話せる状態にしておく", 14, INK, SERIF, "middle", "700")
+    rows = [(38, REDBG, "#EBCFCD", RED, "ずれているとき",
+             "整った言葉で書いてある", "聞かれても実感が出てこない"),
+            (128, GRNBG, "#C9DED1", GRN, "そろっているとき",
+             "実際にあった場面が書いてある", "そのまま自分の言葉で話せる")]
+    for y, bg, st, fg, ttl, l1, l2 in rows:
+        g += _card(20, y, 600, 76, bg, st)
+        g += _txt(40, y + 28, ttl, 12.5, fg, SERIF, "start", "700")
+        g += _txt(40, y + 56, "願書：" + l1, 12.5, INK)
+        g += _txt(330, y + 56, "面接：" + l2, 12.5, INK)
+        g += '<path d="M318 %gv-26" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3"/>' % (y + 62, st)
+    g += _txt(320, 232, "覚えさせるのではなく、本当にあった話だから自然に話せる状態をつくる", 12, SOFT, SANS, "middle")
+    return _svg(248, "願書と面接の内容がずれている場合とそろっている場合の比較", g)
+
+
+def fig_ladder():
+    """抽象から具体への3段"""
+    g = _txt(320, 20, "抽象語は、2段おりると場面になる", 14, INK, SERIF, "middle", "700")
+    steps = [(36, "#F3EFE5", LINE, INK, "抽象語", "「思いやりがある」"),
+             (106, "#F6F1E7", LINE, INK, "どんな種類の？", "困っている人に自分から動く"),
+             (176, GRNBG, "#C9DED1", GRN, "いつ、どこで、何が？", "公園で転んだ子にハンカチを差し出した")]
+    for i, (y, bg, st, fg, lbl, ex) in enumerate(steps):
+        x = 20 + i * 46
+        g += _card(x, y, 600 - i * 46, 58, bg, st)
+        g += _txt(x + 20, y + 24, lbl, 11.5, fg, SERIF, "start", "700")
+        g += _txt(x + 20, y + 45, ex, 13, INK)
+        if i < 2:
+            g += _arrow_d(x + 40, y + 58, 16)
+    g += _txt(320, 256, "1段だけでは足りないことが多く、2段目でやっと場面になります", 12, SOFT, SANS, "middle")
+    return _svg(272, "抽象語を2段階で具体的な場面に下ろす図", g)
+
+
+def fig_deepdive():
+    """書いたことは面接で深掘りされる"""
+    g = _txt(320, 20, "書いた一文は、面接で3つ聞かれると思っておく", 14, INK, SERIF, "middle", "700")
+    g += _card(120, 36, 400, 46, "#F3EFE5", LINE)
+    g += _txt(320, 64, "「探究活動を通じて課題発見力を身につけました」", 13.5, INK, SERIF, "middle", "700")
+    g += '<path d="M320 82v14M110 96h420M110 96v14M320 96v14M530 96v14" fill="none" stroke="%s" stroke-width="1.8"/>' % SOFT
+    qs = ["具体的に何を", "どこでつまずいた", "そこで何を考えた"]
+    for i, q in enumerate(qs):
+        x = 20 + i * 210
+        g += '<path d="M%g 116l-5-8h10z" fill="%s"/>' % (110 + i * 210, RED)
+        g += _card(x, 120, 190, 56)
+        g += _txt(x + 95, 154, q, 13, INK, SANS, "middle")
+    g += _txt(320, 216, "答えられないことは書かない。盛らないほうが、結局いちばん強い", 12, SOFT, SANS, "middle")
+    return _svg(232, "志望理由書の一文が面接で3つの質問に深掘りされる図", g)
+
+
+def fig_speak():
+    """暗記させるのではなく、本当にあったから話せる"""
+    g = _txt(320, 20, "面接で言葉が出てくるのは、どちらの子か", 14, INK, SERIF, "middle", "700")
+    cols = [(20, REDBG, "#EBCFCD", RED, "覚えさせた場合",
+             ["大人がまとめた言葉を渡す", "子どもがそれを覚えようとする", "聞かれ方が変わると止まる"]),
+            (330, GRNBG, "#C9DED1", GRN, "実際にあった場合",
+             ["その子が体験した出来事を書く", "覚えなくても記憶に残っている", "自分の言葉のまま出てくる"])]
+    for x, bg, st, fg, ttl, items in cols:
+        g += _card(x, 36, 290, 186, bg, st)
+        g += _txt(x + 145, 62, ttl, 13.5, fg, SERIF, "middle", "700")
+        for j, it in enumerate(items):
+            y = 92 + j * 46
+            g += '<rect x="%g" y="%g" width="254" height="30" rx="6" fill="%s" stroke="%s"/>' % (x + 18, y - 20, CARD, st)
+            g += _txt(x + 145, y, it, 12, INK, SANS, "middle")
+            if j < 2:
+                g += _arrow_d(x + 145, y + 12, 14, fg)
+    g += _txt(320, 242, "書く段階で決まるので、提出前に慌てて覚えさせる場面をつくらずに済みます", 12, SOFT, SANS, "middle")
+    return _svg(258, "覚えさせた場合と実際にあった出来事を書いた場合で、面接での話しやすさが変わる図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -427,6 +600,10 @@ HEROES = {
     "gansho-aippoi-naoshikata.html": hero_fix,
     "chugakujuken-shibouriyusho-kakikata.html": hero_chugaku,
     "shibouriyusho-ai-tsukaikata.html": hero_tsukaikata,
+    "gansho-shibouriyusho-chigai.html": hero_chigai,
+    "shougakkoujuken-mensetsu-gansho-icchi.html": hero_icchi,
+    "shibouriyusho-chushouteki-naoshikata.html": hero_gutai,
+    "ao-nyushi-shibouriyusho-ai.html": hero_ao,
 }
 
 FIGURES = {
@@ -442,4 +619,9 @@ FIGURES = {
     "fork": (fig_fork, "使うか使わないかではなく、土台にするかそのまま出すかで先が分かれます。"),
     "process": (fig_process, "工程ごとに担当を決めておくと、AI任せになりすぎる場面が減ります。"),
     "ask": (fig_ask, "材料を先に渡すかどうかで、返ってくる文章の中身が変わります。"),
+    "docs": (fig_docs, "2つの書類は目的が違うので、同じ調子で書くと片方が薄くなります。"),
+    "match": (fig_match, "願書と面接がそろっているかは、書いた時点でおおよそ決まっています。"),
+    "ladder": (fig_ladder, "抽象語は一気に直そうとせず、2段に分けて下ろすと場面にたどり着きます。"),
+    "deepdive": (fig_deepdive, "書いた一文は必ず掘られる前提で選ぶと、盛る理由がなくなります。"),
+    "speak": (fig_speak, "面接で言葉が出てくるかどうかは、願書を書く段階でだいたい決まります。"),
 }
