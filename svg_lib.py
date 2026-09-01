@@ -653,6 +653,66 @@ def fig_tanaoroshi():
     return _svg(188, "活動を時系列・数字・判断の3ステップで棚卸しする図", g)
 
 
+def hero_setsumeikai():
+    """記事13：行けなかった説明会→別の窓口→志望理由書"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 行けなかった説明会
+    g += _card(26, 68, 112, 56)
+    g += _txt(82, 92, "説明会", 13.5, SOFT, SERIF, "middle", "700")
+    g += '<path d="M44 87h76" stroke="%s" stroke-width="2"/>' % RED
+    g += _txt(82, 113, "行けなかった", 10.5, SOFT, SANS, "middle")
+    g += _arrow_r(148, 95, 32)
+    # 別の窓口
+    for i, t in enumerate(["学校案内・パンフレット", "紹介動画・行事の配信", "在校生や卒業生の声"]):
+        y = 32 + i * 46
+        g += _card(186, y, 150, 38)
+        g += _txt(261, y + 24, t, 11.5, INK, SANS, "middle")
+    g += _arrow_r(344, 95, 40)
+    # 志望理由書
+    g += _card(392, 34, 196, 124)
+    g += _txt(490, 62, "志望理由書", 13.5, INK, SERIF, "middle", "700")
+    g += _grid(406, 76, 12, 4, 14)
+    g += _wave(414, 122, 132)
+    g += _pen(600, 44, 0.85, 10)
+    return _svg(190, "説明会に行けなくても別の窓口から材料を集めて志望理由書を書くイメージ", g)
+
+
+def fig_sources():
+    """材料の入手先マップ（説明会以外の経路）"""
+    g = _txt(320, 20, "説明会に行けなくても、材料はここから集まる", 14, INK, SERIF, "middle", "700")
+    cells = [("学校案内・パンフレット", "在校生の声、行事の説明文"),
+             ("学校ウェブサイト・ブログ", "日々の活動記録、部活動の報告"),
+             ("紹介動画・行事の配信映像", "生徒同士のやり取り、話し方"),
+             ("公式SNSアカウント", "日常の一コマ、行事の裏側"),
+             ("卒業生・在校生の保護者", "通って分かる雰囲気、距離感"),
+             ("文化祭・体育祭など公開行事", "予約が取りやすい場合もある")]
+    for i, (t, d) in enumerate(cells):
+        x = 16 + (i % 3) * 206
+        y = 40 + (i // 3) * 78
+        g += _card(x, y, 196, 68)
+        g += _txt(x + 98, y + 28, t, 12, INK, SERIF, "middle", "700")
+        g += _txt(x + 98, y + 50, d, 10.5, SOFT, SANS, "middle")
+    g += _txt(320, 210, "一つの窓口にこだわらず、いくつも並べてみる", 12, SOFT, SANS, "middle")
+    return _svg(222, "説明会以外に学校の材料を集められる6つの入手先の図", g)
+
+
+def fig_reverse():
+    """学校側から書くか、家庭側から書くか"""
+    g = _txt(320, 20, "書き始める場所は、2つある", 14, INK, SERIF, "middle", "700")
+    lanes = [(20, "学校側から書き始める", "資料や動画で見た場面", "わが子の様子とつなぐ"),
+             (330, "家庭側から書き始める", "わが子の普段の様子", "学校の情報とつなぐ")]
+    for x, t, a, b in lanes:
+        g += _card(x, 36, 290, 100)
+        g += _txt(x + 145, 62, t, 13.5, INK, SERIF, "middle", "700")
+        g += _txt(x + 145, 92, a, 12, INK, SANS, "middle")
+        g += _txt(x + 145, 118, "→ " + b, 12, SOFT, SANS, "middle")
+        g += _arrow_d(x + 145, 140, 24)
+    g += _card(100, 170, 440, 54, GRNBG, "#C9DED1")
+    g += _txt(320, 194, "学校と家庭が重なっていることが伝わればよい", 13, GRN, SERIF, "middle", "700")
+    g += _txt(320, 214, "順番はどちらからでも構わない", 11, INK, SANS, "middle")
+    return _svg(236, "学校側から書く順番と家庭側から書く順番のどちらでもよいことを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -666,6 +726,7 @@ HEROES = {
     "ao-nyushi-shibouriyusho-ai.html": hero_ao,
     "sougougata-katsudouhoukokusho.html": hero_katsudou,
     "gansho-katei-kyouiku-houshin.html": hero_houshin,
+    "setsumeikai-ikenakatta-shibouriyusho.html": hero_setsumeikai,
 }
 
 FIGURES = {
@@ -687,4 +748,6 @@ FIGURES = {
     "deepdive": (fig_deepdive, "書いた一文は必ず掘られる前提で選ぶと、盛る理由がなくなります。"),
     "speak": (fig_speak, "面接で言葉が出てくるかどうかは、願書を書く段階でだいたい決まります。"),
     "tanaoroshi": (fig_tanaoroshi, "特別な実績を探すより、自分の判断があった場面を探すほうが早く見つかります。"),
+    "sources": (fig_sources, "説明会に申し込めなくても、学校を知る窓口はいくつも残っています。"),
+    "reverse": (fig_reverse, "学校側から書いても家庭側から書いても、重なりが伝われば役割は同じです。"),
 }

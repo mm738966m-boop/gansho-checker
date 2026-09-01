@@ -20,6 +20,7 @@ ARTICLES = [
     ("記事10本文.md", "ao-nyushi-shibouriyusho-ai.html"),
     ("記事11本文.md", "sougougata-katsudouhoukokusho.html"),
     ("記事12本文.md", "gansho-katei-kyouiku-houshin.html"),
+    ("記事13本文.md", "setsumeikai-ikenakatta-shibouriyusho.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -36,6 +37,7 @@ PUBDATES = {
     "ao-nyushi-shibouriyusho-ai.html": "2026-08-29",
     "sougougata-katsudouhoukokusho.html": "2026-08-30",
     "gansho-katei-kyouiku-houshin.html": "2026-08-30",
+    "setsumeikai-ikenakatta-shibouriyusho.html": "2026-09-01",
 }
 
 
@@ -47,14 +49,14 @@ CLUSTERS = {
         "desc": "小学校受験の願書・面接準備の記事をまとめました。例文の作り方から提出前の確認まで。",
         "slugs": ["shougakkoujuken-gansho-reibun.html", "shougakkoujuken-mensetsu-gansho-icchi.html",
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
-                  "gansho-ai-kakikata.html"],
+                  "gansho-ai-kakikata.html", "setsumeikai-ikenakatta-shibouriyusho.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",
         "desc": "中学受験の志望理由書の記事をまとめました。構成の型・字数配分・直し方まで。",
         "slugs": ["chugakujuken-shibouriyusho-kakikata.html", "shibouriyusho-chushouteki-naoshikata.html",
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
-                  "shibouriyusho-ai-tsukaikata.html"],
+                  "shibouriyusho-ai-tsukaikata.html", "setsumeikai-ikenakatta-shibouriyusho.html"],
     },
     "guide-sougougata.html": {
         "title": "総合型選抜・推薦ガイド",
