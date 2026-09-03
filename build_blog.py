@@ -21,6 +21,7 @@ ARTICLES = [
     ("記事11本文.md", "sougougata-katsudouhoukokusho.html"),
     ("記事12本文.md", "gansho-katei-kyouiku-houshin.html"),
     ("記事13本文.md", "setsumeikai-ikenakatta-shibouriyusho.html"),
+    ("記事14本文.md", "shougakkoujuken-gansho-chousho-tansho.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -38,6 +39,7 @@ PUBDATES = {
     "sougougata-katsudouhoukokusho.html": "2026-08-30",
     "gansho-katei-kyouiku-houshin.html": "2026-08-30",
     "setsumeikai-ikenakatta-shibouriyusho.html": "2026-09-01",
+    "shougakkoujuken-gansho-chousho-tansho.html": "2026-09-03",
 }
 
 
@@ -49,7 +51,8 @@ CLUSTERS = {
         "desc": "小学校受験の願書・面接準備の記事をまとめました。例文の作り方から提出前の確認まで。",
         "slugs": ["shougakkoujuken-gansho-reibun.html", "shougakkoujuken-mensetsu-gansho-icchi.html",
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
-                  "gansho-ai-kakikata.html", "setsumeikai-ikenakatta-shibouriyusho.html"],
+                  "gansho-ai-kakikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
+                  "shougakkoujuken-gansho-chousho-tansho.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",

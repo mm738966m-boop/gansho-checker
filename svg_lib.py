@@ -78,6 +78,13 @@ def _svg(h, label, inner):
             % (h, label, inner))
 
 
+
+def _svgw(w, h, label, inner):
+    """幅を指定できるSVG。新しい図解は w=400 で描く。
+    640幅だとスマホ（図の実表示343px）で0.54倍に縮み、12pxの文字が実効6.4pxになって読めない。
+    400幅なら0.86倍で、13pxが実効11.1pxになる。"""
+    return ('<svg viewBox="0 0 %g %g" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="%s">%s</svg>'
+            % (w, h, label, inner))
 # ─────────────────────────────── ヒーロー（記事冒頭のイメージ画像）
 
 def _bubble(x, y, w, h, bg=CARD, st=LINE, tail=28):
@@ -713,6 +720,91 @@ def fig_reverse():
     return _svg(236, "学校側から書く順番と家庭側から書く順番のどちらでもよいことを示す図", g)
 
 
+def hero_chousho():
+    """記事14：願書の長所欄・短所欄。短所には「向き合い方」が書き足される"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 願書用紙
+    g += _card(30, 26, 300, 138)
+    g += _txt(180, 52, "願書", 16, SOFT, SERIF, "middle", "700")
+    # 長所欄
+    g += _card(48, 64, 264, 40, CARD, LINE)
+    g += _txt(66, 90, "長所", 16, INK, SERIF, "start", "700")
+    g += _wave(112, 86, 182)
+    # 短所欄
+    g += _card(48, 112, 264, 40, REDBG, "#E4C4C2")
+    g += _txt(66, 138, "短所", 16, RED, SERIF, "start", "700")
+    g += _wave(112, 134, 96)
+    g += _arrow_r(344, 95, 34)
+    # 足すもの
+    g += _card(390, 44, 218, 102, GRNBG, "#C9DED1")
+    g += _txt(499, 78, "短所は、", 17, INK, SERIF, "middle", "700")
+    g += _txt(499, 104, "どう向き合っているか", 17, GRN, SERIF, "middle", "700")
+    g += _txt(499, 128, "とセットで書く", 15, INK, SANS, "middle")
+    g += _pen(600, 20, 0.8, 12)
+    return _svg(190, "願書の長所欄と短所欄。短所には向き合い方をセットで書くことを示す図", g)
+
+
+def fig_mikata():
+    """長所・短所の欄で学校が見ているもの"""
+    g = _txt(200, 26, "長所・短所の欄で、学校が見ているもの", 16, INK, SERIF, "middle", "700")
+    rows = [(u"わが子をよく見ているか",
+             u"「やさしい」で止まらず、",
+             u"場面で語れているか"),
+            (u"家庭がどう関わっているか",
+             u"短所を放っておかず、",
+             u"何か手を打っているか"),
+            (u"入学後の姿が見えるか",
+             u"集団の中で、",
+             u"どんなふうに過ごす子か")]
+    for i, (t, a, b) in enumerate(rows):
+        y = 44 + i * 84
+        g += _card(14, y, 372, 72)
+        g += '<rect x="14" y="%g" width="5" height="72" rx="2.5" fill="%s"/>' % (y, RED)
+        g += _txt(34, y + 27, t, 15, INK, SERIF, "start", "700")
+        g += _txt(34, y + 49, a + b, 13, SOFT, SANS, "start")
+    g += _card(14, 300, 372, 46, PAPER, LINE)
+    g += _txt(200, 329, u"短所そのものの重さを測っているわけではない", 13.5, INK, SANS, "middle")
+    return _svgw(400, 358, u"学校が長所・短所欄で見ている3つの点を示す図", g)
+
+
+def fig_chousho():
+    """長所を、その子しかいない一場面に変える"""
+    g = _txt(200, 26, u"長所は、一場面に置き換える", 16, INK, SERIF, "middle", "700")
+    # 上：言葉のまま
+    g += _card(14, 42, 372, 82, REDBG, "#E4C4C2")
+    g += _txt(30, 68, u"言葉のまま", 13, RED, SANS, "start", "700")
+    g += _txt(30, 94, u"「やさしい子です」", 17, INK, SERIF, "start", "700")
+    g += _txt(30, 114, u"どの子にも当てはまる", 12.5, SOFT, SANS, "start")
+    g += _arrow_d(200, 130, 26)
+    # 下：場面に置き換える
+    g += _card(14, 164, 372, 118, GRNBG, "#C9DED1")
+    g += _txt(30, 190, u"その日の場面に戻す", 13, GRN, SANS, "start", "700")
+    g += _txt(30, 218, u"妹が転んだとき、", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 244, u"自分の絆創膏を取りに走った", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 268, u"その子にしかない一場面", 12.5, GRN, SANS, "start")
+    g += _txt(200, 306, u"読み手の頭に絵が浮かべば、それでいい", 13.5, INK, SANS, "middle")
+    return _svgw(400, 322, u"やさしい子ですという言葉を具体的な一場面に書き換える図", g)
+
+
+def fig_tansho():
+    """短所だけを書く場合と、向き合い方をセットで書く場合"""
+    g = _txt(200, 26, u"短所は、ここで差がつく", 16, INK, SERIF, "middle", "700")
+    # 短所だけ
+    g += _card(14, 42, 372, 106, REDBG, "#E4C4C2")
+    g += _txt(30, 68, u"短所だけを書く", 13, RED, SANS, "start", "700")
+    g += _txt(30, 96, u"落ち着いて座るのが苦手です。", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 128, u"→ 読み手「それで、ご家庭は？」", 13, SOFT, SANS, "start")
+    g += _arrow_d(200, 154, 26)
+    # 短所＋向き合い方
+    g += _card(14, 188, 372, 132, GRNBG, "#C9DED1")
+    g += _txt(30, 214, u"短所と、向き合い方をセットで", 13, GRN, SANS, "start", "700")
+    g += _txt(30, 242, u"じっとしているのが苦手です。", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 268, u"今は、支度の順番を自分で決めさせています。", 15, INK, SERIF, "start", "700")
+    g += _txt(30, 300, u"→ 読み手「家庭の関わり方が見える」", 13, GRN, SANS, "start")
+    g += _txt(200, 344, u"短所を隠すかどうかではなく、その先があるか", 13.5, INK, SANS, "middle")
+    return _svgw(400, 360, u"短所だけを書く場合と向き合い方をセットで書く場合の対比図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -727,6 +819,7 @@ HEROES = {
     "sougougata-katsudouhoukokusho.html": hero_katsudou,
     "gansho-katei-kyouiku-houshin.html": hero_houshin,
     "setsumeikai-ikenakatta-shibouriyusho.html": hero_setsumeikai,
+    "shougakkoujuken-gansho-chousho-tansho.html": hero_chousho,
 }
 
 FIGURES = {
@@ -750,4 +843,7 @@ FIGURES = {
     "tanaoroshi": (fig_tanaoroshi, "特別な実績を探すより、自分の判断があった場面を探すほうが早く見つかります。"),
     "sources": (fig_sources, "説明会に申し込めなくても、学校を知る窓口はいくつも残っています。"),
     "reverse": (fig_reverse, "学校側から書いても家庭側から書いても、重なりが伝われば役割は同じです。"),
+    "mikata": (fig_mikata, "短所そのものの重さではなく、見ている目と家庭の関わり方が読まれています。"),
+    "chousho": (fig_chousho, "長所は言葉のままだと誰にでも当てはまり、場面に戻すとその子だけのものになります。"),
+    "tansho": (fig_tansho, "短所を書くかどうかより、その先に家庭の関わりが続いているかで伝わり方が変わります。"),
 }
