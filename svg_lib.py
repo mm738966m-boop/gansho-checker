@@ -165,42 +165,39 @@ def hero_fix():
 # ─────────────────────────────── 本文中の図解
 
 def fig_signs():
-    """AIっぽさの3つのクセ"""
-    g = ""
+    """AIっぽさの3つのクセ（2026-09-05に400幅へ描き直し）"""
+    g = _txt(200, 26, u"AIっぽさが出やすい3つのクセ", 16, INK, SERIF, "middle", "700")
     items = [
-        ("抽象語", "「豊かな学び」", "どの子にも当てはまり、", "何があったか見えない"),
-        ("接続詞", "「そして」「また」", "同じつなぎ方が続き、", "機械的に感じられる"),
-        ("語尾", "「〜と考えております」", "熱量が均一になり、", "書き手の顔が消える"),
+        (u"抽象語", u"「豊かな学び」", u"どの子にも当てはまり、何があったか見えない"),
+        (u"接続詞", u"「そして」「また」", u"同じつなぎ方が続き、機械的に感じられる"),
+        (u"語尾", u"「〜と考えております」", u"熱量が均一になり、書き手の顔が消える"),
     ]
-    for i, (t, ex, l1, l2) in enumerate(items):
-        x = 16 + i * 206
-        g += _card(x, 34, 190, 148, CARD, "#EBCFCD")
-        g += '<rect x="%g" y="34" width="190" height="4" rx="2" fill="%s"/>' % (x, RED)
-        g += _txt(x + 95, 68, t, 16, RED, SERIF, "middle", "700")
-        g += _card(x + 16, 82, 158, 30, REDBG, "none", 5)
-        g += _txt(x + 95, 102, ex, 12.5, INK, SANS, "middle")
-        g += _txt(x + 95, 134, l1, 12, SOFT, SANS, "middle")
-        g += _txt(x + 95, 152, l2, 12, SOFT, SANS, "middle")
-    g += _txt(320, 20, "AIっぽさが出やすい3つのクセ", 14, INK, SERIF, "middle", "700")
-    return _svg(196, "AIっぽさが出やすい3つのクセ：抽象語・接続詞・語尾", g)
+    for i, (t, ex, desc) in enumerate(items):
+        y = 44 + i * 92
+        g += _card(14, y, 372, 80, CARD, "#EBCFCD")
+        g += '<rect x="14" y="%g" width="372" height="4" rx="2" fill="%s"/>' % (y, RED)
+        g += _txt(32, y + 37, t, 16, RED, SERIF, "start", "700")
+        g += _card(104, y + 16, 268, 30, REDBG, "none", 6)
+        g += _txt(238, y + 37, ex, 14, INK, SANS, "middle")
+        g += _txt(32, y + 66, desc, 13, SOFT, SANS, "start")
+    return _svgw(400, 320, u"AIっぽさが出やすい3つのクセ：抽象語・接続詞・語尾", g)
 
 
 def fig_scene():
-    """抽象語 → 具体的な場面"""
-    g = _txt(320, 20, "抽象語を、その日の場面に置き換える", 14, INK, SERIF, "middle", "700")
-    g += _card(20, 36, 250, 118, REDBG, "#EBCFCD")
-    g += _txt(36, 60, "抽象語のまま", 12, RED, SERIF, "start", "700")
-    g += _txt(36, 88, "貴校の教育方針に", 13.5, INK)
-    g += _txt(36, 110, "強く共感いたしました", 13.5, INK)
-    g += _wave(36, 118, 200)
-    g += _txt(36, 140, "何を見て、そう思ったのか", 11.5, SOFT)
-    g += _arrow_r(284, 95, 44)
-    g += _card(352, 36, 268, 118, GRNBG, "#C9DED1")
-    g += _txt(368, 60, "その日の場面に置き換える", 12, GRN, SERIF, "start", "700")
-    g += _txt(368, 88, "上級生が休み時間に、下級生へ", 13.5, INK)
-    g += _txt(368, 110, "折り紙を教えていました", 13.5, INK)
-    g += _txt(368, 140, "読み手の頭の中に、絵が浮かぶ", 11.5, SOFT)
-    return _svg(168, "抽象語を具体的な場面に置き換える対比図", g)
+    """抽象語 → 具体的な場面（2026-09-05に400幅へ描き直し）"""
+    g = _txt(200, 26, u"抽象語を、その日の場面に置き換える", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 42, 372, 104, REDBG, "#EBCFCD")
+    g += _txt(30, 68, u"抽象語のまま", 13, RED, SANS, "start", "700")
+    g += _txt(30, 96, u"貴校の教育方針に強く共感いたしました", 16, INK, SERIF, "start", "700")
+    g += _wave(30, 104, 288)
+    g += _txt(30, 128, u"何を見て、そう思ったのか", 13, SOFT, SANS, "start")
+    g += _arrow_d(200, 152, 26)
+    g += _card(14, 186, 372, 132, GRNBG, "#C9DED1")
+    g += _txt(30, 212, u"その日の場面に置き換える", 13, GRN, SANS, "start", "700")
+    g += _txt(30, 240, u"上級生が休み時間に、下級生へ", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 266, u"折り紙を教えていました", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 298, u"読み手の頭の中に、絵が浮かぶ", 13, GRN, SANS, "start")
+    return _svgw(400, 334, u"抽象語を具体的な場面に置き換える対比図", g)
 
 
 def fig_split():
@@ -241,35 +238,34 @@ def fig_3step():
 
 
 def fig_blind():
-    """書いた本人 vs 初めて読む人"""
-    g = _txt(320, 20, "同じ一文でも、見えているものが違う", 14, INK, SERIF, "middle", "700")
-    g += _card(20, 36, 600, 40, "#F3EFE5", LINE)
-    g += _txt(320, 62, "「豊かな学びの環境に魅力を感じました」", 15, INK, SERIF, "middle", "700")
-    g += _arrow_d(170, 84, 22) + _arrow_d(470, 84, 22)
-    g += _card(20, 116, 290, 112, GRNBG, "#C9DED1")
-    g += _txt(165, 142, "書いた本人に見えているもの", 12.5, GRN, SERIF, "middle", "700")
-    g += _txt(165, 170, "見学した日の廊下の掲示物、", 12, INK, SANS, "middle")
-    g += _txt(165, 190, "子どもが立ち止まった場面", 12, INK, SANS, "middle")
-    g += _txt(165, 214, "＝頭が勝手に補ってしまう", 11, SOFT, SANS, "middle")
-    g += _card(330, 116, 290, 112, REDBG, "#EBCFCD")
-    g += _txt(475, 142, "初めて読む人に見えるもの", 12.5, RED, SERIF, "middle", "700")
-    g += _txt(475, 178, "（何も浮かばない）", 13, SOFT, SANS, "middle")
-    g += _txt(475, 214, "＝だから自分では気づけない", 11, SOFT, SANS, "middle")
-    return _svg(244, "同じ一文でも書いた本人と読み手で見えているものが違うことの図", g)
+    """書いた本人 vs 初めて読む人（2026-09-05に400幅へ描き直し）"""
+    g = _txt(200, 26, u"同じ一文でも、見えているものが違う", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 42, 372, 42, "#F3EFE5", LINE)
+    g += _txt(200, 69, u"「豊かな学びの環境に魅力を感じました」", 15, INK, SERIF, "middle", "700")
+    g += _arrow_d(200, 90, 24)
+    g += _card(14, 124, 372, 106, GRNBG, "#C9DED1")
+    g += _txt(30, 150, u"書いた本人に見えているもの", 13, GRN, SANS, "start", "700")
+    g += _txt(30, 178, u"見学した日の廊下の掲示物、", 15, INK, SERIF, "start", "700")
+    g += _txt(30, 202, u"子どもが立ち止まった場面", 15, INK, SERIF, "start", "700")
+    g += _txt(30, 222, u"＝頭が勝手に補ってしまう", 13, SOFT, SANS, "start")
+    g += _card(14, 244, 372, 84, REDBG, "#EBCFCD")
+    g += _txt(30, 270, u"初めて読む人に見えるもの", 13, RED, SANS, "start", "700")
+    g += _txt(30, 298, u"（何も浮かばない）", 15, INK, SERIF, "start", "700")
+    g += _txt(30, 320, u"＝だから自分では気づけない", 13, SOFT, SANS, "start")
+    return _svgw(400, 344, u"同じ一文でも書いた本人と読み手で見えているものが違うことの図", g)
 
 
 def fig_loop():
-    """書く→見直す→直す のループ"""
-    g = _txt(320, 20, "提出までにまわしたい、小さなループ", 14, INK, SERIF, "middle", "700")
-    nodes = [("書く", 108), ("見直す", 320), ("直す", 532)]
-    for t, x in nodes:
-        g += '<circle cx="%g" cy="100" r="46" fill="%s" stroke="%s" stroke-width="1.5"/>' % (x, CARD, LINE)
-        g += _txt(x, 105, t, 15, INK, SERIF, "middle", "700")
-    g += _arrow_r(160, 100, 108) + _arrow_r(372, 100, 108)
-    g += ('<path d="M532 148q0 30-212 30T108 148" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>' % RED)
-    g += '<path d="M108 148l-5 9h10z" fill="%s"/>' % RED
-    g += _txt(320, 202, "2〜3か所直したら、もう一度読み返す", 12, SOFT, SANS, "middle")
-    return _svg(218, "書く・見直す・直すを繰り返すループの図", g)
+    """書く→見直す→直す のループ（2026-09-05に400幅へ描き直し）"""
+    g = _txt(200, 26, u"提出までにまわしたい、小さなループ", 16, INK, SERIF, "middle", "700")
+    for t, x in ((u"書く", 72), (u"見直す", 200), (u"直す", 328)):
+        g += '<circle cx="%g" cy="98" r="40" fill="%s" stroke="%s" stroke-width="1.5"/>' % (x, CARD, LINE)
+        g += _txt(x, 104, t, 16, INK, SERIF, "middle", "700")
+    g += _arrow_r(116, 98, 42) + _arrow_r(244, 98, 42)
+    g += ('<path d="M328 142q0 26-128 26T72 142" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>' % RED)
+    g += '<path d="M72 142l-5 9h10z" fill="%s"/>' % RED
+    g += _txt(200, 196, u"2〜3か所直したら、もう一度読み返す", 13.5, SOFT, SANS, "middle")
+    return _svgw(400, 214, u"書く・見直す・直すを繰り返すループの図", g)
 
 
 def fig_struct():
@@ -805,6 +801,65 @@ def fig_tansho():
     return _svgw(400, 360, u"短所だけを書く場合と向き合い方をセットで書く場合の対比図", g)
 
 
+def hero_jikopr():
+    """記事15：自己PR欄に並んだ資質のラベルを、その日の行動に戻す"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 自己PRの用紙
+    g += _card(30, 26, 300, 138)
+    g += _txt(180, 52, u"自己PR", 16, SOFT, SERIF, "middle", "700")
+    # 資質のラベルが並んでいる
+    for i, w in enumerate((u"責任感", u"主体性", u"協調性")):
+        x = 52 + i * 88
+        g += _card(x, 66, 80, 32, REDBG, "#E4C4C2", 16)
+        g += _txt(x + 40, 88, w, 15, RED, SANS, "middle", "700")
+    g += _wave(52, 124, 250)
+    g += _wave(52, 146, 190)
+    g += _arrow_r(344, 95, 34)
+    # 戻す先
+    g += _card(390, 44, 218, 102, GRNBG, "#C9DED1")
+    g += _txt(499, 78, u"その日、自分が", 17, INK, SERIF, "middle", "700")
+    g += _txt(499, 104, u"何をしたか", 17, GRN, SERIF, "middle", "700")
+    g += _txt(499, 130, u"ラベルの下にある行動", 14, INK, SANS, "middle")
+    g += _pen(600, 20, 0.8, 12)
+    return _svg(190, u"自己PR欄に並んだ資質のラベルを、その日の行動に戻すことを示す図", g)
+
+
+def fig_label():
+    """資質のラベルを、その日の行動に戻す"""
+    g = _txt(200, 26, u"「責任感があります」で止めない", 16, INK, SERIF, "middle", "700")
+    # 上：ラベルのまま
+    g += _card(14, 42, 372, 104, REDBG, "#E4C4C2")
+    g += _txt(30, 68, u"資質の名前だけ", 13, RED, SANS, "start", "700")
+    g += _txt(30, 96, u"責任感を持って取り組みました", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 126, u"→ 誰のことでも言えてしまう一文", 13, SOFT, SANS, "start")
+    g += _arrow_d(200, 152, 26)
+    # 下：行動に戻す
+    g += _card(14, 186, 372, 140, GRNBG, "#C9DED1")
+    g += _txt(30, 212, u"その日の行動に戻す", 13, GRN, SANS, "start", "700")
+    g += _txt(30, 240, u"大会前の2週間、部員19人の", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 266, u"出欠を毎朝聞いて回りました", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 300, u"→ 責任感という言葉は、使わなくていい", 13, GRN, SANS, "start")
+    g += _txt(200, 350, u"ラベルを外すと、自分だけの話が残る", 13.5, INK, SANS, "middle")
+    return _svgw(400, 366, u"責任感という資質のラベルを具体的な行動に書き換える図", g)
+
+
+def fig_qmap():
+    """自己PRに書いた一文は、そのまま面接の質問になる"""
+    g = _txt(200, 26, u"書いた一文は、そのまま質問になる", 16, INK, SERIF, "middle", "700")
+    rows = [(u"部をまとめる役をしていました", u"どの場面で、何を決めましたか"),
+            (u"困難を乗り越えた経験があります", u"その困難とは、具体的には"),
+            (u"計画性を大切にしています", u"直近で計画を立て直したのは")]
+    for i, (a, q) in enumerate(rows):
+        y = 44 + i * 86
+        g += _card(14, y, 372, 76)
+        g += '<rect x="14" y="%g" width="5" height="76" rx="2.5" fill="%s"/>' % (y, RED)
+        g += _txt(34, y + 30, a, 15, INK, SERIF, "start", "700")
+        g += _txt(34, y + 56, u"→ " + q, 13, SOFT, SANS, "start")
+    g += _card(14, 304, 372, 46, PAPER, LINE)
+    g += _txt(200, 333, u"その場で答えられない一文は、書かない", 13.5, INK, SANS, "middle")
+    return _svgw(400, 362, u"自己PRに書いた一文が面接での質問に変わることを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -820,6 +875,7 @@ HEROES = {
     "gansho-katei-kyouiku-houshin.html": hero_houshin,
     "setsumeikai-ikenakatta-shibouriyusho.html": hero_setsumeikai,
     "shougakkoujuken-gansho-chousho-tansho.html": hero_chousho,
+    "suisen-jikopr-ai.html": hero_jikopr,
 }
 
 FIGURES = {
@@ -846,4 +902,6 @@ FIGURES = {
     "mikata": (fig_mikata, "短所そのものの重さではなく、見ている目と家庭の関わり方が読まれています。"),
     "chousho": (fig_chousho, "長所は言葉のままだと誰にでも当てはまり、場面に戻すとその子だけのものになります。"),
     "tansho": (fig_tansho, "短所を書くかどうかより、その先に家庭の関わりが続いているかで伝わり方が変わります。"),
+    "label": (fig_label, "資質の名前は誰にでも当てはまるので、その日の行動に戻すと自分だけの話になります。"),
+    "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
 }
