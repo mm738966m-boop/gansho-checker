@@ -23,6 +23,7 @@ ARTICLES = [
     ("記事13本文.md", "setsumeikai-ikenakatta-shibouriyusho.html"),
     ("記事14本文.md", "shougakkoujuken-gansho-chousho-tansho.html"),
     ("記事15本文.md", "suisen-jikopr-ai.html"),
+    ("記事16本文.md", "shibouriyusho-mojisuu-tarinai.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -42,6 +43,7 @@ PUBDATES = {
     "setsumeikai-ikenakatta-shibouriyusho.html": "2026-09-01",
     "shougakkoujuken-gansho-chousho-tansho.html": "2026-09-03",
     "suisen-jikopr-ai.html": "2026-09-05",
+    "shibouriyusho-mojisuu-tarinai.html": "2026-09-09",
 }
 
 
@@ -61,13 +63,15 @@ CLUSTERS = {
         "desc": "中学受験の志望理由書の記事をまとめました。構成の型・字数配分・直し方まで。",
         "slugs": ["chugakujuken-shibouriyusho-kakikata.html", "shibouriyusho-chushouteki-naoshikata.html",
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
-                  "shibouriyusho-ai-tsukaikata.html", "setsumeikai-ikenakatta-shibouriyusho.html"],
+                  "shibouriyusho-ai-tsukaikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
+                  "shibouriyusho-mojisuu-tarinai.html"],
     },
     "guide-sougougata.html": {
         "title": "総合型選抜・推薦ガイド",
         "desc": "総合型選抜（AO）・推薦入試の書類の記事をまとめました。志望理由書・活動報告書・面接まで。",
         "slugs": ["ao-nyushi-shibouriyusho-ai.html", "sougougata-katsudouhoukokusho.html",
-                  "shibouriyusho-chatgpt-bareru.html", "suisen-jikopr-ai.html"],
+                  "shibouriyusho-chatgpt-bareru.html", "suisen-jikopr-ai.html",
+                  "shibouriyusho-mojisuu-tarinai.html"],
     },
     "guide-ai-kihon.html": {
         "title": "願書×AIの基本ガイド",

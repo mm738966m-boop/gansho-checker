@@ -269,21 +269,20 @@ def fig_loop():
 
 
 def fig_struct():
-    """志望理由書の構成の型"""
-    g = _txt(320, 20, "伝わる文章の、いちばん基本の並び", 14, INK, SERIF, "middle", "700")
-    items = [("きっかけ", "見た場面から始める", REDBG, "#EBCFCD", RED),
-             ("重なり", "家庭の考えとどう合うか", "#F3EFE5", LINE, INK),
-             ("これから", "入学後にどう育ってほしいか", GRNBG, "#C9DED1", GRN)]
+    """志望理由書の構成の型（2026-09-09に400幅へ描き直し）"""
+    g = _txt(200, 26, u"伝わる文章の、いちばん基本の並び", 16, INK, SERIF, "middle", "700")
+    items = [(u"きっかけ", u"見た場面から始める", REDBG, "#EBCFCD", RED),
+             (u"重なり", u"家庭の考えとどう合うか", "#F3EFE5", LINE, INK),
+             (u"これから", u"入学後にどう育ってほしいか", GRNBG, "#C9DED1", GRN)]
     for i, (t, d, bg, st, fg) in enumerate(items):
-        x = 16 + i * 206
-        g += _card(x, 40, 190, 92, bg, st)
-        g += _txt(x + 95, 74, t, 15.5, fg, SERIF, "middle", "700")
-        g += _txt(x + 95, 104, d, 11.5, SOFT, SANS, "middle")
+        y = 42 + i * 86
+        g += _card(14, y, 372, 64, bg, st)
+        g += _txt(32, y + 28, t, 16, fg, SERIF, "start", "700")
+        g += _txt(32, y + 50, d, 13, SOFT, SANS, "start")
         if i < 2:
-            g += _arrow_r(x + 192, 86, 18)
-    g += _txt(320, 156, "字数の目安は 2 : 3 : 2。真ん中がいちばん厚くなる", 12, SOFT, SANS, "middle")
-    return _svg(174, "きっかけ・重なり・これからという文章構成の型", g)
-
+            g += _arrow_d(200, y + 64, 18)
+    g += _txt(200, 302, u"字数の目安は 2 : 3 : 2。真ん中がいちばん厚くなる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 322, u"きっかけ・重なり・これからという文章構成の型", g)
 
 def hero_chugaku():
     """記事5：説明会のメモが志望理由書になる"""
@@ -326,27 +325,24 @@ def fig_ratio():
 
 
 def fig_memo():
-    """見学メモから一文を作る"""
-    g = _txt(320, 20, "その日のメモが、そのまま一文になる", 14, INK, SERIF, "middle", "700")
-    # メモ帳
-    g += _card(20, 40, 236, 150)
-    g += '<rect x="20" y="40" width="236" height="22" rx="7" fill="#EFEAF5"/>'
-    g += _txt(38, 56, "見学のときのメモ", 11.5, "#5B4B77", SANS, "start", "700")
-    memo = ["10/12 説明会", "体育館の写真の前で足が止まった", "「ここで走ってみたい」"]
+    """見学メモから一文を作る（2026-09-09に400幅へ描き直し）"""
+    g = _txt(200, 26, u"その日のメモが、そのまま一文になる", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 42, 372, 126)
+    g += '<rect x="14" y="42" width="372" height="26" rx="7" fill="#EFEAF5"/>'
+    g += _txt(32, 60, u"見学のときのメモ", 13, "#5B4B77", SANS, "start", "700")
+    memo = [u"10/12 説明会", u"体育館の写真の前で足が止まった", u"「ここで走ってみたい」"]
     for i, t in enumerate(memo):
-        g += _txt(38, 88 + i * 30, t, 12, INK)
-        g += '<path d="M38 %g h180" stroke="%s" stroke-width="1"/>' % (96 + i * 30, LINE)
-    g += _arrow_r(268, 112, 38)
-    # 出来上がった一文
-    g += _card(326, 40, 294, 150, GRNBG, "#C9DED1")
-    g += _txt(344, 66, "願書の一文になる", 12, GRN, SERIF, "start", "700")
-    g += _txt(344, 96, "説明会の日、子どもは体育館の", 12.5, INK)
-    g += _txt(344, 116, "写真の前で足を止め、", 12.5, INK)
-    g += _txt(344, 136, "「ここで走ってみたい」と", 12.5, INK)
-    g += _txt(344, 156, "言いました。", 12.5, INK)
-    g += _txt(344, 180, "拾うのは、立ち止まった場所と、その場の一言", 10.5, SOFT)
-    return _svg(204, "見学メモの内容が志望理由書の一文になる流れの図", g)
-
+        g += _txt(32, 92 + i * 30, t, 15, INK)
+        g += '<path d="M32 %g h340" stroke="%s" stroke-width="1"/>' % (100 + i * 30, LINE)
+    g += _arrow_d(200, 172, 22)
+    g += _card(14, 206, 372, 136, GRNBG, "#C9DED1")
+    g += _txt(32, 230, u"願書の一文になる", 13, GRN, SERIF, "start", "700")
+    for i, t in enumerate([u"説明会の日、子どもは体育館の写真の",
+                           u"前で足を止め、「ここで走ってみたい」",
+                           u"と言いました。"]):
+        g += _txt(32, 258 + i * 24, t, 15, INK)
+    g += _txt(32, 330, u"拾うのは、立ち止まった場所と、その場の一言", 13, SOFT)
+    return _svgw(400, 354, u"見学メモの内容が志望理由書の一文になる流れの図", g)
 
 def fig_fork():
     """土台にするか、そのまま出すか"""
@@ -823,6 +819,28 @@ def hero_jikopr():
     g += _pen(600, 20, 0.8, 12)
     return _svg(190, u"自己PR欄に並んだ資質のラベルを、その日の行動に戻すことを示す図", g)
 
+def hero_jisuu():
+    """記事16：文字数が埋まらない原稿用紙が、場面を足して埋まる"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 足りていない状態
+    g += _card(40, 30, 230, 130)
+    g += _grid(54, 44, 15, 4, 14)
+    g += _wave(58, 62, 140) + _wave(58, 90, 90)
+    g += _card(54, 112, 120, 30, REDBG, "#EBCFCD")
+    g += _txt(114, 132, u"380 / 600", 15, RED, SANS, "middle", "700")
+    g += _txt(184, 132, u"あと220字", 12.5, SOFT)
+    # 真ん中
+    g += _txt(320, 84, u"場面を足す", 13, RED, SERIF, "middle", "700")
+    g += _arrow_r(294, 100, 46)
+    # 埋まった状態
+    g += _card(370, 30, 230, 130)
+    g += _grid(384, 44, 15, 4, 14)
+    g += _wave(388, 62, 196) + _wave(388, 90, 196)
+    g += _card(384, 112, 120, 30, GRNBG, "#C9DED1")
+    g += _txt(444, 132, u"596 / 600", 15, GRN, SANS, "middle", "700")
+    g += _txt(514, 132, u"場面を1つ", 12.5, SOFT)
+    g += _pen(612, 36, 0.6, 8)
+    return _svg(190, u"文字数が足りない原稿用紙に場面を足して埋まる様子", g)
 
 def fig_label():
     """資質のラベルを、その日の行動に戻す"""
@@ -876,7 +894,49 @@ HEROES = {
     "setsumeikai-ikenakatta-shibouriyusho.html": hero_setsumeikai,
     "shougakkoujuken-gansho-chousho-tansho.html": hero_chousho,
     "suisen-jikopr-ai.html": hero_jikopr,
+    "shibouriyusho-mojisuu-tarinai.html": hero_jisuu,
 }
+
+
+def fig_kezuru():
+    """削る優先順位（記事16・400幅）"""
+    g = _txt(200, 26, u"削る順番は、上から", 16, INK, SERIF, "middle", "700")
+    rows = [("1", u"どの学校にも当てはまる一般論", u"その学校を選んだ理由になっていない",
+             "#F7E3E1", "#EBCFCD", RED),
+            ("2", u"同じことの言い直し", u"別の言葉で二度説明している箇所",
+             "#FAECEB", "#EEDAD8", RED),
+            ("3", u"「大変」「非常に」などの修飾語", u"削っても文の意味は変わらない",
+             "#FDF5F4", "#F0E2E0", RED),
+            (u"残", u"その日の場面の細部", u"ここだけは最後まで残す",
+             GRNBG, "#C9DED1", GRN)]
+    for i, (n, t, d, bg, st, fg) in enumerate(rows):
+        y = 44 + i * 70
+        g += _card(14, y, 372, 52, bg, st)
+        g += '<circle cx="40" cy="%g" r="13" fill="%s"/>' % (y + 26, fg)
+        g += _txt(40, y + 31, n, 13, "#FFFFFF", SANS, "middle", "700")
+        g += _txt(64, y + 24, t, 15, INK, SERIF, "start", "700")
+        g += _txt(64, y + 44, d, 13, SOFT, SANS, "start")
+        if i < 3:
+            g += _arrow_d(200, y + 52, 14)
+    g += _txt(200, 330, u"場面を削ると、字数は収まっても中身が残らない", 13, SOFT, SANS, "middle")
+    return _svgw(400, 350, u"志望理由書を削るときの優先順位を上から並べた図", g)
+
+
+def fig_hone():
+    """削ってはいけない3つ（記事16・400幅）"""
+    g = _txt(200, 26, u"削ってはいけない、3つの骨", 16, INK, SERIF, "middle", "700")
+    rows = [(u"その日の場面", u"いつ・どこで・何を見たか"),
+            (u"志望校とのつながり", u"それがなぜこの学校の理由になるのか"),
+            (u"これからやりたいこと", u"入学したあと、どう続いていくのか")]
+    g += '<path d="M26 60V236" stroke="%s" stroke-width="2"/>' % GRN
+    for i, (t, d) in enumerate(rows):
+        y = 44 + i * 70
+        g += _card(40, y, 346, 58, GRNBG, "#C9DED1")
+        g += '<circle cx="26" cy="%g" r="5.5" fill="%s"/>' % (y + 29, GRN)
+        g += _txt(58, y + 26, t, 15.5, GRN, SERIF, "start", "700")
+        g += _txt(58, y + 47, d, 13, SOFT, SANS, "start")
+    g += _txt(200, 272, u"1つでも抜けると、読み手に問いが残ったまま終わる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 292, u"志望理由書で削ってはいけない3つの要素の図", g)
 
 FIGURES = {
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
@@ -902,6 +962,8 @@ FIGURES = {
     "mikata": (fig_mikata, "短所そのものの重さではなく、見ている目と家庭の関わり方が読まれています。"),
     "chousho": (fig_chousho, "長所は言葉のままだと誰にでも当てはまり、場面に戻すとその子だけのものになります。"),
     "tansho": (fig_tansho, "短所を書くかどうかより、その先に家庭の関わりが続いているかで伝わり方が変わります。"),
+    "kezuru": (fig_kezuru, u"削るときは思いついた順ではなく、一般論から順に見ていくと迷いません。"),
+    "hone": (fig_hone, u"字数は収まったのに物足りないときは、この3つのどれかが欠けています。"),
     "label": (fig_label, "資質の名前は誰にでも当てはまるので、その日の行動に戻すと自分だけの話になります。"),
     "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
 }
