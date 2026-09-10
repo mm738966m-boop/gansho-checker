@@ -345,24 +345,24 @@ def fig_memo():
     return _svgw(400, 354, u"見学メモの内容が志望理由書の一文になる流れの図", g)
 
 def fig_fork():
-    """土台にするか、そのまま出すか"""
-    g = _txt(320, 20, "同じ下書きでも、ここで先が分かれる", 14, INK, SERIF, "middle", "700")
-    g += _card(200, 34, 240, 40, "#EFEAF5", "#DCD3E8")
-    g += _txt(320, 59, "AIが出してきた下書き", 13.5, "#5B4B77", SERIF, "middle", "700")
-    # 分岐のブラケット
-    g += '<path d="M320 74v14M165 88h310M165 88v12M475 88v12" fill="none" stroke="%s" stroke-width="2"/>' % SOFT
-    g += '<path d="M165 106l-5-8h10z" fill="%s"/><path d="M475 106l-5-8h10z" fill="%s"/>' % (RED, GRN)
-    # 左：そのまま出す
-    g += _card(20, 112, 290, 108, REDBG, "#EBCFCD")
-    g += _txt(165, 138, "そのまま出す", 14, RED, SERIF, "middle", "700")
-    for i, t in enumerate(["どの家庭にも当てはまる文章になる", "面接で自分の言葉として話しにくい"]):
-        g += _txt(165, 168 + i * 24, t, 12, INK, SANS, "middle")
-    # 右：土台として使う
-    g += _card(330, 112, 290, 108, GRNBG, "#C9DED1")
-    g += _txt(475, 138, "土台として使う", 14, GRN, SERIF, "middle", "700")
-    for i, t in enumerate(["場面と子どもの言葉を足していく", "その家庭にしか書けない文章になる"]):
-        g += _txt(475, 168 + i * 24, t, 12, INK, SANS, "middle")
-    return _svg(234, "AIの下書きをそのまま出す場合と土台として使う場合の分かれ道", g)
+    """土台にするか、そのまま出すか（400幅・2026-09-10 描き直し）"""
+    g = _txt(200, 26, u"同じ下書きでも、ここで先が分かれる", 16, INK, SERIF, "middle", "700")
+    g += _card(90, 42, 220, 44, "#EFEAF5", "#DCD3E8")
+    g += _txt(200, 70, u"AIが出してきた下書き", 15, "#5B4B77", SERIF, "middle", "700")
+    g += _arrow_d(200, 88, 18)
+    blocks = [(u"そのまま出す", [u"どの家庭にも当てはまる文章になる",
+                              u"面接で自分の言葉として話しにくい"], RED, REDBG, "#EBCFCD"),
+              (u"土台として使う", [u"場面と子どもの言葉を足していく",
+                                u"その家庭にしか書けない文章になる"], GRN, GRNBG, "#C9DED1")]
+    for i, (t, lines, fg, bg, st) in enumerate(blocks):
+        y = 114 + i * 96
+        g += _card(14, y, 372, 84, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="84" rx="2.5" fill="%s"/>' % (y, fg)
+        g += _txt(34, y + 28, t, 15.5, fg, SERIF, "start", "700")
+        for j, ln in enumerate(lines):
+            g += _txt(34, y + 52 + j * 21, ln, 13, INK, SANS, "start")
+    g += _txt(200, 328, u"分かれ目は、AIを使ったかどうかではありません", 13, SOFT, SANS, "middle")
+    return _svgw(400, 348, u"AIの下書きをそのまま出す場合と土台として使う場合の分かれ道", g)
 
 
 def fig_process():
@@ -540,36 +540,39 @@ def fig_match():
 
 
 def fig_ladder():
-    """抽象から具体への3段"""
-    g = _txt(320, 20, "抽象語は、2段おりると場面になる", 14, INK, SERIF, "middle", "700")
-    steps = [(36, "#F3EFE5", LINE, INK, "抽象語", "「思いやりがある」"),
-             (106, "#F6F1E7", LINE, INK, "どんな種類の？", "困っている人に自分から動く"),
-             (176, GRNBG, "#C9DED1", GRN, "いつ、どこで、何が？", "公園で転んだ子にハンカチを差し出した")]
-    for i, (y, bg, st, fg, lbl, ex) in enumerate(steps):
-        x = 20 + i * 46
-        g += _card(x, y, 600 - i * 46, 58, bg, st)
-        g += _txt(x + 20, y + 24, lbl, 11.5, fg, SERIF, "start", "700")
-        g += _txt(x + 20, y + 45, ex, 13, INK)
+    """抽象から具体への3段（400幅・2026-09-10 描き直し）"""
+    g = _txt(200, 26, u"抽象語は、2段おりると場面になる", 16, INK, SERIF, "middle", "700")
+    steps = [("#F3EFE5", LINE, INK, u"抽象語", u"「思いやりがある」"),
+             ("#F6F1E7", LINE, INK, u"どんな種類の？", u"困っている人に自分から動く"),
+             (GRNBG, "#C9DED1", GRN, u"いつ、どこで、何が？", u"公園で転んだ子にハンカチを差し出した")]
+    for i, (bg, st, fg, lbl, ex) in enumerate(steps):
+        y = 44 + i * 74
+        x = 14 + i * 20
+        g += _card(x, y, 372 - i * 20, 58, bg, st)
+        g += _txt(x + 18, y + 24, lbl, 13, fg, SERIF, "start", "700")
+        g += _txt(x + 18, y + 46, ex, 14.5, INK)
         if i < 2:
             g += _arrow_d(x + 40, y + 58, 16)
-    g += _txt(320, 256, "1段だけでは足りないことが多く、2段目でやっと場面になります", 12, SOFT, SANS, "middle")
-    return _svg(272, "抽象語を2段階で具体的な場面に下ろす図", g)
+    g += _txt(200, 288, u"1段目で止めず、2段目でやっと場面になります", 13, SOFT, SANS, "middle")
+    return _svgw(400, 308, u"抽象語を2段階で具体的な場面に下ろす図", g)
 
 
 def fig_deepdive():
-    """書いたことは面接で深掘りされる"""
-    g = _txt(320, 20, "書いた一文は、面接で3つ聞かれると思っておく", 14, INK, SERIF, "middle", "700")
-    g += _card(120, 36, 400, 46, "#F3EFE5", LINE)
-    g += _txt(320, 64, "「探究活動を通じて課題発見力を身につけました」", 13.5, INK, SERIF, "middle", "700")
-    g += '<path d="M320 82v14M110 96h420M110 96v14M320 96v14M530 96v14" fill="none" stroke="%s" stroke-width="1.8"/>' % SOFT
-    qs = ["具体的に何を", "どこでつまずいた", "そこで何を考えた"]
+    """書いたことは面接で深掘りされる（400幅・2026-09-10 描き直し）"""
+    g = _txt(200, 26, u"書いた一文は、3つ聞かれると思っておく", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 44, 372, 52, "#F3EFE5", LINE)
+    g += _txt(200, 68, u"「探究活動を通じて", 14.5, INK, SERIF, "middle", "700")
+    g += _txt(200, 88, u"課題発見力を身につけました」", 14.5, INK, SERIF, "middle", "700")
+    g += _arrow_d(200, 98, 16)
+    qs = [u"具体的に、何をしたのですか", u"どこでつまずきましたか", u"そこで何を考えましたか"]
     for i, q in enumerate(qs):
-        x = 20 + i * 210
-        g += '<path d="M%g 116l-5-8h10z" fill="%s"/>' % (110 + i * 210, RED)
-        g += _card(x, 120, 190, 56)
-        g += _txt(x + 95, 154, q, 13, INK, SANS, "middle")
-    g += _txt(320, 216, "答えられないことは書かない。盛らないほうが、結局いちばん強い", 12, SOFT, SANS, "middle")
-    return _svg(232, "志望理由書の一文が面接で3つの質問に深掘りされる図", g)
+        y = 122 + i * 58
+        g += _card(14, y, 372, 46, CARD, LINE)
+        g += '<circle cx="40" cy="%g" r="11" fill="%s"/>' % (y + 23, RED)
+        g += _txt(40, y + 28, u"?", 13, "#FFFFFF", SANS, "middle", "700")
+        g += _txt(62, y + 28, q, 14, INK, SANS, "start")
+    g += _txt(200, 320, u"答えられないことは書かない。盛らないほうが、結局いちばん強い", 12.5, SOFT, SANS, "middle")
+    return _svgw(400, 340, u"志望理由書の一文が面接で3つの質問に深掘りされる図", g)
 
 
 def fig_speak():
@@ -878,6 +881,30 @@ def fig_qmap():
     return _svgw(400, 362, u"自己PRに書いた一文が面接での質問に変わることを示す図", g)
 
 
+def hero_tensaku():
+    """記事17：家庭の添削。原稿を前に、見る順番が決まっている"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：直しかけの原稿
+    g += _card(34, 28, 256, 134)
+    g += _grid(50, 44, 16, 5, 14)
+    g += _wave(54, 64, 180) + _wave(54, 96, 120) + _wave(54, 128, 150)
+    g += '<path d="M196 92l10 10 20-22" fill="none" stroke="%s" stroke-width="2.4" stroke-linecap="round"/>' % GRN
+    g += _pen(300, 42, 0.72, 10)
+    g += _arrow_r(330, 96, 34)
+    # 右：見る順番
+    rows = [(u"1", u"内容", GRNBG, "#C9DED1", GRN),
+            (u"2", u"構成", "#F3EFE5", LINE, INK),
+            (u"3", u"表現", REDBG, "#EBCFCD", RED)]
+    for i, (n, t, bg, st, fg) in enumerate(rows):
+        y = 32 + i * 44
+        g += _card(378, y, 226, 36, bg, st)
+        g += '<circle cx="400" cy="%g" r="11" fill="%s"/>' % (y + 18, fg)
+        g += _txt(400, y + 23, n, 12, "#FFFFFF", SANS, "middle", "700")
+        g += _txt(420, y + 24, t, 16, INK, SERIF, "start", "700")
+        g += _txt(468, y + 23, [u"何を書くか", u"どの順に置くか", u"どう言うか"][i], 12.5, SOFT)
+    return _svg(190, u"家庭で志望理由書を添削するとき、内容・構成・表現の順に見ることを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -895,6 +922,7 @@ HEROES = {
     "shougakkoujuken-gansho-chousho-tansho.html": hero_chousho,
     "suisen-jikopr-ai.html": hero_jikopr,
     "shibouriyusho-mojisuu-tarinai.html": hero_jisuu,
+    "shibouriyusho-tensaku-jibun-de.html": hero_tensaku,
 }
 
 
@@ -938,6 +966,43 @@ def fig_hone():
     g += _txt(200, 272, u"1つでも抜けると、読み手に問いが残ったまま終わる", 13, SOFT, SANS, "middle")
     return _svgw(400, 292, u"志望理由書で削ってはいけない3つの要素の図", g)
 
+def fig_sansou():
+    """添削の3層（記事17・400幅）"""
+    g = _txt(200, 26, u"上から順に見ると、直しが減る", 16, INK, SERIF, "middle", "700")
+    rows = [(u"1", u"内容", u"書くと決めた場面が入っているか", GRNBG, "#C9DED1", GRN),
+            (u"2", u"構成", u"その場面が、読み手に届く順に並んでいるか", "#F3EFE5", LINE, INK),
+            (u"3", u"表現", u"言葉づかい・字数・書式を整える", REDBG, "#EBCFCD", RED)]
+    for i, (n, t, d, bg, st, fg) in enumerate(rows):
+        y = 44 + i * 76
+        g += _card(14 + i * 16, y, 372 - i * 16, 58, bg, st)
+        g += '<circle cx="%g" cy="%g" r="13" fill="%s"/>' % (40 + i * 16, y + 29, fg)
+        g += _txt(40 + i * 16, y + 34, n, 13, "#FFFFFF", SANS, "middle", "700")
+        g += _txt(64 + i * 16, y + 26, t, 16, INK, SERIF, "start", "700")
+        g += _txt(64 + i * 16, y + 47, d, 13, SOFT, SANS, "start")
+        if i < 2:
+            g += _arrow_d(60 + i * 16, y + 58, 16)
+    g += _card(14, 274, 372, 52, PAPER, LINE)
+    g += _txt(200, 296, u"下から始めると、表現を磨いた一文ごと", 13.5, INK, SANS, "middle")
+    g += _txt(200, 316, u"あとで消すことになる", 13.5, INK, SANS, "middle")
+    return _svgw(400, 342, u"添削は内容・構成・表現の順に見るという3層の図", g)
+
+
+def fig_bunntan():
+    """家庭で分担するときの役割（記事17・400幅）"""
+    g = _txt(200, 26, u"同じ紙を、同時に囲まない", 16, INK, SERIF, "middle", "700")
+    rows = [(u"材料を出す人", u"本人。その日に何があったかを話す", GRN, GRNBG, "#C9DED1"),
+            (u"筋を見る人", u"内容と構成だけを見る。言葉は直さない", INK, "#F3EFE5", LINE),
+            (u"言葉を整える人", u"いちばん最後に、ひとりで通して読む", RED, REDBG, "#EBCFCD")]
+    for i, (t, d, fg, bg, st) in enumerate(rows):
+        y = 44 + i * 74
+        g += _card(14, y, 372, 60, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="60" rx="2.5" fill="%s"/>' % (y, fg)
+        g += _txt(34, y + 26, t, 15.5, fg, SERIF, "start", "700")
+        g += _txt(34, y + 48, d, 13, SOFT, SANS, "start")
+    g += _txt(200, 288, u"役割を決めないと、直した先から別の人が戻す", 13, SOFT, SANS, "middle")
+    return _svgw(400, 308, u"家庭で添削を分担するときの3つの役割の図", g)
+
+
 FIGURES = {
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),
@@ -964,6 +1029,8 @@ FIGURES = {
     "tansho": (fig_tansho, "短所を書くかどうかより、その先に家庭の関わりが続いているかで伝わり方が変わります。"),
     "kezuru": (fig_kezuru, u"削るときは思いついた順ではなく、一般論から順に見ていくと迷いません。"),
     "hone": (fig_hone, u"字数は収まったのに物足りないときは、この3つのどれかが欠けています。"),
+    "sansou": (fig_sansou, u"内容・構成・表現は同時に見ようとせず、上から順に一段ずつ見ていくほうが直しが減ります。"),
+    "bunntan": (fig_bunntan, u"誰が何を見るかを先に決めておくと、直したところを別の人が戻してしまう往復が起きません。"),
     "label": (fig_label, "資質の名前は誰にでも当てはまるので、その日の行動に戻すと自分だけの話になります。"),
     "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
 }
