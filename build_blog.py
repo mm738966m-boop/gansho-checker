@@ -25,6 +25,7 @@ ARTICLES = [
     ("記事15本文.md", "suisen-jikopr-ai.html"),
     ("記事16本文.md", "shibouriyusho-mojisuu-tarinai.html"),
     ("記事17本文.md", "shibouriyusho-tensaku-jibun-de.html"),
+    ("記事18本文.md", "shougakkoujuken-gansho-teishutsu-mae.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -46,6 +47,7 @@ PUBDATES = {
     "suisen-jikopr-ai.html": "2026-09-05",
     "shibouriyusho-mojisuu-tarinai.html": "2026-09-09",
     "shibouriyusho-tensaku-jibun-de.html": "2026-09-10",
+    "shougakkoujuken-gansho-teishutsu-mae.html": "2026-09-15",
 }
 
 
@@ -58,7 +60,8 @@ CLUSTERS = {
         "slugs": ["shougakkoujuken-gansho-reibun.html", "shougakkoujuken-mensetsu-gansho-icchi.html",
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
                   "gansho-ai-kakikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
-                  "shougakkoujuken-gansho-chousho-tansho.html"],
+                  "shougakkoujuken-gansho-chousho-tansho.html",
+                  "shougakkoujuken-gansho-teishutsu-mae.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",

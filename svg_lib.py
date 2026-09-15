@@ -523,20 +523,22 @@ def fig_docs():
 
 
 def fig_match():
-    """願書と面接の一致・ずれ"""
-    g = _txt(320, 20, "書いたことは、その場で話せる状態にしておく", 14, INK, SERIF, "middle", "700")
-    rows = [(38, REDBG, "#EBCFCD", RED, "ずれているとき",
-             "整った言葉で書いてある", "聞かれても実感が出てこない"),
-            (128, GRNBG, "#C9DED1", GRN, "そろっているとき",
-             "実際にあった場面が書いてある", "そのまま自分の言葉で話せる")]
+    """願書と面接の一致・ずれ（400幅・2026-09-15 描き直し）"""
+    g = _txt(200, 26, u"書いた場面は、その場で話せる状態に", 16, INK, SERIF, "middle", "700")
+    rows = [(44, REDBG, "#EBCFCD", RED, u"ずれているとき",
+             u"整った言葉で書いてある", u"聞かれても実感が出てこない"),
+            (150, GRNBG, "#C9DED1", GRN, u"そろっているとき",
+             u"実際にあった場面が書いてある", u"そのまま自分の言葉で話せる")]
     for y, bg, st, fg, ttl, l1, l2 in rows:
-        g += _card(20, y, 600, 76, bg, st)
-        g += _txt(40, y + 28, ttl, 12.5, fg, SERIF, "start", "700")
-        g += _txt(40, y + 56, "願書：" + l1, 12.5, INK)
-        g += _txt(330, y + 56, "面接：" + l2, 12.5, INK)
-        g += '<path d="M318 %gv-26" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3"/>' % (y + 62, st)
-    g += _txt(320, 232, "覚えさせるのではなく、本当にあった話だから自然に話せる状態をつくる", 12, SOFT, SANS, "middle")
-    return _svg(248, "願書と面接の内容がずれている場合とそろっている場合の比較", g)
+        g += _card(14, y, 372, 92, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="92" rx="2.5" fill="%s"/>' % (y, fg)
+        g += _txt(34, y + 26, ttl, 15, fg, SERIF, "start", "700")
+        g += _txt(34, y + 52, u"願書", 13, SOFT, SANS, "start", "700")
+        g += _txt(74, y + 52, l1, 14.5, INK)
+        g += _txt(34, y + 78, u"面接", 13, SOFT, SANS, "start", "700")
+        g += _txt(74, y + 78, l2, 14.5, INK)
+    g += _txt(200, 274, u"覚えさせるより、本当にあった話を書いておく", 13, SOFT, SANS, "middle")
+    return _svgw(400, 294, u"願書と面接の内容がずれている場合とそろっている場合の比較", g)
 
 
 def fig_ladder():
@@ -905,6 +907,29 @@ def hero_tensaku():
     return _svg(190, u"家庭で志望理由書を添削するとき、内容・構成・表現の順に見ることを示す図", g)
 
 
+def hero_teishutsu():
+    """記事18：提出前夜の最終チェック。封筒の前で、見る順番が決まっている"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：封筒と、差し込みかけの願書
+    g += _card(92, 20, 176, 104)
+    g += _grid(106, 34, 10, 4, 14)
+    g += _wave(110, 54, 110) + _wave(110, 82, 80)
+    g += _card(46, 70, 268, 98, "#EFE6D6", "#DCCFB8", 6)
+    g += '<path d="M46 76l134 56 134-56" fill="none" stroke="#DCCFB8" stroke-width="1.6"/>'
+    g += '<circle cx="180" cy="132" r="9" fill="%s"/>' % RED
+    g += _pen(318, 30, 0.72, 16)
+    g += _arrow_r(346, 96, 28)
+    # 右：出す前に見る3つ
+    rows = [(u"書式", u"押印・空欄・同封"), (u"事実", u"名前・学校名・日付"), (u"一文", u"浮いた言葉だけ")]
+    for i, (t, d) in enumerate(rows):
+        y = 30 + i * 46
+        g += _card(388, y, 222, 38)
+        g += '<path d="M%g %gl6 6 12-13" fill="none" stroke="%s" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' % (402, y + 19, GRN)
+        g += _txt(428, y + 25, t, 16, INK, SERIF, "start", "700")
+        g += _txt(472, y + 24, d, 13, SOFT)
+    return _svg(190, u"願書を封筒に入れる前に、書式・事実・浮いた一文の順に確認することを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -923,6 +948,7 @@ HEROES = {
     "suisen-jikopr-ai.html": hero_jikopr,
     "shibouriyusho-mojisuu-tarinai.html": hero_jisuu,
     "shibouriyusho-tensaku-jibun-de.html": hero_tensaku,
+    "shougakkoujuken-gansho-teishutsu-mae.html": hero_teishutsu,
 }
 
 
@@ -1003,6 +1029,27 @@ def fig_bunntan():
     return _svgw(400, 308, u"家庭で添削を分担するときの3つの役割の図", g)
 
 
+def fig_yuusen():
+    """時間がないときの確認の優先順位（記事18・400幅）"""
+    g = _txt(200, 26, u"あと30分なら、上から順に見る", 16, INK, SERIF, "middle", "700")
+    rows = [(u"最優先", u"押印・必須項目・同封書類", u"欠けると、中身を読まれる前に止まる", RED, REDBG, "#EBCFCD"),
+            (u"次に", u"氏名・学校名・日付", u"直す手間は小さく、見落とすと目立つ", INK, "#F3EFE5", LINE),
+            (u"そのあと", u"浮いて見える一文だけ", u"全文ではなく、場面をひとこと添える", GRN, GRNBG, "#C9DED1"),
+            (u"後回しでよい", u"語尾・言い回し・字数の微調整", u"提出そのものは止めない", SOFT, PAPER, LINE)]
+    for i, (lbl, t, d, fg, bg, st) in enumerate(rows):
+        y = 44 + i * 70
+        if i == 3:
+            g += '<rect x="14" y="%g" width="372" height="60" rx="7" fill="%s" stroke="%s" stroke-dasharray="5 4"/>' % (y, bg, SOFT)
+        else:
+            g += _card(14, y, 372, 60, bg, st)
+            g += '<rect x="14" y="%g" width="5" height="60" rx="2.5" fill="%s"/>' % (y, fg)
+        g += _txt(30, y + 25, lbl, 13, fg, SANS, "start", "700")
+        g += _txt(128, y + 26, t, 15, INK, SERIF, "start", "700")
+        g += _txt(128, y + 47, d, 13, SOFT)
+    g += _txt(200, 342, u"全部を直すより、出せる状態を先につくる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 362, u"提出まで時間がないときに確認する優先順位の4段の図", g)
+
+
 FIGURES = {
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),
@@ -1032,5 +1079,6 @@ FIGURES = {
     "sansou": (fig_sansou, u"内容・構成・表現は同時に見ようとせず、上から順に一段ずつ見ていくほうが直しが減ります。"),
     "bunntan": (fig_bunntan, u"誰が何を見るかを先に決めておくと、直したところを別の人が戻してしまう往復が起きません。"),
     "label": (fig_label, "資質の名前は誰にでも当てはまるので、その日の行動に戻すと自分だけの話になります。"),
+    "yuusen": (fig_yuusen, u"時間が足りない夜は、直したい順ではなく、止まると困る順に見ていきます。"),
     "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
 }
