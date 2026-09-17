@@ -578,23 +578,24 @@ def fig_deepdive():
 
 
 def fig_speak():
-    """暗記させるのではなく、本当にあったから話せる"""
-    g = _txt(320, 20, "面接で言葉が出てくるのは、どちらの子か", 14, INK, SERIF, "middle", "700")
-    cols = [(20, REDBG, "#EBCFCD", RED, "覚えさせた場合",
-             ["大人がまとめた言葉を渡す", "子どもがそれを覚えようとする", "聞かれ方が変わると止まる"]),
-            (330, GRNBG, "#C9DED1", GRN, "実際にあった場合",
-             ["その子が体験した出来事を書く", "覚えなくても記憶に残っている", "自分の言葉のまま出てくる"])]
-    for x, bg, st, fg, ttl, items in cols:
-        g += _card(x, 36, 290, 186, bg, st)
-        g += _txt(x + 145, 62, ttl, 13.5, fg, SERIF, "middle", "700")
+    """暗記させるのではなく、本当にあったから話せる（2026-09-17に400幅・縦積みへ描き直し）"""
+    g = _txt(200, 26, u"面接で言葉が出てくるのは、どちらの子か", 16, INK, SERIF, "middle", "700")
+    blocks = [(REDBG, "#EBCFCD", RED, u"覚えさせた場合",
+               [u"大人がまとめた言葉を渡す", u"子どもがそれを覚えようとする", u"聞かれ方が変わると止まる"]),
+              (GRNBG, "#C9DED1", GRN, u"実際にあった場合",
+               [u"その子が体験した出来事を書く", u"覚えなくても記憶に残っている", u"自分の言葉のまま出てくる"])]
+    for i, (bg, st, fg, ttl, items) in enumerate(blocks):
+        y0 = 42 + i * 156
+        g += _card(14, y0, 372, 142, bg, st)
+        g += _txt(30, y0 + 26, ttl, 15, fg, SERIF, "start", "700")
         for j, it in enumerate(items):
-            y = 92 + j * 46
-            g += '<rect x="%g" y="%g" width="254" height="30" rx="6" fill="%s" stroke="%s"/>' % (x + 18, y - 20, CARD, st)
-            g += _txt(x + 145, y, it, 12, INK, SANS, "middle")
+            y = y0 + 58 + j * 30
+            g += '<circle cx="36" cy="%g" r="4" fill="%s"/>' % (y - 5, fg)
+            g += _txt(50, y, it, 15, INK, SANS, "start")
             if j < 2:
-                g += _arrow_d(x + 145, y + 12, 14, fg)
-    g += _txt(320, 242, "書く段階で決まるので、提出前に慌てて覚えさせる場面をつくらずに済みます", 12, SOFT, SANS, "middle")
-    return _svg(258, "覚えさせた場合と実際にあった出来事を書いた場合で、面接での話しやすさが変わる図", g)
+                g += '<path d="M36 %gv14" stroke="%s" stroke-width="1.4" stroke-dasharray="2 3"/>' % (y + 1, fg)
+    g += _txt(200, 380, u"話せるかどうかは、書く段階でほぼ決まる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 398, u"覚えさせた場合と実際にあった出来事を書いた場合で、面接での話しやすさが変わる図", g)
 
 
 def hero_katsudou():
@@ -930,6 +931,31 @@ def hero_teishutsu():
     return _svg(190, u"願書を封筒に入れる前に、書式・事実・浮いた一文の順に確認することを示す図", g)
 
 
+def hero_yousu():
+    """記事19：中学受験の願書・子どもの様子欄。成績表の数字ではなく、家で見ている姿を書く"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：模試の成績表（少し退かせる）
+    g += '<g opacity="0.55">'
+    g += _card(40, 26, 196, 138)
+    g += '<rect x="40" y="26" width="196" height="24" rx="7" fill="#EDE6D8"/>'
+    g += _txt(56, 43, u"模試の成績表", 12.5, SOFT, SANS, "start", "700")
+    for i, h in enumerate((46, 62, 38, 70, 54)):
+        g += '<rect x="%g" y="%g" width="20" height="%g" rx="3" fill="#D9D0BF"/>' % (60 + i * 32, 150 - h, h)
+    g += '</g>'
+    g += _pen(244, 34, 0.72, 16)
+    g += _arrow_r(272, 96, 40)
+    # 右：家で見ている姿
+    g += _txt(340, 36, u"家で見ている、その子の姿", 14, RED, SERIF, "start", "700")
+    rows = [(u"翌朝", u"悪かった模試のあと、机へ"), (u"夕方", u"弟の音読を最後まで聞く"), (u"帰り道", u"友達の話ばかりする")]
+    for i, (t, d) in enumerate(rows):
+        y = 50 + i * 44
+        g += _card(336, y, 272, 36)
+        g += '<path d="M%g %gl6 6 12-13" fill="none" stroke="%s" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' % (350, y + 18, GRN)
+        g += _txt(376, y + 24, t, 15, INK, SERIF, "start", "700")
+        g += _txt(432, y + 23, d, 13, SOFT)
+    return _svg(190, u"模試の成績表の数字ではなく、家で見ているその子の姿を願書に書くことを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -949,6 +975,7 @@ HEROES = {
     "shibouriyusho-mojisuu-tarinai.html": hero_jisuu,
     "shibouriyusho-tensaku-jibun-de.html": hero_tensaku,
     "shougakkoujuken-gansho-teishutsu-mae.html": hero_teishutsu,
+    "chugakujuken-gansho-kodomo-no-yousu.html": hero_yousu,
 }
 
 
@@ -1050,6 +1077,27 @@ def fig_yuusen():
     return _svgw(400, 362, u"提出まで時間がないときに確認する優先順位の4段の図", g)
 
 
+def fig_yousu():
+    """数字で書けること／家庭でしか見ていない場面（記事19・400幅）"""
+    g = _txt(200, 26, u"この欄に置くのは、下の側", 16, INK, SERIF, "middle", "700")
+    blocks = [(REDBG, "#EBCFCD", RED, u"数字や名前で書けること",
+               [u"模試の偏差値・順位", u"塾のクラス", u"検定の級・表彰"]),
+              (GRNBG, "#C9DED1", GRN, u"家庭でしか見ていない場面",
+               [u"悪かった模試の翌朝、自分から机へ", u"弟の音読を、最後まで聞いていた", u"塾の帰り道、友達の話ばかりする"])]
+    for i, (bg, st, fg, ttl, items) in enumerate(blocks):
+        y0 = 42 + i * 170
+        g += _card(14, y0, 372, 142, bg, st)
+        g += _txt(30, y0 + 26, ttl, 15, fg, SERIF, "start", "700")
+        for j, it in enumerate(items):
+            y = y0 + 58 + j * 30
+            g += '<circle cx="36" cy="%g" r="4" fill="%s"/>' % (y - 5, fg)
+            g += _txt(50, y, it, 15, INK, SANS, "start")
+        if i == 0:
+            g += _arrow_d(200, y0 + 146, 22)
+    g += _txt(200, 392, u"数字を並べても、その子の顔は見えてこない", 13, SOFT, SANS, "middle")
+    return _svgw(400, 410, u"数字や名前で書けることと、家庭でしか見ていない場面を分けた図", g)
+
+
 FIGURES = {
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),
@@ -1080,5 +1128,6 @@ FIGURES = {
     "bunntan": (fig_bunntan, u"誰が何を見るかを先に決めておくと、直したところを別の人が戻してしまう往復が起きません。"),
     "label": (fig_label, "資質の名前は誰にでも当てはまるので、その日の行動に戻すと自分だけの話になります。"),
     "yuusen": (fig_yuusen, u"時間が足りない夜は、直したい順ではなく、止まると困る順に見ていきます。"),
+    "yousu": (fig_yousu, u"数字や肩書きは別の場所でも伝わるので、この欄は家でしか見ていない場面のために使います。"),
     "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
 }

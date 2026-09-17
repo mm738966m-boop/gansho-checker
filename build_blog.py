@@ -26,6 +26,7 @@ ARTICLES = [
     ("記事16本文.md", "shibouriyusho-mojisuu-tarinai.html"),
     ("記事17本文.md", "shibouriyusho-tensaku-jibun-de.html"),
     ("記事18本文.md", "shougakkoujuken-gansho-teishutsu-mae.html"),
+    ("記事19本文.md", "chugakujuken-gansho-kodomo-no-yousu.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -48,6 +49,7 @@ PUBDATES = {
     "shibouriyusho-mojisuu-tarinai.html": "2026-09-09",
     "shibouriyusho-tensaku-jibun-de.html": "2026-09-10",
     "shougakkoujuken-gansho-teishutsu-mae.html": "2026-09-15",
+    "chugakujuken-gansho-kodomo-no-yousu.html": "2026-09-17",
 }
 
 
@@ -70,7 +72,8 @@ CLUSTERS = {
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
                   "shibouriyusho-ai-tsukaikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
                   "shibouriyusho-mojisuu-tarinai.html",
-                  "shibouriyusho-tensaku-jibun-de.html"],
+                  "shibouriyusho-tensaku-jibun-de.html",
+                  "chugakujuken-gansho-kodomo-no-yousu.html"],
     },
     "guide-sougougata.html": {
         "title": "総合型選抜・推薦ガイド",
