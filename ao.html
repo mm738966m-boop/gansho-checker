@@ -796,11 +796,16 @@ GanshoEngine.PHRASES.push(
   "use strict";
 
   var FREE_HINTS = 3;
-  var UNLOCK_CODE = "akapen8153";
+  // 購入者特典コードと、配布用コード（配布分だけ後から無効にできる）
+  var UNLOCK_CODES = ["akapen8153", "akapen2026trial"];
   var memUnlocked = false;
   function isUnlocked() {
     if (memUnlocked) return true;
-    try { return localStorage.getItem("gansho_full") === "1"; } catch (e) { return false; }
+    try {
+      var saved = localStorage.getItem("gansho_code");
+      if (saved) return UNLOCK_CODES.indexOf(saved) >= 0;
+      return localStorage.getItem("gansho_full") === "1";
+    } catch (e) { return false; }
   }
 
   var $ = function (id) { return document.getElementById(id); };
@@ -989,9 +994,9 @@ GanshoEngine.PHRASES.push(
       if (ub) {
         var tryUnlock = function () {
           var vv = (document.getElementById("codeInput").value || "").trim().toLowerCase();
-          if (vv === UNLOCK_CODE) {
+          if (UNLOCK_CODES.indexOf(vv) >= 0) {
             memUnlocked = true;
-            try { localStorage.setItem("gansho_full", "1"); } catch (e) {}
+            try { localStorage.setItem("gansho_code", vv); } catch (e) {}
             suppressScroll = true;
             runCheck();
           } else {
@@ -1023,12 +1028,12 @@ GanshoEngine.PHRASES.push(
     $("rewriteWrap").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  /* 撮影・デモ用URLパラメータ: ?demo=chugaku&full=1&shot=score|hints|rewrite */
+  /* 撮影・デモ用URLパラメータ: ?demo=chugaku&full=<パスコード>&shot=score|hints|rewrite */
   try {
     var q = new URLSearchParams(location.search);
     var demoKey = q.get("demo");
     if (demoKey && SAMPLES[demoKey]) {
-      if (q.get("full") === "1") memUnlocked = true;
+      if (UNLOCK_CODES.indexOf(String(q.get("full") || "").trim().toLowerCase()) >= 0) memUnlocked = true;
       suppressScroll = true;
       input.value = SAMPLES[demoKey];
       input.dispatchEvent(new Event("input"));
