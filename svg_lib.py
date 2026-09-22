@@ -1098,7 +1098,37 @@ def fig_yousu():
     return _svgw(400, 410, u"数字や名前で書けることと、家庭でしか見ていない場面を分けた図", g)
 
 
+def fig_yobikata():
+    """入学願書・志願書・志願票は同じもの（記事7・400幅）"""
+    g = _txt(200, 26, u"名前は3通りでも、役割は2つ", 16, INK, SERIF, "middle", "700")
+    blocks = [(REDBG, "#EBCFCD", RED, u"事実を書く紙",
+               [u"入学願書", u"志願書", u"志願票"],
+               u"氏名・生年月日・住所・連絡先"),
+              (GRNBG, "#C9DED1", GRN, u"理由を書く紙",
+               [u"志望理由書", u"面接資料", u"自己PRカード"],
+               u"なぜその学校を選んだのか")]
+    for i, (bg, st, fg, ttl, chips, note) in enumerate(blocks):
+        y0 = 42 + i * 148
+        g += _card(14, y0, 372, 122, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="122" rx="2.5" fill="%s"/>' % (y0, fg)
+        g += _txt(30, y0 + 28, ttl, 15, fg, SERIF, "start", "700")
+        x = 30
+        for c in chips:
+            w = len(c) * 15 + 20
+            g += _card(x, y0 + 44, w, 30, CARD, st, 15)
+            g += _txt(x + w / 2, y0 + 64, c, 15, INK, SANS, "middle", "700")
+            x += w + 9
+        g += _txt(30, y0 + 100, note, 13, SOFT)
+        if i == 0:
+            g += _txt(200, y0 + 138, u"呼び方が違うだけ", 13, SOFT, SANS, "middle")
+    g += '<rect x="14" y="342" width="372" height="56" rx="7" fill="%s" stroke="%s" stroke-dasharray="5 4"/>' % (PAPER, SOFT)
+    g += _txt(30, 366, u"ただし、志願票の中に志望理由の欄が", 13, INK)
+    g += _txt(30, 386, u"入っている学校もあります。募集要項で確認を。", 13, INK)
+    return _svgw(400, 414, u"入学願書・志願書・志願票は同じ書類で、志望理由書とは役割が違うことを示した図", g)
+
+
 FIGURES = {
+    "yobikata": (fig_yobikata, u"呼び方が違っても中身は同じなので、迷ったら募集要項の欄の名前で判断します。"),
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),
     "split": (fig_split, "型を整える作業はAIが得意ですが、素材そのものは家庭にしかありません。"),
