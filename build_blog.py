@@ -30,6 +30,12 @@ ARTICLES = [
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
+# 公開後に本文を加筆・改稿した記事だけ、改稿日をここに書く。
+# sitemap の lastmod と JSON-LD の dateModified に反映される（公開日=PUBDATES は変えない）。
+UPDATED = {
+    "gansho-shibouriyusho-chigai.html": "2026-09-22",
+}
+
 PUBDATES = {
     "gansho-ai-kakikata.html": "2026-08-28",
     "shibouriyusho-chatgpt-bareru.html": "2026-08-28",
@@ -394,7 +400,7 @@ def build():
         jsonld = ('<script type="application/ld+json">' + _json.dumps({
             "@context": "https://schema.org", "@type": "Article",
             "headline": title, "description": desc,
-            "datePublished": pubdate, "dateModified": pubdate,
+            "datePublished": pubdate, "dateModified": UPDATED.get(slug, pubdate),
             "image": og_img,
             "mainEntityOfPage": BASE + "blog/" + slug,
             "author": {"@type": "Organization", "name": "赤ペン願書ラボ", "url": BASE},
@@ -469,7 +475,7 @@ def build():
     # sitemap / robots
     urls = [(BASE, today), (BASE + "ao.html", today), (BASE + "blog/", today)] + \
         [(BASE + "blog/" + h, today) for h in hub_slugs] + \
-        [(BASE + "blog/" + s, PUBDATES.get(s, today)) for t, d, s, b in metas]
+        [(BASE + "blog/" + s, UPDATED.get(s, PUBDATES.get(s, today))) for t, d, s, b in metas]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for u, lm in urls:
         sm += "  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, lm)
