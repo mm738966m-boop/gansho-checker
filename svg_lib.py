@@ -956,6 +956,33 @@ def hero_yousu():
     return _svg(190, u"模試の成績表の数字ではなく、家で見ているその子の姿を願書に書くことを示す図", g)
 
 
+def hero_kakinaoshi():
+    """記事20：願書の書き直し。全部消す前に線を引き、直す順を決める"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：下書き。気になる行は2本だけ
+    g += _card(40, 24, 212, 142)
+    g += _txt(56, 44, u"書き終えた下書き", 12.5, SOFT, SANS, "start", "700")
+    for i in range(6):
+        y = 62 + i * 18
+        w = 170 if i != 5 else 110
+        g += '<rect x="56" y="%g" width="%g" height="5" rx="2.5" fill="#E2DACB"/>' % (y, w)
+        if i in (1, 4):
+            g += _wave(56, y + 9, w)
+    g += _pen(246, 30, 0.72, 16)
+    g += _arrow_r(278, 96, 40)
+    # 右：直す順
+    g += _txt(340, 36, u"消す前に、直す順を決める", 14, RED, SERIF, "start", "700")
+    rows = [(u"その場で", u"事実の誤り"), (u"最初に", u"志望校とのつながり"), (u"最後に", u"語尾の癖")]
+    for i, (t, d) in enumerate(rows):
+        y = 50 + i * 44
+        g += _card(336, y, 272, 36)
+        g += '<circle cx="356" cy="%g" r="10" fill="%s"/>' % (y + 18, RED if i < 2 else SOFT)
+        g += _txt(356, y + 23, str(i + 1), 13, CARD, SANS, "middle", "700")
+        g += _txt(376, y + 24, t, 15, INK, SERIF, "start", "700")
+        g += _txt(452, y + 23, d, 13, SOFT)
+    return _svg(190, u"下書きを全部消す前に気になる行に線を引き、事実の誤り・志望校とのつながり・語尾の癖の順に直すことを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -976,6 +1003,7 @@ HEROES = {
     "shibouriyusho-tensaku-jibun-de.html": hero_tensaku,
     "shougakkoujuken-gansho-teishutsu-mae.html": hero_teishutsu,
     "chugakujuken-gansho-kodomo-no-yousu.html": hero_yousu,
+    "gansho-kakinaoshi-junban.html": hero_kakinaoshi,
 }
 
 
@@ -1127,7 +1155,47 @@ def fig_yobikata():
     return _svgw(400, 414, u"入学願書・志願書・志願票は同じ書類で、志望理由書とは役割が違うことを示した図", g)
 
 
+def fig_matrix():
+    """書き直しの優先順位：効果×手間のマトリクス（記事20・400幅）"""
+    g = _txt(200, 26, u"直す順は、効果と手間で決める", 16, INK, SERIF, "middle", "700")
+    X0, Y0, W, H, GAP = 58, 48, 160, 136, 10
+    quads = [(0, 0, REDBG, "#EBCFCD", RED, u"① その場で", [u"事実の誤り"], u"名前・日付・学校名"),
+             (1, 0, REDBG, "#EBCFCD", RED, u"② 最初に時間を", [u"志望校との", u"つながり"], None),
+             (0, 1, PAPER, None, SOFT, u"ついでに直す", [], None),
+             (1, 1, PAPER, None, SOFT, u"④ 最後でいい", [u"語尾・言い回し", u"の癖"], None)]
+    for cx, cy, bg, st, fg, lbl, ttl, note in quads:
+        x, y = X0 + cx * (W + GAP), Y0 + cy * (H + GAP)
+        if st:
+            g += _card(x, y, W, H, bg, st)
+        else:
+            g += '<rect x="%g" y="%g" width="%g" height="%g" rx="7" fill="%s" stroke="%s" stroke-dasharray="5 4"/>' % (x, y, W, H, bg, SOFT)
+        ty = y + 28 if cy == 0 else y + 64
+        if cy == 1 and cx == 0:
+            ty = y + H - 20
+        g += _txt(x + 14, ty, lbl, 13, fg, SANS, "start", "700")
+        for j, t in enumerate(ttl):
+            g += _txt(x + 14, ty + 28 + j * 22, t, 15, INK, SERIF, "start", "700")
+        if note:
+            g += _txt(x + 14, ty + 52, note, 13, SOFT)
+    # 真ん中：抽象語の一文（効果も手間も中くらい）
+    mx, my = X0 + W + GAP / 2, Y0 + H + GAP / 2
+    g += _card(mx - 82, my - 20, 164, 40, GRNBG, "#C9DED1", 20)
+    g += _txt(mx, my + 6, u"③ 抽象語の一文", 15, GRN, SERIF, "middle", "700")
+    # 軸
+    g += _txt(40, Y0 + 16, u"大", 13, SOFT, SANS, "middle", "700")
+    g += _txt(40, Y0 + 2 * H + GAP - 6, u"小", 13, SOFT, SANS, "middle", "700")
+    g += _txt(40, my - 2, u"効", 13, SOFT, SANS, "middle", "700")
+    g += _txt(40, my + 15, u"果", 13, SOFT, SANS, "middle", "700")
+    by = Y0 + 2 * H + GAP + 22
+    g += _txt(X0 + 8, by, u"小", 13, SOFT, SANS, "start", "700")
+    g += _txt(X0 + 2 * W + GAP - 8, by, u"大", 13, SOFT, SANS, "end", "700")
+    g += _txt(mx, by, u"手間", 13, SOFT, SANS, "middle", "700")
+    g += _txt(200, by + 28, u"上の段から。同じ段なら左から。", 13, SOFT, SANS, "middle")
+    return _svgw(400, by + 44, u"効果の大きさと直す手間で、書き直す箇所の順番を決めるマトリクス図", g)
+
+
 FIGURES = {
+    "matrix": (fig_matrix, u"直したい順ではなく、効果が大きく手間の小さいものから手をつけると、肝心なところが最後まで残りません。"),
     "yobikata": (fig_yobikata, u"呼び方が違っても中身は同じなので、迷ったら募集要項の欄の名前で判断します。"),
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),

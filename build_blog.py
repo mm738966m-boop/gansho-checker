@@ -27,6 +27,7 @@ ARTICLES = [
     ("記事17本文.md", "shibouriyusho-tensaku-jibun-de.html"),
     ("記事18本文.md", "shougakkoujuken-gansho-teishutsu-mae.html"),
     ("記事19本文.md", "chugakujuken-gansho-kodomo-no-yousu.html"),
+    ("記事20本文.md", "gansho-kakinaoshi-junban.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -56,6 +57,7 @@ PUBDATES = {
     "shibouriyusho-tensaku-jibun-de.html": "2026-09-10",
     "shougakkoujuken-gansho-teishutsu-mae.html": "2026-09-15",
     "chugakujuken-gansho-kodomo-no-yousu.html": "2026-09-17",
+    "gansho-kakinaoshi-junban.html": "2026-09-26",
 }
 
 
@@ -69,7 +71,8 @@ CLUSTERS = {
                   "gansho-katei-kyouiku-houshin.html", "gansho-shibouriyusho-chigai.html",
                   "gansho-ai-kakikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
                   "shougakkoujuken-gansho-chousho-tansho.html",
-                  "shougakkoujuken-gansho-teishutsu-mae.html"],
+                  "shougakkoujuken-gansho-teishutsu-mae.html",
+                  "gansho-kakinaoshi-junban.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",
@@ -79,7 +82,8 @@ CLUSTERS = {
                   "shibouriyusho-ai-tsukaikata.html", "setsumeikai-ikenakatta-shibouriyusho.html",
                   "shibouriyusho-mojisuu-tarinai.html",
                   "shibouriyusho-tensaku-jibun-de.html",
-                  "chugakujuken-gansho-kodomo-no-yousu.html"],
+                  "chugakujuken-gansho-kodomo-no-yousu.html",
+                  "gansho-kakinaoshi-junban.html"],
     },
     "guide-sougougata.html": {
         "title": "総合型選抜・推薦ガイド",
@@ -87,7 +91,8 @@ CLUSTERS = {
         "slugs": ["ao-nyushi-shibouriyusho-ai.html", "sougougata-katsudouhoukokusho.html",
                   "shibouriyusho-chatgpt-bareru.html", "suisen-jikopr-ai.html",
                   "shibouriyusho-mojisuu-tarinai.html",
-                  "shibouriyusho-tensaku-jibun-de.html"],
+                  "shibouriyusho-tensaku-jibun-de.html",
+                  "gansho-kakinaoshi-junban.html"],
     },
     "guide-ai-kihon.html": {
         "title": "願書×AIの基本ガイド",
@@ -479,7 +484,7 @@ def build():
         hub_slugs.append(hub)
         print("built hub", hub)
     # sitemap / robots
-    urls = [(BASE, today), (BASE + "ao.html", today), (BASE + "blog/", today)] + \
+    urls = [(BASE, today), (BASE + "ao.html", today), (BASE + "chuju.html", today), (BASE + "blog/", today)] + \
         [(BASE + "blog/" + h, today) for h in hub_slugs] + \
         [(BASE + "blog/" + s, UPDATED.get(s, PUBDATES.get(s, today))) for t, d, s, b in metas]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
