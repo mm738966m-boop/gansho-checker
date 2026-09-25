@@ -212,6 +212,12 @@ CTA = ('<div class="cta"><div class="t">自分の文章のAIっぽさを、無�
   '<a class="btn" href="' + BASE + '">願書AI感チェッカーを開く（無料）</a>'
   '<a class="btn sub" href="' + BASE + 'ao.html">総合型選抜・推薦の方はこちら</a></div>')
 
+X_URL = "https://x.com/gansho_checker"
+XFOLLOW = ('<div class="cta xf"><div class="t">言い換えのコツを、Xで毎日1つずつ</div>'
+  '<p>朝と夜に、AIっぽい言い回しの見つけ方と直し方を出しています。<br>'
+  '出願の時期に、少しずつ読める長さです。</p>'
+  '<a class="btn sub" href="' + X_URL + '" target="_blank" rel="noopener">Xで @gansho_checker を見る</a></div>')
+
 SITEBAR = ('<div class="sitebar"><a class="logo" href="' + BASE + 'blog/">✍ 赤ペン願書ラボ</a>'
   '<a href="' + BASE + '">無料チェッカー</a><a href="' + BASE + 'ao.html">総合型選抜版</a>'
   '<a href="' + BASE + 'blog/">読みもの一覧</a></div>')
@@ -422,7 +428,7 @@ def build():
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + pubdate + " ｜ 赤ペン願書ラボ</div>"
           + hero_h + lead + toc_html(heads, body)
-          + art + TANA + FOOTER + "</div>")
+          + art + TANA + XFOLLOW + FOOTER + "</div>")
         os.makedirs("blog", exist_ok=True)
         open("blog/" + slug, "w", encoding="utf-8").write(page)
         print("built", slug, len(page), "bytes /", len(heads), "見出し")
@@ -444,7 +450,7 @@ def build():
       "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
       + "<h1>読みもの一覧</h1><div class=\"meta\">願書・志望理由書の書き方と、AIとの上手な付き合い方。</div>"
       + '<div class="hublinks top">' + "".join('<a href="%s">%s →</a>' % (h, html.escape(c["title"])) for h, c in CLUSTERS.items()) + "</div>"
-      + cards + CTA + TANA + FOOTER + "</div>")
+      + cards + CTA + TANA + XFOLLOW + FOOTER + "</div>")
     open("blog/index.html", "w", encoding="utf-8").write(idx)
     # ハブページ
     hub_slugs = []
@@ -468,7 +474,7 @@ def build():
           "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(c["title"]) + "</h1><div class=\"meta\">" + html.escape(c["desc"]) + "</div>"
-          + hcards + CTA + TANA + FOOTER + "</div>")
+          + hcards + CTA + TANA + XFOLLOW + FOOTER + "</div>")
         open("blog/" + hub, "w", encoding="utf-8").write(hpage)
         hub_slugs.append(hub)
         print("built hub", hub)
