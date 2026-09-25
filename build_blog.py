@@ -223,6 +223,9 @@ XFOLLOW = ('<div class="cta xf"><div class="t">言い換えのコツを、Xで�
   '出願の時期に、少しずつ読める長さです。</p>'
   '<a class="btn sub" href="' + X_URL + '" target="_blank" rel="noopener">Xで @gansho_checker を見る</a></div>')
 
+# アクセス解析（Cloudflare Web Analytics・Cookieなし）。トップ・ao・chuju・startにも同じ1行を入れてある
+BEACON = '\n<!-- Cloudflare Web Analytics --><script type=\'module\' src=\'https://static.cloudflareinsights.com/beacon.min.js\' data-cf-beacon=\'{"token": "3bf3384dc82543f1872704a52231b570"}\'></script><!-- End Cloudflare Web Analytics -->\n'
+
 SITEBAR = ('<div class="sitebar"><a class="logo" href="' + BASE + 'blog/">✍ 赤ペン願書ラボ</a>'
   '<a href="' + BASE + '">無料チェッカー</a><a href="' + BASE + 'ao.html">総合型選抜版</a>'
   '<a href="' + BASE + 'blog/">読みもの一覧</a></div>')
@@ -433,7 +436,7 @@ def build():
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(title) + "</h1><div class=\"meta\">" + pubdate + " ｜ 赤ペン願書ラボ</div>"
           + hero_h + lead + toc_html(heads, body)
-          + art + TANA + XFOLLOW + FOOTER + "</div>")
+          + art + TANA + XFOLLOW + FOOTER + "</div>" + BEACON)
         os.makedirs("blog", exist_ok=True)
         open("blog/" + slug, "w", encoding="utf-8").write(page)
         print("built", slug, len(page), "bytes /", len(heads), "見出し")
@@ -455,7 +458,7 @@ def build():
       "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
       + "<h1>読みもの一覧</h1><div class=\"meta\">願書・志望理由書の書き方と、AIとの上手な付き合い方。</div>"
       + '<div class="hublinks top">' + "".join('<a href="%s">%s →</a>' % (h, html.escape(c["title"])) for h, c in CLUSTERS.items()) + "</div>"
-      + cards + CTA + TANA + XFOLLOW + FOOTER + "</div>")
+      + cards + CTA + TANA + XFOLLOW + FOOTER + "</div>" + BEACON)
     open("blog/index.html", "w", encoding="utf-8").write(idx)
     # ハブページ
     hub_slugs = []
@@ -479,7 +482,7 @@ def build():
           "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap\">\n"
           "<style>" + CSS + "</style>\n<div class=\"wrap\">" + SITEBAR
           + "<h1>" + html.escape(c["title"]) + "</h1><div class=\"meta\">" + html.escape(c["desc"]) + "</div>"
-          + hcards + CTA + TANA + XFOLLOW + FOOTER + "</div>")
+          + hcards + CTA + TANA + XFOLLOW + FOOTER + "</div>" + BEACON)
         open("blog/" + hub, "w", encoding="utf-8").write(hpage)
         hub_slugs.append(hub)
         print("built hub", hub)
