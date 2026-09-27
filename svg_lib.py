@@ -983,6 +983,31 @@ def hero_kakinaoshi():
     return _svg(190, u"下書きを全部消す前に気になる行に線を引き、事実の誤り・志望校とのつながり・語尾の癖の順に直すことを示す図", g)
 
 
+def hero_mensetsu():
+    """記事21：小学校受験の面接資料。整えた願書とは別に、面接の机で開かれる一行を書く"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：願書（出願済みの整えた文章。少し退かせる）
+    g += '<g opacity="0.55">'
+    g += _card(40, 26, 196, 138)
+    g += '<rect x="40" y="26" width="196" height="24" rx="7" fill="#EDE6D8"/>'
+    g += _txt(56, 43, u"願書（整えた文章）", 12.5, SOFT, SANS, "start", "700")
+    for i in range(5):
+        g += '<rect x="56" y="%g" width="%g" height="5" rx="2.5" fill="#D9D0BF"/>' % (66 + i * 18, 164 if i != 4 else 104)
+    g += '</g>'
+    g += _pen(244, 34, 0.72, 16)
+    g += _arrow_r(272, 96, 40)
+    # 右：面接資料に置く一行
+    g += _txt(340, 36, u"面接の机で、開かれる一行", 14, RED, SERIF, "start", "700")
+    rows = [(u"最近", u"補助輪なしで坂を上った"), (u"話題", u"家族で決めている約束"), (u"確認", u"子どもが同じ答えを言えるか")]
+    for i, (t, d) in enumerate(rows):
+        y = 50 + i * 44
+        g += _card(336, y, 272, 36)
+        g += '<path d="M%g %gl6 6 12-13" fill="none" stroke="%s" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' % (350, y + 18, GRN)
+        g += _txt(376, y + 24, t, 15, INK, SERIF, "start", "700")
+        g += _txt(424, y + 23, d, 13, SOFT)
+    return _svg(190, u"整えた願書とは別に、面接資料には最近の一場面や話したい話題を書き、子どもの答えと合っているか確かめることを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1004,6 +1029,7 @@ HEROES = {
     "shougakkoujuken-gansho-teishutsu-mae.html": hero_teishutsu,
     "chugakujuken-gansho-kodomo-no-yousu.html": hero_yousu,
     "gansho-kakinaoshi-junban.html": hero_kakinaoshi,
+    "shougakkoujuken-mensetsu-shiryou.html": hero_mensetsu,
 }
 
 
@@ -1194,7 +1220,35 @@ def fig_matrix():
     return _svgw(400, by + 44, u"効果の大きさと直す手間で、書き直す箇所の順番を決めるマトリクス図", g)
 
 
+def fig_mensetsu():
+    """願書と面接資料の役割の違い（記事21・400幅）"""
+    g = _txt(200, 26, u"同じ家庭の話でも、紙の役割が違う", 16, INK, SERIF, "middle", "700")
+    blocks = [(PAPER, "#E2DACB", SOFT, u"願書＝出願のときに出す紙",
+               [u"志望理由", u"教育方針", u"子の様子"],
+               u"何度も直して、整えた文章"),
+              (GRNBG, "#C9DED1", GRN, u"面接資料＝面接の机で開かれる紙",
+               [u"最近の場面", u"話したい話題", u"子が話せる話"],
+               u"会話のきっかけになる、具体的な一行")]
+    for i, (bg, st, fg, ttl, chips, note) in enumerate(blocks):
+        y0 = 42 + i * 136
+        g += _card(14, y0, 372, 122, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="122" rx="2.5" fill="%s"/>' % (y0, fg)
+        g += _txt(30, y0 + 28, ttl, 15, fg, SERIF, "start", "700")
+        x = 30
+        for c in chips:
+            w = len(c) * 15 + 20
+            g += _card(x, y0 + 44, w, 30, CARD, st, 15)
+            g += _txt(x + w / 2, y0 + 64, c, 15, INK, SANS, "middle", "700")
+            x += w + 9
+        g += _txt(30, y0 + 100, note, 13, SOFT)
+    g += '<rect x="14" y="318" width="372" height="56" rx="7" fill="%s" stroke="%s" stroke-dasharray="5 4"/>' % (REDBG, RED)
+    g += _txt(30, 342, u"願書に書いた場面は、もう一度書かない。", 13, INK, SANS, "start", "700")
+    g += _txt(30, 362, u"様式と項目は学校ごとに違うので募集要項で確認を。", 13, INK)
+    return _svgw(400, 390, u"願書は出願のときに出す整えた文章、面接資料は面接の机で開かれる会話のきっかけであることを示した図", g)
+
+
 FIGURES = {
+    "mensetsu": (fig_mensetsu, u"願書で整えた話をもう一度並べるより、面接の机で話が始まりそうな一行を置くほうが、この紙は生きます。"),
     "matrix": (fig_matrix, u"直したい順ではなく、効果が大きく手間の小さいものから手をつけると、肝心なところが最後まで残りません。"),
     "yobikata": (fig_yobikata, u"呼び方が違っても中身は同じなので、迷ったら募集要項の欄の名前で判断します。"),
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
