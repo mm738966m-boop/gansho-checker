@@ -1008,6 +1008,30 @@ def hero_mensetsu():
     return _svg(190, u"整えた願書とは別に、面接資料には最近の一場面や話したい話題を書き、子どもの答えと合っているか確かめることを示す図", g)
 
 
+def hero_fubo():
+    """記事22：父親と母親どちらが書くか。欄ごとに書き手を決め、最後は書かなかった側が通して読む"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：願書1枚を欄ごとに色分け
+    g += _card(40, 22, 220, 146)
+    g += _txt(56, 44, u"願書", 13, SOFT, SANS, "start", "700")
+    cols = [(u"志望理由", RED, REDBG), (u"子の様子", GRN, GRNBG), (u"教育方針", RED, REDBG)]
+    for i, (t, fg, bg) in enumerate(cols):
+        y = 56 + i * 36
+        g += '<rect x="54" y="%g" width="192" height="28" rx="5" fill="%s"/>' % (y, bg)
+        g += '<rect x="54" y="%g" width="4" height="28" rx="2" fill="%s"/>' % (y, fg)
+        g += _txt(66, y + 19, t, 13, INK, SANS, "start", "700")
+        g += '<rect x="140" y="%g" width="92" height="4" rx="2" fill="#D9D0BF"/>' % (y + 12)
+    g += _arrow_r(280, 96, 44)
+    # 右：書かなかった側が通して読む
+    g += _txt(348, 40, u"一つの欄は、一人で書き切る", 14, INK, SERIF, "start", "700")
+    g += _txt(348, 66, u"最後に通して読むのは", 13, SOFT)
+    g += _txt(348, 90, u"その欄を書かなかった側", 15, RED, SERIF, "start", "700")
+    g += _bubble(348, 108, 232, 42)
+    g += _txt(364, 134, u"「ここだけ、なんか固いね」", 13.5, INK, SANS, "start", "700")
+    g += _pen(560, 30, 0.7, 20)
+    return _svg(190, u"願書の欄ごとに書き手を決めて一人で書き切り、最後はその欄を書かなかった側が通して読むことを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1030,6 +1054,7 @@ HEROES = {
     "chugakujuken-gansho-kodomo-no-yousu.html": hero_yousu,
     "gansho-kakinaoshi-junban.html": hero_kakinaoshi,
     "shougakkoujuken-mensetsu-shiryou.html": hero_mensetsu,
+    "shougakkoujuken-gansho-chichioya-hahaoya.html": hero_fubo,
 }
 
 
@@ -1247,7 +1272,31 @@ def fig_mensetsu():
     return _svgw(400, 390, u"願書は出願のときに出す整えた文章、面接資料は面接の机で開かれる会話のきっかけであることを示した図", g)
 
 
+def fig_rangoto():
+    """継ぎ足して書く／欄ごとに書き切る（記事22・400幅）"""
+    g = _txt(200, 26, u"割れるのは、書き手の数ではなく継ぎ足し方", 15.5, INK, SERIF, "middle", "700")
+    blocks = [(REDBG, "#EBCFCD", RED, u"途中で交代・部分的に手直し",
+               [(u"〜と考えております", RED), (u"〜だと思います", GRN), (u"〜いたしました", RED)],
+               u"一つの欄の中で、語り口が入れ替わる"),
+              (GRNBG, "#C9DED1", GRN, u"欄ごとに担当を決めて書き切る",
+               [(u"志望理由＝Aさん", RED), (u"子の様子＝Bさん", GRN)],
+               u"気になった所は、担当者に戻して直す")]
+    for i, (bg, st, fg, ttl, rows, note) in enumerate(blocks):
+        y0 = 42 + i * 150
+        g += _card(14, y0, 372, 136, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="136" rx="2.5" fill="%s"/>' % (y0, fg)
+        g += _txt(30, y0 + 26, ttl, 15, fg, SERIF, "start", "700")
+        for j, (t, c) in enumerate(rows):
+            yy = y0 + 36 + j * 24
+            g += '<rect x="30" y="%g" width="4" height="20" rx="2" fill="%s"/>' % (yy, c)
+            g += _txt(42, yy + 15, t, 13.5, INK, SANS, "start", "700")
+        g += _txt(30, y0 + 125, note, 13, SOFT)
+    g += _txt(200, 354, u"書き手の指定は、募集要項の注意書きで確認を", 13, SOFT, SANS, "middle")
+    return _svgw(400, 372, u"一つの欄を途中で交代して書くと語り口が混ざり、欄ごとに担当を決めて書き切ると割れないことを示した図", g)
+
+
 FIGURES = {
+    "rangoto": (fig_rangoto, u"書き手が二人いても、一つの欄を一人で書き切れば、欄の中で語り口が割れることはありません。"),
     "mensetsu": (fig_mensetsu, u"願書で整えた話をもう一度並べるより、面接の机で話が始まりそうな一行を置くほうが、この紙は生きます。"),
     "matrix": (fig_matrix, u"直したい順ではなく、効果が大きく手間の小さいものから手をつけると、肝心なところが最後まで残りません。"),
     "yobikata": (fig_yobikata, u"呼び方が違っても中身は同じなので、迷ったら募集要項の欄の名前で判断します。"),

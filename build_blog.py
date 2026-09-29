@@ -29,6 +29,7 @@ ARTICLES = [
     ("記事19本文.md", "chugakujuken-gansho-kodomo-no-yousu.html"),
     ("記事20本文.md", "gansho-kakinaoshi-junban.html"),
     ("記事21本文.md", "shougakkoujuken-mensetsu-shiryou.html"),
+    ("記事22本文.md", "shougakkoujuken-gansho-chichioya-hahaoya.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -60,6 +61,7 @@ PUBDATES = {
     "chugakujuken-gansho-kodomo-no-yousu.html": "2026-09-17",
     "gansho-kakinaoshi-junban.html": "2026-09-26",
     "shougakkoujuken-mensetsu-shiryou.html": "2026-09-27",
+    "shougakkoujuken-gansho-chichioya-hahaoya.html": "2026-09-29",
 }
 
 
@@ -75,7 +77,8 @@ CLUSTERS = {
                   "shougakkoujuken-gansho-chousho-tansho.html",
                   "shougakkoujuken-gansho-teishutsu-mae.html",
                   "gansho-kakinaoshi-junban.html",
-                  "shougakkoujuken-mensetsu-shiryou.html"],
+                  "shougakkoujuken-mensetsu-shiryou.html",
+                  "shougakkoujuken-gansho-chichioya-hahaoya.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",
