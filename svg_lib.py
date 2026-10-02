@@ -1032,6 +1032,40 @@ def hero_fubo():
     return _svg(190, u"願書の欄ごとに書き手を決めて一人で書き切り、最後はその欄を書かなかった側が通して読むことを示す図", g)
 
 
+def hero_nihyaku():
+    """記事23：600字の下書きから、場面をひとつ選んで200字の小さな欄に収める"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：長い下書き
+    g += _card(40, 20, 200, 150)
+    g += _txt(56, 45, u"下書き", 15, SOFT, SANS, "start", "700")
+    for i in range(7):
+        y = 58 + i * 13
+        if i == 3:
+            g += '<rect x="52" y="%g" width="176" height="14" rx="3" fill="%s"/>' % (y - 9, GRNBG)
+            g += _wave(58, y, 160, GRN)
+        else:
+            g += _wave(58, y, 160 if i % 3 else 130, "#D9D0BF")
+    g += _card(150, 28, 78, 24, REDBG, "#EBCFCD")
+    g += _txt(189, 45, u"約600字", 14, RED, SANS, "middle", "700")
+    g += _txt(56, 161, u"残すのは、この一場面", 15, GRN, SANS, "start", "700")
+    # 真ん中
+    g += _txt(300, 84, u"ひとつ選ぶ", 15, RED, SERIF, "middle", "700")
+    g += _arrow_r(276, 100, 46)
+    # 右：小さな欄
+    g += _txt(360, 40, u"志望理由の欄", 16, INK, SERIF, "start", "700")
+    g += _card(360, 52, 240, 84)
+    for i in range(5):
+        y = 68 + i * 14
+        g += '<path d="M372 %gh216" stroke="%s"/>' % (y + 4, LINE)
+        if i < 4:
+            g += _wave(376, y, 204 if i < 3 else 120, GRN)
+    g += _card(360, 146, 78, 24, GRNBG, "#C9DED1")
+    g += _txt(399, 163, u"200字", 14, GRN, SANS, "middle", "700")
+    g += _txt(448, 163, u"場面と、重なる一文", 15, SOFT)
+    g += _pen(606, 24, 0.6, 12)
+    return _svg(190, u"約600字の下書きから場面をひとつ選び、200字の志望理由欄に収める様子", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1055,6 +1089,7 @@ HEROES = {
     "gansho-kakinaoshi-junban.html": hero_kakinaoshi,
     "shougakkoujuken-mensetsu-shiryou.html": hero_mensetsu,
     "shougakkoujuken-gansho-chichioya-hahaoya.html": hero_fubo,
+    "shougakkoujuken-gansho-shibouriyuu-mijikai.html": hero_nihyaku,
 }
 
 
@@ -1295,7 +1330,51 @@ def fig_rangoto():
     return _svgw(400, 372, u"一つの欄を途中で交代して書くと語り口が混ざり、欄ごとに担当を決めて書き切ると割れないことを示した図", g)
 
 
+def fig_waku():
+    """200字の欄に入るもの／入れようとして薄まるもの（記事23・400幅）"""
+    g = _txt(200, 26, u"200字の欄に入るのは、この二つ", 16, INK, SERIF, "middle", "700")
+    keep = [(u"その日の場面を、ひとつ", u"数字やその子の言葉が入った一文"),
+            (u"その場面が、学校のどこに重なるか", u"自分の目で見たことと結ぶ一文")]
+    for i, (t, d) in enumerate(keep):
+        y = 42 + i * 70
+        g += _card(14, y, 372, 58, GRNBG, "#C9DED1")
+        g += '<rect x="14" y="%g" width="5" height="58" rx="2.5" fill="%s"/>' % (y, GRN)
+        g += _txt(32, y + 25, t, 15.5, GRN, SERIF, "start", "700")
+        g += _txt(32, y + 46, d, 13, SOFT, SANS, "start")
+    y0 = 190
+    g += ('<rect x="14" y="%g" width="372" height="118" rx="7" fill="%s" stroke="#D9D0BF" stroke-dasharray="5 4"/>'
+          % (y0, CARD))
+    g += _txt(32, y0 + 26, u"入れようとすると、全部が薄まるもの", 15, RED, SERIF, "start", "700")
+    for j, t in enumerate([u"学校案内の言葉の言い換え", u"どの家庭にも当てはまる話", u"二つ目、三つ目のエピソード"]):
+        yy = y0 + 50 + j * 22
+        g += '<path d="M34 %gh8" stroke="%s" stroke-width="2"/>' % (yy - 5, RED)
+        g += _txt(50, yy, t, 13.5, INK, SANS, "start")
+    g += _txt(200, 334, u"欄の大きさは学校ごとに違うので、募集要項で確認を", 13, SOFT, SANS, "middle")
+    return _svgw(400, 352, u"200字の志望理由欄に入るのは場面ひとつと学校に重なる一文で、ほかを入れると全体が薄まることを示した図", g)
+
+
+def fig_mawasu():
+    """入りきらなかった話の行き先（記事23・400幅）"""
+    g = _txt(200, 26, u"入りきらなかった話は、捨てずに回す", 16, INK, SERIF, "middle", "700")
+    g += _card(70, 42, 260, 44, REDBG, "#EBCFCD")
+    g += _txt(200, 70, u"志望理由の欄から外した話", 15, RED, SERIF, "middle", "700")
+    g += _arrow_d(200, 90, 22)
+    rows = [(u"家庭の教育方針の欄", u"ふだんの関わり方の話は、こちらへ"),
+            (u"子どもの様子を書く欄", u"家での姿が見える話は、こちらへ"),
+            (u"面接で話す", u"書かなかった場面を、口で伝える")]
+    for i, (t, d) in enumerate(rows):
+        y = 122 + i * 68
+        g += _card(14, y, 372, 56, GRNBG, "#C9DED1")
+        g += '<circle cx="38" cy="%g" r="5.5" fill="%s"/>' % (y + 28, GRN)
+        g += _txt(58, y + 24, t, 15.5, GRN, SERIF, "start", "700")
+        g += _txt(58, y + 45, d, 13, SOFT, SANS, "start")
+    g += _txt(200, 346, u"どの欄があるかは、その学校の様式しだい", 13, SOFT, SANS, "middle")
+    return _svgw(400, 364, u"志望理由欄に入りきらなかった話を、教育方針の欄・子どもの様子の欄・面接に回すことを示した図", g)
+
+
 FIGURES = {
+    "waku": (fig_waku, u"小さな欄に全部を入れようとすると一つひとつが短くなり、どれも印象に残らなくなります。"),
+    "mawasu": (fig_mawasu, u"外した話は消えるわけではなく、ほかの欄や面接で使う材料として手元に残ります。"),
     "rangoto": (fig_rangoto, u"書き手が二人いても、一つの欄を一人で書き切れば、欄の中で語り口が割れることはありません。"),
     "mensetsu": (fig_mensetsu, u"願書で整えた話をもう一度並べるより、面接の机で話が始まりそうな一行を置くほうが、この紙は生きます。"),
     "matrix": (fig_matrix, u"直したい順ではなく、効果が大きく手間の小さいものから手をつけると、肝心なところが最後まで残りません。"),
