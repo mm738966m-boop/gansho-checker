@@ -1066,6 +1066,34 @@ def hero_nihyaku():
     return _svg(190, u"約600字の下書きから場面をひとつ選び、200字の志望理由欄に収める様子", g)
 
 
+def hero_seisho():
+    """記事24：下書き→寝かせる→清書。3枚の紙が左から右へ進む"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：赤の入った下書き
+    g += _card(40, 30, 150, 124)
+    g += _txt(54, 54, u"下書き", 15, SOFT, SANS, "start", "700")
+    for i in range(5):
+        y = 72 + i * 15
+        g += _wave(54, y, 120 if i % 2 else 96, RED if i in (1, 3) else "#D9D0BF")
+    g += _pen(168, 84, 0.7, 24)
+    g += _arrow_r(202, 92, 40)
+    # 真ん中：寝かせる（月と閉じた紙）
+    g += _card(254, 30, 132, 124, "#F1ECE0", "#D9D0BF")
+    g += _txt(320, 54, u"寝かせる", 15, SOFT, SANS, "middle", "700")
+    g += '<circle cx="320" cy="98" r="22" fill="#E8D9C4"/><circle cx="330" cy="91" r="19" fill="#F1ECE0"/>'
+    g += _txt(320, 142, u"一晩でも", 13.5, SOFT, SANS, "middle")
+    g += _arrow_r(398, 92, 40)
+    # 右：清書
+    g += _card(450, 30, 150, 124, GRNBG, "#C9DED1")
+    g += _txt(464, 54, u"清書", 15, GRN, SANS, "start", "700")
+    for i in range(5):
+        y = 70 + i * 15
+        g += '<path d="M464 %gh122" stroke="#C9DED1"/>' % (y + 5)
+        g += '<path d="M466 %gh%g" stroke="%s" stroke-width="2.2" stroke-linecap="round"/>' % (y, 116 if i < 4 else 70, INK)
+    g += _txt(320, 178, u"書き上げた日に、清書しない", 15, RED, SERIF, "middle", "700")
+    return _svg(190, u"下書きを書き上げ、一晩でも寝かせてから清書に進む流れを示す図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1090,6 +1118,7 @@ HEROES = {
     "shougakkoujuken-mensetsu-shiryou.html": hero_mensetsu,
     "shougakkoujuken-gansho-chichioya-hahaoya.html": hero_fubo,
     "shougakkoujuken-gansho-shibouriyuu-mijikai.html": hero_nihyaku,
+    "shougakkoujuken-gansho-seisho.html": hero_seisho,
 }
 
 
@@ -1372,7 +1401,30 @@ def fig_mawasu():
     return _svgw(400, 364, u"志望理由欄に入りきらなかった話を、教育方針の欄・子どもの様子の欄・面接に回すことを示した図", g)
 
 
+def fig_nittei():
+    """下書きから清書までの日程表（記事24・400幅）"""
+    g = _txt(200, 26, u"下書きから清書まで、締切から逆に置く", 15.5, INK, SERIF, "middle", "700")
+    rows = [(u"下書きを書き上げる", u"字の形は気にせず、中身を出し切る", SOFT),
+            (u"寝かせる", u"一晩でも、できれば数日。開かない", SOFT),
+            (u"読み直して直す", u"声に出す。紙に印刷して読むのも手", RED),
+            (u"コピーに試し書き", u"字の大きさと行数を、本番と同じペンで", RED),
+            (u"清書する", u"疲れの少ない時間に。欄ごとに休んでもいい", GRN),
+            (u"乾かして、写しを取る", u"面接の前に読み返すための控え", GRN)]
+    g += '<path d="M36 58v%g" stroke="#D9D0BF" stroke-width="2"/>' % (len(rows) * 58 - 30)
+    for i, (t, d, c) in enumerate(rows):
+        y = 42 + i * 58
+        g += '<circle cx="36" cy="%g" r="11" fill="%s"/>' % (y + 24, c)
+        g += _txt(36, y + 29, str(i + 1), 13, "#FFFFFF", SANS, "middle", "700")
+        bg, st = (GRNBG, "#C9DED1") if c == GRN else ((REDBG, "#EBCFCD") if c == RED else (CARD, LINE))
+        g += _card(60, y, 326, 48, bg, st)
+        g += _txt(74, y + 21, t, 15, INK, SERIF, "start", "700")
+        g += _txt(74, y + 40, d, 12.5, SOFT, SANS, "start")
+    g += _txt(200, 412, u"締切と用紙の扱いは、募集要項で確認を", 13, SOFT, SANS, "middle")
+    return _svgw(400, 430, u"下書きを書き上げてから、寝かせる、読み直す、コピーに試し書き、清書、写しを取るまでの6つの段階を上から順に並べた日程表", g)
+
+
 FIGURES = {
+    "nittei": (fig_nittei, u"清書の日を先に決めて、そこから逆に置いていくと、寝かせる時間が最後まで残ります。"),
     "waku": (fig_waku, u"小さな欄に全部を入れようとすると一つひとつが短くなり、どれも印象に残らなくなります。"),
     "mawasu": (fig_mawasu, u"外した話は消えるわけではなく、ほかの欄や面接で使う材料として手元に残ります。"),
     "rangoto": (fig_rangoto, u"書き手が二人いても、一つの欄を一人で書き切れば、欄の中で語り口が割れることはありません。"),
