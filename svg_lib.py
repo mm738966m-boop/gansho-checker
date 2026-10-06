@@ -1093,6 +1093,28 @@ def hero_seisho():
     g += _txt(320, 178, u"書き上げた日に、清書しない", 15, RED, SERIF, "middle", "700")
     return _svg(190, u"下書きを書き上げ、一晩でも寝かせてから清書に進む流れを示す図", g)
 
+def hero_youchien():
+    """記事25：連絡帳の評価語（左）と、自転車の後ろの「今日ね」（右）"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：連絡帳。評価語に赤の波線
+    g += _card(40, 30, 200, 124)
+    g += _txt(54, 54, u"連絡帳", 15, SOFT, SANS, "start", "700")
+    g += _txt(54, 82, u"お友達と仲良く", 15, INK, SERIF, "start", "700")
+    g += _txt(54, 104, u"意欲的に取り組んで", 15, INK, SERIF, "start", "700")
+    g += _wave(54, 88, 108) + _wave(54, 110, 138)
+    g += _txt(54, 138, u"先生の言葉＝材料", 13, RED, SANS, "start")
+    g += _pen(216, 86, 0.6, 20)
+    g += _arrow_r(256, 92, 40)
+    # 右：帰り道の吹き出し
+    g += _card(310, 30, 290, 124, GRNBG, "#C9DED1")
+    g += _txt(324, 54, u"帰り道", 15, GRN, SANS, "start", "700")
+    g += _bubble(324, 66, 262, 58, CARD, "#C9DED1", 30)
+    g += _txt(340, 90, u"「あのね、今日ね、", 15, INK, SERIF, "start", "700")
+    g += _txt(340, 112, u"○○ちゃんが泣いちゃって」", 15, INK, SERIF, "start", "700")
+    g += _txt(324, 146, u"家庭でしか聞けない、園の一日", 13, GRN, SANS, "start")
+    g += _txt(320, 178, u"評価の言葉を、その場面に戻す", 15, RED, SERIF, "middle", "700")
+    return _svg(190, u"連絡帳の評価語をそのまま写さず、帰り道に子どもが話す園の様子から書く、という対比", g)
+
 
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
@@ -1119,6 +1141,7 @@ HEROES = {
     "shougakkoujuken-gansho-chichioya-hahaoya.html": hero_fubo,
     "shougakkoujuken-gansho-shibouriyuu-mijikai.html": hero_nihyaku,
     "shougakkoujuken-gansho-seisho.html": hero_seisho,
+    "shougakkoujuken-gansho-youchien-yousu.html": hero_youchien,
 }
 
 
@@ -1422,6 +1445,27 @@ def fig_nittei():
     g += _txt(200, 412, u"締切と用紙の扱いは、募集要項で確認を", 13, SOFT, SANS, "middle")
     return _svgw(400, 430, u"下書きを書き上げてから、寝かせる、読み直す、コピーに試し書き、清書、写しを取るまでの6つの段階を上から順に並べた日程表", g)
 
+def fig_mado():
+    """園の様子を知る三つの窓（記事25・400幅）"""
+    g = _txt(200, 26, u"園の様子を知る、三つの窓", 16, INK, SERIF, "middle", "700")
+    rows = [(REDBG, "#EBCFCD", RED, u"先生のひと言", u"連絡帳・面談・お迎えのとき",
+             u"評価語でなく、話してくれた場面を拾う"),
+            (GRNBG, "#C9DED1", GRN, u"本人の「今日ね」", u"帰り道・夕食のとき",
+             u"子どもの目から見た園の一日。家庭だけの材料"),
+            (GRNBG, "#C9DED1", GRN, u"自分の目で見た一瞬", u"送り迎え・運動会・発表会・参観",
+             u"先生にも他の家庭にも書けない")]
+    for i, (bg, st, fg, ttl, where, note) in enumerate(rows):
+        y0 = 42 + i * 104
+        g += _card(14, y0, 372, 92, bg, st)
+        g += '<rect x="14" y="%g" width="5" height="92" rx="2.5" fill="%s"/>' % (y0, fg)
+        g += _txt(30, y0 + 28, ttl, 16, fg, SERIF, "start", "700")
+        g += _txt(30, y0 + 52, where, 13, SOFT, SANS, "start")
+        g += _txt(30, y0 + 76, note, 13, INK, SANS, "start")
+    g += _card(14, 356, 372, 50, PAPER, SOFT)
+    g += _txt(200, 377, u"軸にするのは、下の二つ", 15, INK, SERIF, "middle", "700")
+    g += _txt(200, 396, u"先生のひと言は、場面を補うために使う", 13, SOFT, SANS, "middle")
+    return _svgw(400, 418, u"園の様子を知る三つの窓＝先生のひと言・本人の今日ね・自分の目で見た一瞬を並べた図", g)
+
 
 FIGURES = {
     "nittei": (fig_nittei, u"清書の日を先に決めて、そこから逆に置いていくと、寝かせる時間が最後まで残ります。"),
@@ -1462,4 +1506,5 @@ FIGURES = {
     "yuusen": (fig_yuusen, u"時間が足りない夜は、直したい順ではなく、止まると困る順に見ていきます。"),
     "yousu": (fig_yousu, u"数字や肩書きは別の場所でも伝わるので、この欄は家でしか見ていない場面のために使います。"),
     "qmap": (fig_qmap, "自己PRに書いた一文は、面接で聞かれる質問をこちらから配っているのと同じです。"),
+    "mado": (fig_mado, u"園の様子は三つの窓から集めます。軸にするのは、本人の「今日ね」と、自分の目で見た一瞬です。"),
 }
