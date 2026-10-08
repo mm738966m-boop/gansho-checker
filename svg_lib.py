@@ -1116,6 +1116,27 @@ def hero_youchien():
     return _svg(190, u"連絡帳の評価語をそのまま写さず、帰り道に子どもが話す園の様子から書く、という対比", g)
 
 
+def hero_kokushi():
+    """記事26：同じ場面（左）から、私立小あて・国立小あての結びの一文（右）へ"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：核の場面
+    g += _card(40, 30, 236, 124)
+    g += _txt(54, 54, u"同じ子の、同じ場面", 15, SOFT, SANS, "start", "700")
+    g += _bubble(54, 66, 208, 40, GRNBG, "#C9DED1", 30)
+    g += _txt(70, 92, u"「きのうより赤い」", 15, INK, SERIF, "start", "700")
+    g += _txt(54, 142, u"毎朝の水やり", 13, GRN, SANS, "start")
+    g += _arrow_r(290, 92, 36)
+    # 右：2通の結び
+    g += _card(340, 30, 260, 56, REDBG, "#EBCFCD")
+    g += _txt(354, 52, u"私立小あて", 13, RED, SANS, "start", "700")
+    g += _txt(354, 74, u"教育方針に重ねる一文", 15, INK, SERIF, "start", "700")
+    g += _card(340, 98, 260, 56, REDBG, "#EBCFCD")
+    g += _txt(354, 120, u"国立小あて", 13, RED, SANS, "start", "700")
+    g += _txt(354, 142, u"学校の役割に重ねる一文", 15, INK, SERIF, "start", "700")
+    g += _txt(320, 178, u"場面は同じ、結びの一文だけ取り替える", 15, RED, SERIF, "middle", "700")
+    return _svg(190, u"同じ子どもの場面を核にして、私立小あてと国立小あてで結びの一文だけを取り替える、という図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1142,6 +1163,7 @@ HEROES = {
     "shougakkoujuken-gansho-shibouriyuu-mijikai.html": hero_nihyaku,
     "shougakkoujuken-gansho-seisho.html": hero_seisho,
     "shougakkoujuken-gansho-youchien-yousu.html": hero_youchien,
+    "shougakkoujuken-gansho-kokuritsu-shiritsu.html": hero_kokushi,
 }
 
 
@@ -1467,7 +1489,51 @@ def fig_mado():
     return _svgw(400, 418, u"園の様子を知る三つの窓＝先生のひと言・本人の今日ね・自分の目で見た一瞬を並べた図", g)
 
 
+def fig_kakiwake():
+    """核の場面は同じ、学校に重ねる一文を取り替える（記事26・400幅）"""
+    g = _txt(200, 26, u"場面は同じ、結びの一文を取り替える", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 42, 372, 76, GRNBG, "#C9DED1")
+    g += '<rect x="14" y="42" width="5" height="76" rx="2.5" fill="%s"/>' % GRN
+    g += _txt(30, 68, u"核の場面（2通で同じ）", 15, GRN, SERIF, "start", "700")
+    g += _txt(30, 96, u"毎朝の水やりと「きのうより赤い」", 14.5, INK)
+    g += _arrow_d(200, 122, 18)
+    rows = [(u"私立小あて", u"重ねる相手", u"建学の精神・教育方針",
+             u"方針と、家庭のこの場面が重なる"),
+            (u"国立小あて", u"重ねる相手", u"学校の役割（研究・実習など）",
+             u"その場に、家庭はこう関わっていく")]
+    for i, (ttl, k, who, musubi) in enumerate(rows):
+        y0 = 150 + i * 116
+        g += _card(14, y0, 372, 104, REDBG, "#EBCFCD")
+        g += '<rect x="14" y="%g" width="5" height="104" rx="2.5" fill="%s"/>' % (y0, RED)
+        g += _txt(30, y0 + 28, ttl, 16, RED, SERIF, "start", "700")
+        g += _txt(30, y0 + 56, k, 13, SOFT, SANS, "start", "700")
+        g += _txt(108, y0 + 56, who, 14.5, INK)
+        g += _txt(30, y0 + 84, u"結びの一文", 13, SOFT, SANS, "start", "700")
+        g += _txt(108, y0 + 84, musubi, 14.5, INK)
+    g += _txt(200, 396, u"学校の言葉は、公式の案内で確かめてから", 13, SOFT, SANS, "middle")
+    return _svgw(400, 414, u"核の場面は2通で同じにして、私立小あてと国立小あてで学校に重ねる結びの一文だけを取り替える図", g)
+
+
+def fig_narabe():
+    """2通を並べて確かめる3つ（記事26・400幅）"""
+    g = _txt(200, 26, u"2通を並べて、3つ確かめる", 16, INK, SERIF, "middle", "700")
+    rows = [(u"場面の事実", u"いつ・何を・どのくらい、が同じか"),
+            (u"子どもの言葉", u"同じ言葉のまま書かれているか"),
+            (u"違うのは結びだけ", u"ほかの部分が別人になっていないか")]
+    for i, (ttl, note) in enumerate(rows):
+        y0 = 42 + i * 84
+        g += _card(14, y0, 372, 72, GRNBG, "#C9DED1")
+        g += '<rect x="14" y="%g" width="5" height="72" rx="2.5" fill="%s"/>' % (y0, GRN)
+        g += _txt(30, y0 + 28, ttl, 16, GRN, SERIF, "start", "700")
+        g += _txt(30, y0 + 54, note, 14.5, INK)
+    g += _card(14, 296, 372, 44, PAPER, SOFT)
+    g += _txt(200, 323, u"どちらの面接でも、同じ子の話になる", 15, INK, SERIF, "middle", "700")
+    return _svgw(400, 352, u"併願の2通を並べて、場面の事実・子どもの言葉・結びの一文以外が同じかを確かめる図", g)
+
+
 FIGURES = {
+    "kakiwake": (fig_kakiwake, u"書き分けるのは文章の全部ではなく、学校に重ねる結びの一文です。"),
+    "narabe": (fig_narabe, u"書いた日が違うと、同じ場面でも細部が少しずつずれていきます。並べると見つかります。"),
     "nittei": (fig_nittei, u"清書の日を先に決めて、そこから逆に置いていくと、寝かせる時間が最後まで残ります。"),
     "waku": (fig_waku, u"小さな欄に全部を入れようとすると一つひとつが短くなり、どれも印象に残らなくなります。"),
     "mawasu": (fig_mawasu, u"外した話は消えるわけではなく、ほかの欄や面接で使う材料として手元に残ります。"),
