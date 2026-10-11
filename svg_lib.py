@@ -201,22 +201,22 @@ def fig_scene():
 
 
 def fig_split():
-    """AIに任せる / 家庭が担う"""
-    g = _txt(320, 20, "AIに任せられること、家庭にしかできないこと", 14, INK, SERIF, "middle", "700")
-    left = ["文章の型を整える", "言い回しの候補を出す", "文字数を調整する", "誤字を拾う"]
-    right = ["その日、何があったか", "子どもが言った言葉", "家庭が大事にしてきたこと", "説明会で感じたこと"]
-    g += _card(20, 36, 290, 172, "#EFEAF5", "#DCD3E8")
-    g += _txt(40, 62, "AIに任せられる", 13.5, "#5B4B77", SERIF, "start", "700")
-    for i, s in enumerate(left):
-        g += '<circle cx="46" cy="%g" r="3.5" fill="#8B79AE"/>' % (88 + i * 28)
-        g += _txt(60, 92 + i * 28, s, 13, INK)
-    g += _card(330, 36, 290, 172, GRNBG, "#C9DED1")
-    g += _txt(350, 62, "家庭にしか書けない", 13.5, GRN, SERIF, "start", "700")
-    for i, s in enumerate(right):
-        g += '<circle cx="356" cy="%g" r="3.5" fill="%s"/>' % (88 + i * 28, GRN)
-        g += _txt(370, 92 + i * 28, s, 13, INK)
-    g += _txt(320, 228, "AIは素材を言葉にする道具で、素材そのものは作れない", 12, SOFT, SANS, "middle")
-    return _svg(242, "AIに任せられる作業と、家庭にしか書けない内容の切り分け", g)
+    """AIに任せる / 家庭が担う（2026-10-12に400幅へ描き直し）"""
+    g = _txt(200, 26, u"AIに任せられること、家庭にしかないもの", 16, INK, SERIF, "middle", "700")
+    left = [u"文章の型を整える", u"言い回しの候補を出す", u"文字数を調整する", u"誤字を拾う"]
+    right = [u"その日、何があったか", u"子どもが言った言葉", u"家庭が大事にしてきたこと", u"説明会で感じたこと"]
+    g += _card(14, 42, 372, 150, "#EFEAF5", "#DCD3E8")
+    g += _txt(30, 68, u"AIに任せられる", 15, "#5B4B77", SERIF, "start", "700")
+    for i, t in enumerate(left):
+        g += '<circle cx="36" cy="%g" r="3.5" fill="#8B79AE"/>' % (91 + i * 26)
+        g += _txt(50, 96 + i * 26, t, 15, INK)
+    g += _card(14, 204, 372, 150, GRNBG, "#C9DED1")
+    g += _txt(30, 230, u"家庭にしか書けない", 15, GRN, SERIF, "start", "700")
+    for i, t in enumerate(right):
+        g += '<circle cx="36" cy="%g" r="3.5" fill="%s"/>' % (253 + i * 26, GRN)
+        g += _txt(50, 258 + i * 26, t, 15, INK)
+    g += _txt(200, 380, u"AIは素材を言葉にする道具。素材は作れない", 14, SOFT, SANS, "middle")
+    return _svgw(400, 394, u"AIに任せられる作業と、家庭にしか書けない内容の切り分け", g)
 
 
 def fig_3step():
@@ -1137,6 +1137,27 @@ def hero_kokushi():
     return _svg(190, u"同じ子どもの場面を核にして、私立小あてと国立小あてで結びの一文だけを取り替える、という図", g)
 
 
+def hero_tanomu():
+    """記事30：走り書きの材料メモ（左）を渡すと、家庭の場面が入った下書き（右）が返る"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：材料メモ
+    g += _card(40, 30, 236, 124)
+    g += _txt(54, 54, u"先に渡すメモ", 15, SOFT, SANS, "start", "700")
+    for i, t in enumerate([u"・土曜、公園で落ち葉を並べて", u"・「ぎざぎざの数がちがう」", u"・欄は200字"]):
+        g += _txt(54, 82 + i * 24, t, 14, INK, SERIF, "start", "700")
+    g += _pen(258, 112, 0.5, 20)
+    g += _arrow_r(290, 92, 36)
+    # 右：返ってくる下書き
+    g += _card(340, 30, 260, 124, GRNBG, "#C9DED1")
+    g += _txt(354, 54, u"返ってくる下書き", 15, GRN, SANS, "start", "700")
+    g += _grid(354, 66, 16, 4, 14)
+    g += _txt(360, 86, u"落ち葉を並べて、", 14, INK, SERIF, "start", "700")
+    g += _txt(360, 108, u"数をかぞえた日の話", 14, INK, SERIF, "start", "700")
+    g += _txt(354, 144, u"はじめから、わが家の場面が入る", 13, GRN, SANS, "start")
+    g += _txt(320, 178, u"頼み方より先に、渡す材料", 15, RED, SERIF, "middle", "700")
+    return _svg(190, u"走り書きの材料メモをAIに先に渡すと、家庭の場面が入った下書きが返ってくる、という図", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1164,6 +1185,7 @@ HEROES = {
     "shougakkoujuken-gansho-seisho.html": hero_seisho,
     "shougakkoujuken-gansho-youchien-yousu.html": hero_youchien,
     "shougakkoujuken-gansho-kokuritsu-shiritsu.html": hero_kokushi,
+    "gansho-chatgpt-tanomikata.html": hero_tanomu,
 }
 
 
@@ -1531,7 +1553,45 @@ def fig_narabe():
     return _svgw(400, 352, u"併願の2通を並べて、場面の事実・子どもの言葉・結びの一文以外が同じかを確かめる図", g)
 
 
+def fig_watasu():
+    """AIに最初に渡す4つの材料（記事30・400幅）"""
+    g = _txt(200, 26, u"頼む前に渡す、4つの材料", 16, INK, SERIF, "middle", "700")
+    rows = [(u"その日の場面", u"いつ・どこで・何をしていたか"),
+            (u"子どもが言った言葉", u"言い回しは直さず、そのまま"),
+            (u"学校で見たもの", u"説明会や見学で目に残ったひとつ"),
+            (u"欄の設問文と字数", u"募集要項の言葉を写して渡す")]
+    for i, (ttl, note) in enumerate(rows):
+        y0 = 42 + i * 76
+        g += _card(14, y0, 372, 64, GRNBG, "#C9DED1")
+        g += '<rect x="14" y="%g" width="5" height="64" rx="2.5" fill="%s"/>' % (y0, GRN)
+        g += _txt(30, y0 + 26, ttl, 16, GRN, SERIF, "start", "700")
+        g += _txt(30, y0 + 50, note, 14, INK)
+    g += _card(14, 348, 372, 50, PAPER, SOFT)
+    g += _txt(200, 369, u"メモ書きのまま、話し言葉のままでいい", 15, INK, SERIF, "middle", "700")
+    g += _txt(200, 388, u"渡していない所は、一般論で埋まる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 410, u"AIに下書きを頼む前に渡す4つの材料＝その日の場面・子どもが言った言葉・学校で見たもの・欄の設問文と字数", g)
+
+
+def fig_mazari():
+    """返ってきた下書きで確かめる3つ（記事30・400幅）"""
+    g = _txt(200, 26, u"返ってきた下書きで、3つ確かめる", 16, INK, SERIF, "middle", "700")
+    rows = [(u"渡していない話", u"メモに無い出来事が足されていないか"),
+            (u"言い換えられた言葉", u"子どもの言葉が整えられていないか"),
+            (u"まとめの一文", u"場面のあとに一般論が付いていないか")]
+    for i, (ttl, note) in enumerate(rows):
+        y0 = 42 + i * 84
+        g += _card(14, y0, 372, 72, REDBG, "#EBCFCD")
+        g += '<rect x="14" y="%g" width="5" height="72" rx="2.5" fill="%s"/>' % (y0, RED)
+        g += _txt(30, y0 + 28, ttl, 16, RED, SERIF, "start", "700")
+        g += _txt(30, y0 + 54, note, 14.5, INK)
+    g += _card(14, 296, 372, 44, PAPER, SOFT)
+    g += _txt(200, 323, u"メモと並べて、一行ずつ照らす", 15, INK, SERIF, "middle", "700")
+    return _svgw(400, 352, u"AIから返ってきた下書きで確かめる3つ＝渡していない話・言い換えられた子どもの言葉・まとめの一般論", g)
+
+
 FIGURES = {
+    "watasu": (fig_watasu, u"頼み方の言い回しを工夫するより先に、この4つをメモのまま渡します。"),
+    "mazari": (fig_mazari, u"材料を渡しても、すき間はそれらしい言葉で埋まることがあります。渡したメモと照らすと見つかります。"),
     "kakiwake": (fig_kakiwake, u"書き分けるのは文章の全部ではなく、学校に重ねる結びの一文です。"),
     "narabe": (fig_narabe, u"書いた日が違うと、同じ場面でも細部が少しずつずれていきます。並べると見つかります。"),
     "nittei": (fig_nittei, u"清書の日を先に決めて、そこから逆に置いていくと、寝かせる時間が最後まで残ります。"),
@@ -1543,7 +1603,7 @@ FIGURES = {
     "yobikata": (fig_yobikata, u"呼び方が違っても中身は同じなので、迷ったら募集要項の欄の名前で判断します。"),
     "signs": (fig_signs, "AIっぽさは感覚ではなく、抽象語・接続詞・語尾という具体的なクセとして現れます。"),
     "scene": (fig_scene, "同じ出来事でも、その日の場面に置き換えるだけで読み手に絵が浮かびます。"),
-    "split": (fig_split, "型を整える作業はAIが得意ですが、素材そのものは家庭にしかありません。"),
+    "split": (fig_split, u"型を整える作業はAIが得意ですが、素材そのものは家庭にしかありません。"),
     "3step": (fig_3step, "この3つを順に通すと、下書きは「たたき台」から「家庭の文章」に変わります。"),
     "blind": (fig_blind, "書いた本人の頭は足りない情報を勝手に補うため、自分では抜けに気づけません。"),
     "loop": (fig_loop, "一度で仕上げようとせず、小さく直して読み返すほうが早く整います。"),

@@ -34,6 +34,7 @@ ARTICLES = [
     ("記事24本文.md", "shougakkoujuken-gansho-seisho.html"),
     ("記事25本文.md", "shougakkoujuken-gansho-youchien-yousu.html"),
     ("記事26本文.md", "shougakkoujuken-gansho-kokuritsu-shiritsu.html"),
+    ("記事30本文.md", "gansho-chatgpt-tanomikata.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -70,6 +71,7 @@ PUBDATES = {
     "shougakkoujuken-gansho-seisho.html": "2026-10-05",
     "shougakkoujuken-gansho-youchien-yousu.html": "2026-10-06",
     "shougakkoujuken-gansho-kokuritsu-shiritsu.html": "2026-10-08",
+    "gansho-chatgpt-tanomikata.html": "2026-10-12",
 }
 
 
@@ -117,7 +119,8 @@ CLUSTERS = {
         "desc": "AIと願書・志望理由書の付き合い方の記事をまとめました。使い方の線引きから直し方まで。",
         "slugs": ["gansho-ai-kakikata.html", "shibouriyusho-ai-tsukaikata.html",
                   "gansho-aippoi-naoshikata.html", "shibouriyusho-chatgpt-bareru.html",
-                  "shibouriyusho-chushouteki-naoshikata.html", "suisen-jikopr-ai.html"],
+                  "shibouriyusho-chushouteki-naoshikata.html", "suisen-jikopr-ai.html",
+                  "gansho-chatgpt-tanomikata.html"],
     },
 }
 
