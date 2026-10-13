@@ -35,6 +35,7 @@ ARTICLES = [
     ("記事25本文.md", "shougakkoujuken-gansho-youchien-yousu.html"),
     ("記事26本文.md", "shougakkoujuken-gansho-kokuritsu-shiritsu.html"),
     ("記事30本文.md", "gansho-chatgpt-tanomikata.html"),
+    ("記事31本文.md", "shougakkoujuken-gansho-shibouriyuu-chikai.html"),
 ]
 
 # 公開日（記事ごとに固定）。ここに無いスラッグはビルド当日の日付になる。
@@ -72,6 +73,7 @@ PUBDATES = {
     "shougakkoujuken-gansho-youchien-yousu.html": "2026-10-06",
     "shougakkoujuken-gansho-kokuritsu-shiritsu.html": "2026-10-08",
     "gansho-chatgpt-tanomikata.html": "2026-10-12",
+    "shougakkoujuken-gansho-shibouriyuu-chikai.html": "2026-10-13",
 }
 
 
@@ -92,7 +94,8 @@ CLUSTERS = {
                   "shougakkoujuken-gansho-shibouriyuu-mijikai.html",
                   "shougakkoujuken-gansho-seisho.html",
                   "shougakkoujuken-gansho-youchien-yousu.html",
-                  "shougakkoujuken-gansho-kokuritsu-shiritsu.html"],
+                  "shougakkoujuken-gansho-kokuritsu-shiritsu.html",
+                  "shougakkoujuken-gansho-shibouriyuu-chikai.html"],
     },
     "guide-chugakujuken.html": {
         "title": "中学受験の志望理由書ガイド",

@@ -1158,6 +1158,29 @@ def hero_tanomu():
     return _svg(190, u"走り書きの材料メモをAIに先に渡すと、家庭の場面が入った下書きが返ってくる、という図", g)
 
 
+def hero_chikai():
+    """記事31：願書の欄に「家から近いから」（左）と、通学路の信号待ちで見た場面（右）"""
+    g = '<rect width="640" height="190" rx="10" fill="%s"/>' % PAPER
+    # 左：志望理由欄に事実だけ
+    g += _card(40, 30, 220, 124)
+    g += _txt(54, 54, u"志望理由", 15, SOFT, SANS, "start", "700")
+    g += _grid(54, 66, 14, 3, 14)
+    g += _txt(60, 92, u"家から近いから", 16, INK, SERIF, "start", "700")
+    g += _wave(60, 98, 118)
+    g += _txt(54, 138, u"事実のまま、で止まっている", 13, RED, SANS, "start")
+    g += _pen(236, 86, 0.6, 20)
+    g += _arrow_r(276, 92, 40)
+    # 右：通学路の場面
+    g += _card(330, 30, 270, 124, GRNBG, "#C9DED1")
+    g += _txt(344, 54, u"通学路の、信号待ち", 15, GRN, SANS, "start", "700")
+    g += _bubble(344, 66, 242, 58, CARD, "#C9DED1", 30)
+    g += _txt(360, 90, u"上級生が小さな子の手を引いて、", 14, INK, SERIF, "start", "700")
+    g += _txt(360, 112, u"長女が「あの子みたい」", 14, INK, SERIF, "start", "700")
+    g += _txt(344, 146, u"近いから、何度も目に入る", 13, GRN, SANS, "start")
+    g += _txt(320, 178, u"「近い」を、毎日の場面に戻す", 15, RED, SERIF, "middle", "700")
+    return _svg(190, u"願書の志望理由欄に「家から近いから」とだけ書いて止まった状態から、通学路の信号待ちで見た場面に戻す、という対比", g)
+
+
 HEROES = {
     "gansho-ai-kakikata.html": hero_ai,
     "shibouriyusho-chatgpt-bareru.html": hero_eye,
@@ -1186,6 +1209,7 @@ HEROES = {
     "shougakkoujuken-gansho-youchien-yousu.html": hero_youchien,
     "shougakkoujuken-gansho-kokuritsu-shiritsu.html": hero_kokushi,
     "gansho-chatgpt-tanomikata.html": hero_tanomu,
+    "shougakkoujuken-gansho-shibouriyuu-chikai.html": hero_chikai,
 }
 
 
@@ -1589,7 +1613,59 @@ def fig_mazari():
     return _svgw(400, 352, u"AIから返ってきた下書きで確かめる3つ＝渡していない話・言い換えられた子どもの言葉・まとめの一般論", g)
 
 
+def fig_chikai():
+    """「近い」の下にある場面（記事31・400幅）"""
+    g = _txt(200, 26, u"「近い」の下にある、その家の場面", 16, INK, SERIF, "middle", "700")
+    # 上：事実のまま
+    g += _card(14, 42, 372, 92, REDBG, "#EBCFCD")
+    g += _txt(30, 66, u"事実のまま", 13, RED, SANS, "start", "700")
+    g += _txt(30, 92, u"家から近く、通いやすい環境です", 16, INK, SERIF, "start", "700")
+    g += _wave(30, 100, 250)
+    g += _txt(30, 122, u"読み手には「そうですか」で終わってしまう", 13, SOFT, SANS, "start")
+    g += _arrow_d(200, 140, 24)
+    # 中：近いから、何がある
+    g += _card(14, 170, 372, 160, GRNBG, "#C9DED1")
+    g += _txt(30, 194, u"近いから、何がある？", 13, GRN, SANS, "start", "700")
+    rows = [(u"通学路で", u"毎朝の校門、信号待ちの上級生"),
+            (u"放課後に", u"祖父母の家、習い事、下の子の迎え"),
+            (u"6年間で", u"雨の朝の傘、ひとりで門をくぐる背中")]
+    for i, (k, v) in enumerate(rows):
+        y = 222 + i * 36
+        g += '<rect x="30" y="%g" width="60" height="26" rx="6" fill="%s"/>' % (y - 18, GRN)
+        g += _txt(60, y, k, 13, CARD, SANS, "middle", "700")
+        g += _txt(102, y, v, 15, INK, SERIF, "start", "700")
+    g += _arrow_d(200, 336, 24)
+    # 下：場面ひとつ＋重なる一文
+    g += _card(14, 366, 372, 60, CARD, LINE)
+    g += _txt(200, 390, u"場面がひとつ、学校に重なる一文がひとつ", 15, INK, SERIF, "middle", "700")
+    g += _txt(200, 412, u"理念の言葉を何行も借りなくても、欄は足りる", 13, SOFT, SANS, "middle")
+    return _svgw(400, 440, u"「家から近い」という事実を、通学路・放課後・6年間の場面に戻し、学校に重なる一文を一つ添える、という流れの図", g)
+
+
+def fig_kyoudai():
+    """「上の子が通っている」も場面に戻す（記事31・400幅）"""
+    g = _txt(200, 26, u"「上の子が通っている」も、場面に戻す", 16, INK, SERIF, "middle", "700")
+    g += _card(14, 42, 372, 96, REDBG, "#EBCFCD")
+    g += _txt(30, 66, u"在校の事実だけ", 13, RED, SANS, "start", "700")
+    g += _txt(30, 92, u"在校生の家庭として、", 16, INK, SERIF, "start", "700")
+    g += _txt(30, 116, u"貴校の教育に信頼を寄せております", 16, INK, SERIF, "start", "700")
+    g += _wave(30, 122, 272)
+    g += _arrow_d(200, 144, 24)
+    g += _card(14, 174, 372, 150, GRNBG, "#C9DED1")
+    g += _txt(30, 198, u"家の中の場面", 13, GRN, SANS, "start", "700")
+    g += _bubble(30, 210, 340, 56, CARD, "#C9DED1", 30)
+    g += _txt(46, 232, u"玄関で、上の子が今日の給食の話。", 15, INK, SERIF, "start", "700")
+    g += _txt(46, 254, u"それを、下の子がじっと聞いている", 15, INK, SERIF, "start", "700")
+    g += _txt(30, 300, u"「ぼくも行く」と言ったのは、いつだったか", 15, INK, SERIF, "start", "700")
+    g += _card(14, 336, 372, 50, PAPER, SOFT)
+    g += _txt(200, 357, u"書くのは、下の子が上の子の背中をどう見ているか", 14, INK, SERIF, "middle", "700")
+    g += _txt(200, 376, u"兄姉枠の有無は別の話。募集要項で確認を", 12, SOFT, SANS, "middle")
+    return _svgw(400, 398, u"在校の事実だけを書いた文を、上の子が家で話す学校の様子と、それを聞く下の子の場面に戻す、という図", g)
+
+
 FIGURES = {
+    "chikai": (fig_chikai, u"「近い」は隠さなくてよく、その下にある毎日の場面を拾うと、志望理由として読めるようになります。"),
+    "kyoudai": (fig_kyoudai, u"在校の事実は学校も知っています。下の子の願書になるのは、家の中で聞こえている学校の声のほうです。"),
     "watasu": (fig_watasu, u"頼み方の言い回しを工夫するより先に、この4つをメモのまま渡します。"),
     "mazari": (fig_mazari, u"材料を渡しても、すき間はそれらしい言葉で埋まることがあります。渡したメモと照らすと見つかります。"),
     "kakiwake": (fig_kakiwake, u"書き分けるのは文章の全部ではなく、学校に重ねる結びの一文です。"),
